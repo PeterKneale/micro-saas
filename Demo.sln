@@ -1,23 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 #
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{3A59BB6C-580C-47F0-8E7C-40F3E1D896D0}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose-infra.yml = docker-compose-infra.yml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.UnitTests", "Demo.UnitTests\Demo.UnitTests.csproj", "{939C5733-EFD7-4E55-BC86-48AE86CA26E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.UnitTests", "Backend.UnitTests\Backend.UnitTests.csproj", "{939C5733-EFD7-4E55-BC86-48AE86CA26E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.IntegrationTests", "Demo.IntegrationTests\Demo.IntegrationTests.csproj", "{52F3BB2D-DCFE-443A-A6A1-ACABF503F244}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.IntegrationTests", "Backend.IntegrationTests\Backend.IntegrationTests.csproj", "{52F3BB2D-DCFE-443A-A6A1-ACABF503F244}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{61DBEDDD-8598-4A03-A107-A05485F968CE}"
 	ProjectSection(SolutionItems) = preProject
 		readme.md = readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.FunctionalTests", "Demo.FunctionalTests\Demo.FunctionalTests.csproj", "{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.FunctionalTests", "Backend.FunctionalTests\Backend.FunctionalTests.csproj", "{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendAdmin", "FrontendAdmin\FrontendAdmin.csproj", "{CE235943-F154-42B4-983C-9A7247F3A381}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendTenant", "FrontendTenant\FrontendTenant.csproj", "{5E7672A5-BC17-4D2D-B365-8068D3990C6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Client", "Backend.Client\Backend.Client.csproj", "{23DF63D6-5D86-434B-868C-9A5AA42D24A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendSignup", "FrontendSignup\FrontendSignup.csproj", "{98F578EA-53D1-4D34-A191-E648AC8D54C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,5 +49,21 @@ Global
 		{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE235943-F154-42B4-983C-9A7247F3A381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE235943-F154-42B4-983C-9A7247F3A381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE235943-F154-42B4-983C-9A7247F3A381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE235943-F154-42B4-983C-9A7247F3A381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E7672A5-BC17-4D2D-B365-8068D3990C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E7672A5-BC17-4D2D-B365-8068D3990C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E7672A5-BC17-4D2D-B365-8068D3990C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E7672A5-BC17-4D2D-B365-8068D3990C6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23DF63D6-5D86-434B-868C-9A5AA42D24A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23DF63D6-5D86-434B-868C-9A5AA42D24A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23DF63D6-5D86-434B-868C-9A5AA42D24A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23DF63D6-5D86-434B-868C-9A5AA42D24A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F578EA-53D1-4D34-A191-E648AC8D54C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F578EA-53D1-4D34-A191-E648AC8D54C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F578EA-53D1-4D34-A191-E648AC8D54C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F578EA-53D1-4D34-A191-E648AC8D54C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

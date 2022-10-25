@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package Backend;
+
+option csharp_namespace = "Backend.Api";
+
+service AdminService {
+    rpc CountCars(CountCarsRequest) returns (CountCarsResponse);
+}
+message CountCarsRequest{
+}
+
+message CountCarsResponse{
+    int32 total = 1;
+}

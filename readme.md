@@ -1,7 +1,11 @@
-# Demo of a multi-tenant application using Grpc, Dapper and Postgres with Row level security 
+# Demo of a micro-saas 
 - Featuring both tenant and admin access
 
-## API
+# FrontEnd
+
+- todo
+
+# Backend
 
 ### Admin API
 - Executes use cases in the context of an administrator on the platform
