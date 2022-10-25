@@ -7,4 +7,12 @@
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Backend.Client\Backend.Client.csproj" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
+    </ItemGroup>    
 </Project>
