@@ -31,6 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Backend\Backend.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Protobuf Include="..\Backend\Api\AdminApi.proto">
       <GrpcServices>Client</GrpcServices>
       <Access>Public</Access>
@@ -49,10 +53,6 @@
       <Generator>MSBuild:Compile</Generator>
       <Link>Api\TenantApi.proto</Link>
     </Protobuf>
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Backend\Backend.csproj" />
   </ItemGroup>
 
 </Project>

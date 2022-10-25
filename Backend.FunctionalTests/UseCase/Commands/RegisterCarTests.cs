@@ -48,7 +48,7 @@ public class RegisterCarTests
     }
 
     [Fact]
-    public async Task AlreadyExists()
+    public async Task Unavailable()
     {
         // arrange
         var id1 = Guid.NewGuid().ToString();
@@ -64,7 +64,7 @@ public class RegisterCarTests
         // assert
         act.Should().Throw<RpcException>().WithMessage("*already exists*")
             .And
-            .Status.StatusCode.Should().Be(StatusCode.AlreadyExists);
+            .Status.StatusCode.Should().Be(StatusCode.FailedPrecondition);
     }
     
     [Fact]

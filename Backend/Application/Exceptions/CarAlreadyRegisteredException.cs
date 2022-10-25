@@ -1,6 +1,7 @@
 ﻿namespace Backend.Application.Exceptions;
 
-public class CarAlreadyRegisteredException : Exception
+
+internal class CarAlreadyRegisteredException : BaseRuleBrokenException
 {
     public CarAlreadyRegisteredException(string registration) : base($"Car {registration} already registered")
     {

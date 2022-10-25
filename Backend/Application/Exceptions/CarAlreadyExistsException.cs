@@ -1,8 +1,8 @@
 ﻿namespace Backend.Application.Exceptions;
 
-public class CarAlreadyExistsException : Exception
+internal class CarAlreadyExistsException : BaseAlreadyExistsException
 {
-    public CarAlreadyExistsException(Guid id) : base($"Car {id} already exists")
+    public CarAlreadyExistsException(Guid id) : base("car", id.ToString())
     {
     }
 }

@@ -1,10 +1,14 @@
 ﻿using Backend.Api;
 using Backend.Application.Contracts;
+using Backend.Application.Contracts.Admin;
+using Backend.Application.Contracts.Tenants;
 using Backend.Infrastructure.Behaviours;
 using Backend.Infrastructure.Configuration;
 using Backend.Infrastructure.Database;
 using Backend.Infrastructure.Interceptors;
 using Backend.Infrastructure.Repositories;
+using Backend.Infrastructure.Repositories.Admin;
+using Backend.Infrastructure.Repositories.Tenants;
 using Backend.Infrastructure.Tenancy;
 
 namespace Backend;
@@ -47,7 +51,8 @@ public static class ServiceCollectionExtensions
         services
             .AddScoped<IConnectionFactory,ConnectionFactory>()
             .AddScoped<ICarRepository, CarRepository>()
-            .AddScoped<IAdminRepository, AdminRepository>();
+            .AddScoped<IDashboardRepository, DashboardRepository>()
+            .AddScoped<IManagementRepository, ManagementRepository>();
 
         // Register tenant context
         // a single instance of tenant context is created per request

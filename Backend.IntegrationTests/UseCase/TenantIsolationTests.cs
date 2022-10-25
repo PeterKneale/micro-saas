@@ -1,5 +1,7 @@
 ﻿using Backend.Application.Commands;
+using Backend.Application.Commands.Tenants;
 using Backend.Application.Queries;
+using Backend.Application.Queries.Tenants;
 using Backend.IntegrationTests.Fixtures;
 
 namespace Backend.IntegrationTests.UseCase;

@@ -25,25 +25,20 @@ internal class ExceptionInterceptor : Interceptor
             _log.LogError(ex, "Validation exception detected, returning InvalidArgument");
             throw new RpcException(new Status(StatusCode.InvalidArgument, ex.Message));
         }
-        catch (CarNotFoundException ex)
+        catch (BaseNotFoundException ex)
         {
             _log.LogError(ex, "Not found exception detected, returning NotFound");
             throw new RpcException(new Status(StatusCode.NotFound, ex.Message));
         }
-        catch (CarAlreadyExistsException ex)
+        catch (BaseAlreadyExistsException ex)
         {
             _log.LogError(ex, "Already exists exception detected, returning NotFound");
             throw new RpcException(new Status(StatusCode.AlreadyExists, ex.Message));
         }
-        catch (CarAlreadyRegisteredException ex)
+        catch (BaseRuleBrokenException ex)
         {
-            _log.LogError(ex, "Car already registered exception detected, returning FailedPrecondition");
+            _log.LogError(ex, "Rule broken exception detected, returning FailedPrecondition");
             throw new RpcException(new Status(StatusCode.FailedPrecondition, ex.Message));
-        }
-        catch (RegistrationAlreadyExistsException ex)
-        {
-            _log.LogError(ex, "Registration already exists exception detected, returning AlreadyExists");
-            throw new RpcException(new Status(StatusCode.AlreadyExists, ex.Message));
         }
         catch (MissingTenantHeaderException ex)
         {

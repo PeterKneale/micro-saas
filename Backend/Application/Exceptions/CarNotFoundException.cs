@@ -1,11 +1,11 @@
 ﻿namespace Backend.Application.Exceptions;
 
-public class CarNotFoundException : Exception
+internal class CarBaseNotFoundException : BaseNotFoundException
 {
-    public CarNotFoundException(Guid id) : base($"Car {id} not found")
+    public CarBaseNotFoundException(Guid id) : base("car", id.ToString())
     {
     }
-    public CarNotFoundException(string registration) : base($"Car {registration} not found")
+    public CarBaseNotFoundException(string registration) : base("car", registration)
     {
     }
 }

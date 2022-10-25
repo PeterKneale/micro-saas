@@ -1,0 +1,28 @@
+﻿@page
+@model Management.Pages.Tenants.Add
+
+<partial name="_Toolbar"/>
+
+<h3>Tenant Management</h3>
+<div class="card">
+    <div class="card-header">
+        Add a new Tenant
+    </div>
+    <div class="card-body">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Data.Name"></label>
+                <input asp-for="Data.Name" class="form-control">
+                <span asp-validation-for="Data.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mt-4">Add Tenant</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

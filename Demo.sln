@@ -19,13 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{61DBED
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.FunctionalTests", "Backend.FunctionalTests\Backend.FunctionalTests.csproj", "{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendAdmin", "FrontendAdmin\FrontendAdmin.csproj", "{CE235943-F154-42B4-983C-9A7247F3A381}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Management", "Management\Management.csproj", "{CE235943-F154-42B4-983C-9A7247F3A381}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendTenant", "FrontendTenant\FrontendTenant.csproj", "{5E7672A5-BC17-4D2D-B365-8068D3990C6F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frontend", "Frontend\Frontend.csproj", "{5E7672A5-BC17-4D2D-B365-8068D3990C6F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend.Client", "Backend.Client\Backend.Client.csproj", "{23DF63D6-5D86-434B-868C-9A5AA42D24A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontendSignup", "FrontendSignup\FrontendSignup.csproj", "{98F578EA-53D1-4D34-A191-E648AC8D54C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Registration", "Registration\Registration.csproj", "{98F578EA-53D1-4D34-A191-E648AC8D54C8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

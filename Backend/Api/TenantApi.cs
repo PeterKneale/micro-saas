@@ -1,5 +1,7 @@
 ﻿using Backend.Application.Commands;
+using Backend.Application.Commands.Tenants;
 using Backend.Application.Queries;
+using Backend.Application.Queries.Tenants;
 using Grpc.Core;
 
 namespace Backend.Api;
