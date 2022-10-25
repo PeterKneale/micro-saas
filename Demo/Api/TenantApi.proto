@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package Demo;
+
+option csharp_namespace = "Demo.Api";
+
+service TenantService {
+    rpc AddCar(AddCarRequest) returns (EmptyResponse);
+    rpc GetCar(GetCarRequest) returns (GetCarResponse);
+    rpc RegisterCar(RegisterCarRequest) returns (EmptyResponse);
+    rpc GetCarByRegistration(GetCarByRegistrationRequest) returns (GetCarByRegistrationResponse);
+}
+
+message AddCarRequest{
+    string id = 1;
+}
+
+message EmptyResponse{
+}
+
+message GetCarRequest{
+    string id = 1;
+}
+
+message GetCarResponse{
+    string id = 1;
+    string registration = 2;
+}
+message RegisterCarRequest{
+    string id = 1;
+    string registration = 2;
+}
+message GetCarByRegistrationRequest{
+    string registration = 1;
+}
+message GetCarByRegistrationResponse{
+    string id = 1;
+    string registration = 2;
+}

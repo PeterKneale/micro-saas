@@ -1,0 +1,45 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+#
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{3A59BB6C-580C-47F0-8E7C-40F3E1D896D0}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-infra.yml = docker-compose-infra.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.UnitTests", "Demo.UnitTests\Demo.UnitTests.csproj", "{939C5733-EFD7-4E55-BC86-48AE86CA26E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.IntegrationTests", "Demo.IntegrationTests\Demo.IntegrationTests.csproj", "{52F3BB2D-DCFE-443A-A6A1-ACABF503F244}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{61DBEDDD-8598-4A03-A107-A05485F968CE}"
+	ProjectSection(SolutionItems) = preProject
+		readme.md = readme.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo.FunctionalTests", "Demo.FunctionalTests\Demo.FunctionalTests.csproj", "{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156}.Release|Any CPU.Build.0 = Release|Any CPU
+		{939C5733-EFD7-4E55-BC86-48AE86CA26E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{939C5733-EFD7-4E55-BC86-48AE86CA26E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{939C5733-EFD7-4E55-BC86-48AE86CA26E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{939C5733-EFD7-4E55-BC86-48AE86CA26E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52F3BB2D-DCFE-443A-A6A1-ACABF503F244}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52F3BB2D-DCFE-443A-A6A1-ACABF503F244}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52F3BB2D-DCFE-443A-A6A1-ACABF503F244}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52F3BB2D-DCFE-443A-A6A1-ACABF503F244}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B4C767E-FA5C-4BAA-84F7-F6782526DF22}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
