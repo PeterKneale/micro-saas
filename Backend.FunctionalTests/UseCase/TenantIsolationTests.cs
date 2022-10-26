@@ -18,8 +18,8 @@ public class TenantIsolationTests
     public async Task CantGet()
     {
         // arrange
-        var tenant1 = MetaDataBuilder.WithTenant("A");
-        var tenant2 = MetaDataBuilder.WithTenant("B");
+        var tenant1 = MetaDataBuilder.WithTenant();
+        var tenant2 = MetaDataBuilder.WithTenant();
         var id = Guid.NewGuid().ToString();
 
         // act
@@ -36,8 +36,8 @@ public class TenantIsolationTests
     public async Task CantRegister()
     {
         // arrange
-        var tenant1 = MetaDataBuilder.WithTenant("A");
-        var tenant2 = MetaDataBuilder.WithTenant("B");
+        var tenant1 = MetaDataBuilder.WithTenant();
+        var tenant2 = MetaDataBuilder.WithTenant();
         var id = Guid.NewGuid().ToString();
         var registration = Guid.NewGuid().ToString()[..6];
 
@@ -55,8 +55,8 @@ public class TenantIsolationTests
     public async Task CantGetByRegistration()
     {
         // arrange
-        var tenant1 = MetaDataBuilder.WithTenant("A");
-        var tenant2 = MetaDataBuilder.WithTenant("B");
+        var tenant1 = MetaDataBuilder.WithTenant();
+        var tenant2 = MetaDataBuilder.WithTenant();
         var id = Guid.NewGuid().ToString();
         var registration = Guid.NewGuid().ToString()[..6];
 

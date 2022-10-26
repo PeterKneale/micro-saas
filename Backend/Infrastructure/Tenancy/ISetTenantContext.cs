@@ -2,5 +2,5 @@
 
 internal interface ISetTenantContext
 {
-    void SetCurrentTenant(string tenant);
+    void SetCurrentTenant(Guid tenant);
 }

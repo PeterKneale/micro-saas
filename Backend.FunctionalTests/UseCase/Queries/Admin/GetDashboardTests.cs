@@ -22,12 +22,15 @@ public class GetDashboardTests
         var id1 = Guid.NewGuid().ToString();
         var id2 = Guid.NewGuid().ToString();
         var id3 = Guid.NewGuid().ToString();
+        var tenant1 = MetaDataBuilder.WithTenant();
+        var tenant2 = MetaDataBuilder.WithTenant();
+        var tenant3 = MetaDataBuilder.WithTenant();
 
         // act
         var total1 = await _adminClient.GetDashboardAsync(new GetDashboardRequest());
-        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id1}, MetaDataBuilder.WithTenant("A"));
-        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id2}, MetaDataBuilder.WithTenant("B"));
-        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id3}, MetaDataBuilder.WithTenant("C"));
+        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id1}, tenant1);
+        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id2}, tenant2);
+        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id3}, tenant3);
         var total2 = await _adminClient.GetDashboardAsync(new GetDashboardRequest());
 
         // assert

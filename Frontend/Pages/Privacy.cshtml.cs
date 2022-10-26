@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace Frontend.Pages;
+﻿namespace Frontend.Pages;
 
 public class PrivacyModel : PageModel
 {

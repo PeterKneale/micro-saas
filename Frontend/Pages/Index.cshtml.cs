@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Finbuckle.MultiTenant;
 
 namespace Frontend.Pages;
 
@@ -10,8 +10,13 @@ public class IndexModel : PageModel
     {
         _logger = logger;
     }
+    
+    public TenantInfo TenantInfo { get; private set; }
 
     public void OnGet()
     {
+        TenantInfo = HttpContext
+            .GetMultiTenantContext<TenantInfo>()?
+            .TenantInfo!;
     }
 }

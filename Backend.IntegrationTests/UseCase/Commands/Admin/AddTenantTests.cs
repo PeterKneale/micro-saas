@@ -2,7 +2,6 @@
 using Backend.Application.Commands.Tenants;
 using Backend.Application.Queries.Admin;
 using Backend.Application.Queries.Tenants;
-using Backend.IntegrationTests.Fixtures;
 
 namespace Backend.IntegrationTests.UseCase.Commands.Admin;
 
@@ -22,10 +21,11 @@ public class AddTenantTests
         // arrange
         var id = Guid.NewGuid();
         var name = Guid.NewGuid().ToString();
+        var identifier = Guid.NewGuid().ToString();
 
         // act
-        await _provider.ExecuteCommand(new AddTenant.Command(id, name));
-        var result = await _provider.ExecuteQuery(new GetTenant.Query(id), name);
+        await _provider.ExecuteCommand(new AddTenant.Command(id, name, identifier));
+        var result = await _provider.ExecuteQuery(new GetTenant.Query(id), id);
 
         // assert
         result.Id.Should().Be(id);

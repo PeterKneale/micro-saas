@@ -1,11 +1,11 @@
 ﻿namespace Backend.Application.Exceptions;
 
-internal class TenantBaseNotFoundException : BaseNotFoundException
+internal class TenantNotFoundException : BaseNotFoundException
 {
-    public TenantBaseNotFoundException(Guid id) : base("tenant", id.ToString())
+    public TenantNotFoundException(Guid id) : base("tenant", id.ToString())
     {
     }
-    public TenantBaseNotFoundException(string name) : base("tenant", name)
+    public TenantNotFoundException(string name) : base("tenant", name)
     {
     }
 }

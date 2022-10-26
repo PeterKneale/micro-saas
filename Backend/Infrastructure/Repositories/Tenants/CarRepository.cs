@@ -49,12 +49,12 @@ internal class CarRepository : ICarRepository
 
     public async Task Insert(Car car, CancellationToken cancellationToken)
     {
-        const string sql = "insert into cars (id, tenant, registration, data) values (@id, @tenant, @registration, @data::jsonb)";
+        const string sql = "insert into cars (id, tenant_id, registration, data) values (@id, @tenant_id, @registration, @data::jsonb)";
         var json = JsonHelper.ToJson(car);
         await _connection.ExecuteAsync(sql, new
         {
             id = car.Id.Id,
-            tenant = _context.CurrentTenant,
+            tenant_id = _context.CurrentTenant,
             registration = car.Registration?.RegistrationNumber,
             data = json
         });

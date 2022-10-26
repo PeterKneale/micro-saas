@@ -2,9 +2,17 @@
 
 public class Constants
 {
-    internal const string TableCars = "cars";
+    // common
+    internal const string ColumnId = "id";
+    internal const string ColumnData = "data";
+    
+    // tenants
     internal const string TableTenants = "tenants";
-    internal const string ColumnId= "id";
-    internal const string ColumnTenant= "tenant";
-    internal const string ColumnData= "data";
+    internal const string ColumnTenantId = "tenant_id";
+    internal const string ColumnTenantName = "name";
+    internal const string ColumnTenantIdentifier = "identifier";
+
+    // cars
+    internal const string TableCars = "cars";
+    internal const string ColumnRegistration = "registration";
 }

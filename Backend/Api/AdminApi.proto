@@ -7,6 +7,7 @@ option csharp_namespace = "Backend.Api";
 service AdminService {
     rpc AddTenant(AddTenantRequest) returns (EmptyResponse2);
     rpc GetTenant(GetTenantRequest) returns (GetTenantResponse);
+    rpc GetTenantByIdentifier(GetTenantByIdentifierRequest) returns (GetTenantByIdentifierResponse);
     rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse);
     rpc GetDashboard(GetDashboardRequest) returns (GetDashboardResponse);
 }
@@ -14,6 +15,7 @@ service AdminService {
 message AddTenantRequest {
     string id = 1;
     string name = 2;
+    string identifier = 3;
 }
 
 message GetTenantRequest{
@@ -22,7 +24,18 @@ message GetTenantRequest{
 
 message GetTenantResponse{
     string id = 1;
-    string registration = 2;
+    string name = 2;
+    string identifier = 3;
+}
+
+message GetTenantByIdentifierRequest{
+    string identifier = 1;
+}
+
+message GetTenantByIdentifierResponse{
+    string id = 1;
+    string name = 2;
+    string identifier = 3;
 }
 
 message ListTenantsRequest {
@@ -35,6 +48,7 @@ message ListTenantsResponse {
 message ListTenantsItem {
     string id = 1;
     string name = 2;
+    string identifier = 3;
 }
 
 message GetDashboardRequest {

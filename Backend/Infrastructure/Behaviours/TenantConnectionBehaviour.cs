@@ -29,7 +29,7 @@ internal class TenantConnectionBehaviour<TRequest, TResponse> : IPipelineBehavio
                 try
                 {
                     _log.LogInformation("Setting the tenant context");
-                    await connection.ExecuteAsync($"SET app.tenant = '{_context.CurrentTenant}';");
+                    await connection.ExecuteAsync($"SET app.tenant_id = '{_context.CurrentTenant}';");
 
                     var result = await next();
 

@@ -1,5 +1,4 @@
-﻿using Backend.Application.Contracts;
-using Backend.Application.Contracts.Admin;
+﻿using Backend.Application.Contracts.Admin;
 
 namespace Backend.Application.Queries.Admin;
 
@@ -7,7 +6,7 @@ public static class ListTenants
 {
     public record Query : IRequest<IEnumerable<Result>>;
 
-    public record Result(Guid Id, string Name);
+    public record Result(Guid Id, string Name, string Identifier);
 
     internal class Validator : AbstractValidator<Query>
     {
@@ -27,7 +26,7 @@ public static class ListTenants
             var cars = await _repository.ListTenants(cancellationToken);
 
             return cars
-                .Select(x => new Result(x.Id.Id, x.Name.Value));
+                .Select(x => new Result(x.Id.Id, x.Name.Value, x.Identifier.Value));
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace Management;
+﻿namespace Frontend;
 
 internal static class Extensions
 {
@@ -12,6 +10,9 @@ internal static class Extensions
 
     public static string GetPassword(this IConfiguration configuration) =>
         Get(configuration, "Password");
+    
+    public static string GetTenant(this IConfiguration configuration) =>
+        Get(configuration, "Tenant");
     private static string Get(IConfiguration configuration, string key) =>
         configuration[key] ?? throw new Exception($"missing {key}");
 

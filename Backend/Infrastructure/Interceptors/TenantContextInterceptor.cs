@@ -30,7 +30,13 @@ internal class TenantContextInterceptor : Interceptor
         _log.LogInformation("Found tenant header {Tenant}", header.Value);
         var tenant = header.Value;
 
-        _context.SetCurrentTenant(tenant);
+        if (!Guid.TryParse(tenant, out var tenantId))
+        {
+            _log.LogError("Invalid header found");
+            throw new MissingTenantHeaderException();
+        }
+
+        _context.SetCurrentTenant(tenantId);
 
         return continuation(request, context);
     }

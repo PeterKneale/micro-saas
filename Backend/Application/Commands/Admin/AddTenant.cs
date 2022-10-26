@@ -7,17 +7,7 @@ namespace Backend.Application.Commands.Admin;
 
 public static class AddTenant
 {
-    public class Command : IRequest
-    {
-        public Command(Guid id, string name)
-        {
-            Id = id;
-            Name = name;
-        }
-
-        public Guid Id { get; }
-        public string Name { get; }
-    }
+    public record Command(Guid Id, string Name, string Identifier) : IRequest;
 
     internal class Validator : AbstractValidator<Command>
     {
@@ -25,6 +15,7 @@ public static class AddTenant
         {
             RuleFor(x => x.Id).NotEmpty();
             RuleFor(x => x.Name).NotEmpty();
+            RuleFor(x => x.Identifier).NotEmpty();
         }
     }
 
@@ -46,9 +37,10 @@ public static class AddTenant
             {
                 throw new TenantAlreadyExistsException(request.Id);
             }
-            
+
             var name = Name.CreateInstance(request.Name);
-            var tenant =  Tenant.CreateInstance(tenantId, name);
+            var identifier = Identifier.CreateInstance(request.Identifier);
+            var tenant = Tenant.CreateInstance(tenantId, name, identifier);
 
             await _repository.Insert(tenant, cancellationToken);
 

@@ -1,8 +1,5 @@
-﻿using Backend.Application.Commands;
-using Backend.Application.Commands.Tenants;
-using Backend.Application.Queries;
+﻿using Backend.Application.Commands.Tenants;
 using Backend.Application.Queries.Tenants;
-using Backend.IntegrationTests.Fixtures;
 
 namespace Backend.IntegrationTests.UseCase;
 
@@ -20,13 +17,13 @@ public class TenantIsolationTests
     public async Task Different_tenant_cant_list_car()
     {
         // arrange
-        var tenant1 = Guid.NewGuid().ToString();
-        var tenant2 = Guid.NewGuid().ToString();
+        var tenantId1 = Guid.NewGuid();
+        var tenantId2 = Guid.NewGuid();
         var id = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenant1);
-        var results = await _provider.ExecuteQuery(new ListCars.Query(), tenant2);
+        await _provider.ExecuteCommand(new AddCar.Command(id), tenantId1);
+        var results = await _provider.ExecuteQuery(new ListCars.Query(), tenantId2);
 
         // assert
         results.Should().BeEmpty();
@@ -36,13 +33,13 @@ public class TenantIsolationTests
     public async Task Different_tenant_cant_get_car()
     {
         // arrange
-        var tenant1 = Guid.NewGuid().ToString();
-        var tenant2 = Guid.NewGuid().ToString();
+        var tenantId1 = Guid.NewGuid();
+        var tenantId2 = Guid.NewGuid();
         var id = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenant1);
-        Func<Task> func = async () => { await _provider.ExecuteQuery(new GetCar.Query(id), tenant2); };
+        await _provider.ExecuteCommand(new AddCar.Command(id), tenantId1);
+        Func<Task> func = async () => { await _provider.ExecuteQuery(new GetCar.Query(id), tenantId2); };
 
         // assert
         await func.Should().ThrowAsync<Exception>().WithMessage("*not found*");
@@ -52,15 +49,15 @@ public class TenantIsolationTests
     public async Task Different_tenant_cant_get_car_by_registration()
     {
         // arrange
-        var tenant1 = Guid.NewGuid().ToString();
-        var tenant2 = Guid.NewGuid().ToString();
+        var tenantId1 = Guid.NewGuid();
+        var tenantId2 = Guid.NewGuid();
         var id = Guid.NewGuid();
         var registration = Guid.NewGuid().ToString()[..6];
 
         // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenant1);
-        await _provider.ExecuteCommand(new RegisterCar.Command(id, registration), tenant1);
-        Func<Task> func = async () => { await _provider.ExecuteQuery(new GetCarByRegistration.Query(registration), tenant2); };
+        await _provider.ExecuteCommand(new AddCar.Command(id), tenantId1);
+        await _provider.ExecuteCommand(new RegisterCar.Command(id, registration), tenantId1);
+        Func<Task> func = async () => { await _provider.ExecuteQuery(new GetCarByRegistration.Query(registration), tenantId2); };
 
         // assert
         await func.Should().ThrowAsync<Exception>().WithMessage("*not found*");

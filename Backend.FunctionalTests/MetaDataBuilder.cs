@@ -2,13 +2,12 @@
 
 namespace Backend.FunctionalTests;
 
-internal class MetaDataBuilder
+internal static class MetaDataBuilder
 {
-    public static Metadata WithTenant(string tenant) => new Metadata
+    public static Metadata WithTenant() => new()
     {
         {
-            "tenant", tenant
+            "tenant", Guid.NewGuid().ToString()
         }
     };
-
 }

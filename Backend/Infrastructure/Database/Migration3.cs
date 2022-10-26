@@ -19,8 +19,8 @@ public class Migration3 : Migration
         Execute.Sql($"GRANT SELECT, UPDATE, INSERT, DELETE ON {Constants.TableCars} TO {Username};");
         
         // Define the policy that will be applied
-        Execute.Sql($"CREATE POLICY {Policy} ON {Constants.TableTenants} FOR ALL TO {Username} USING ({Constants.ColumnTenant} = current_setting('app.tenant')::VARCHAR);");
-        Execute.Sql($"CREATE POLICY {Policy} ON {Constants.TableCars} FOR ALL TO {Username} USING ({Constants.ColumnTenant} = current_setting('app.tenant')::VARCHAR);");
+        Execute.Sql($"CREATE POLICY {Policy} ON {Constants.TableTenants} FOR ALL TO {Username} USING ({Constants.ColumnId} = current_setting('app.tenant_id')::uuid);");
+        Execute.Sql($"CREATE POLICY {Policy} ON {Constants.TableCars} FOR ALL TO {Username} USING ({Constants.ColumnTenantId} = current_setting('app.tenant_id')::uuid);");
     }
 
     public override void Down()

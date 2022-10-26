@@ -1,6 +1,5 @@
 ﻿using Backend.Application.Commands.Admin;
 using Backend.Application.Queries.Admin;
-using Backend.IntegrationTests.Fixtures;
 
 namespace Backend.IntegrationTests.UseCase.Queries.Admin;
 
@@ -22,15 +21,19 @@ public class ListTenantsTests
         var tenantId2 = Guid.NewGuid();
         var tenant1 = "A";
         var tenant2 = "B";
+        var identifier1 = Guid.NewGuid().ToString();
+        var identifier2 = Guid.NewGuid().ToString();
 
         // act
-        await _provider.ExecuteCommand(new AddTenant.Command(tenantId1, tenant1));
-        await _provider.ExecuteCommand(new AddTenant.Command(tenantId2, tenant2));
+        await _provider.ExecuteCommand(new AddTenant.Command(tenantId1, tenant1, identifier1));
+        await _provider.ExecuteCommand(new AddTenant.Command(tenantId2, tenant2, identifier2));
         var results = await _provider.ExecuteQuery(new ListTenants.Query());
 
         // assert
         results.Should().HaveCountGreaterOrEqualTo(2);
         results.Should().ContainSingle(x => x.Id == tenantId1);
         results.Should().ContainSingle(x => x.Id == tenantId2);
+        results.Should().ContainSingle(x => x.Identifier == identifier1);
+        results.Should().ContainSingle(x => x.Identifier == identifier2);
     }
 }

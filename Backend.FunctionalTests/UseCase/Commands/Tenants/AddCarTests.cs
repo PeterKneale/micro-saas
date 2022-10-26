@@ -18,14 +18,15 @@ public class AddCarTests
     public async Task Success()
     {
         // arrange
-        var id = Guid.NewGuid().ToString();
+        var carId = Guid.NewGuid().ToString();
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, MetaDataBuilder.WithTenant("A"));
-        var result = await _client.GetCarAsync(new GetCarRequest {Id = id}, MetaDataBuilder.WithTenant("A"));
+        await _client.AddCarAsync(new AddCarRequest {Id = carId}, tenant);
+        var result = await _client.GetCarAsync(new GetCarRequest {Id = carId}, tenant);
 
         // assert
-        result.Id.Should().Be(id);
+        result.Id.Should().Be(carId);
         result.Registration.Should().BeEmpty();
     }
 
@@ -34,10 +35,11 @@ public class AddCarTests
     {
         // arrange
         var id = Guid.NewGuid().ToString();
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, MetaDataBuilder.WithTenant("A"));
-        Action act = () => _client.AddCar(new AddCarRequest {Id = id}, MetaDataBuilder.WithTenant("A"));
+        await _client.AddCarAsync(new AddCarRequest {Id = id}, tenant);
+        Action act = () => _client.AddCar(new AddCarRequest {Id = id}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*already exists*")

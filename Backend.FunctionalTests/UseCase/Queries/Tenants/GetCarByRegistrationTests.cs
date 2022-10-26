@@ -19,9 +19,10 @@ public class GetCarByRegistrationTests
     {
         // arrange
         var registration = Guid.NewGuid().ToString()[..6];
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        Action act = () => _client.GetCarByRegistration(new GetCarByRegistrationRequest {Registration = registration}, MetaDataBuilder.WithTenant("A"));
+        Action act = () => _client.GetCarByRegistration(new GetCarByRegistrationRequest {Registration = registration}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*not found*")
@@ -35,9 +36,10 @@ public class GetCarByRegistrationTests
     {
         // arrange
         var registration = string.Empty;
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        Action act = () => _client.GetCarByRegistration(new GetCarByRegistrationRequest {Registration = registration}, MetaDataBuilder.WithTenant("A"));
+        Action act = () => _client.GetCarByRegistration(new GetCarByRegistrationRequest {Registration = registration}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*'Registration' must not be empty*")

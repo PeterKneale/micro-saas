@@ -2,12 +2,12 @@
 
 internal class TenantContext : IGetTenantContext, ISetTenantContext
 {
-    private string? _tenant;
+    private Guid? _tenant;
 
-    public string CurrentTenant =>
+    public Guid CurrentTenant =>
         _tenant ?? throw new EmptyTenantContextException();
 
-    public void SetCurrentTenant(string tenant)
+    public void SetCurrentTenant(Guid tenant)
     {
         _tenant = tenant;
     }

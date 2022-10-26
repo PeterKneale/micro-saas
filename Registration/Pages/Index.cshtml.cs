@@ -1,17 +1,30 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿namespace Registration.Pages;
 
-namespace Registration.Pages;
-
-public class IndexModel : PageModel
+public class Index : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly AdminService.AdminServiceClient _client;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public Index(AdminService.AdminServiceClient client)
     {
-        _logger = logger;
+        _client = client;
     }
 
-    public void OnGet()
+    [BindProperty]
+    public Model Data { get; set; }
+
+    public async Task<IActionResult> OnPostAsync()
     {
+        await _client.AddTenantAsync(new AddTenantRequest
+        {
+            Id = Guid.NewGuid().ToString(),
+            Name = Data.Name
+        });
+
+        return RedirectToPage("Index");
+    }
+
+    public record Model
+    {
+        public string Name { get; init; }
     }
 }

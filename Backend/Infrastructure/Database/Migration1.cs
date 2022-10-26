@@ -9,13 +9,14 @@ public class Migration1 : Migration
     {
         Create.Table(Constants.TableCars)
             .WithColumn(Constants.ColumnId).AsGuid().NotNullable().PrimaryKey()
-            .WithColumn(Constants.ColumnTenant).AsString().NotNullable()
-            .WithColumn("registration").AsString().Nullable().Unique()
+            .WithColumn(Constants.ColumnTenantId).AsGuid().NotNullable()
+            .WithColumn(Constants.ColumnRegistration).AsString().Nullable().Unique()
             .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
         
         Create.Table(Constants.TableTenants)
             .WithColumn(Constants.ColumnId).AsGuid().NotNullable().PrimaryKey()
-            .WithColumn(Constants.ColumnTenant).AsString().NotNullable()
+            .WithColumn(Constants.ColumnTenantName).AsString().NotNullable()
+            .WithColumn(Constants.ColumnTenantIdentifier).AsString().NotNullable().Unique()
             .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
         
         // This table should have row level security that ensure a tenant can only manage their own data

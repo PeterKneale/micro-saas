@@ -13,19 +13,20 @@ internal class ManagementRepository : IManagementRepository
     {
         _connection = factory.GetDbConnectionForAdmin();
     }
-    
+
     public async Task Insert(Tenant tenant, CancellationToken cancellationToken)
     {
-        const string sql = "insert into tenants (id, tenant, data) values (@id, @tenant, @data::jsonb)";
+        const string sql = "insert into tenants (id, name, identifier, data) values (@id, @name, @identifier,@data::jsonb)";
         var json = JsonHelper.ToJson(tenant);
         await _connection.ExecuteAsync(sql, new
         {
             id = tenant.Id.Id,
-            tenant = tenant.Id.Id.ToString(),
+            name = tenant.Name.Value,
+            identifier = tenant.Identifier.Value,
             data = json
         });
     }
-    
+
     public async Task<Tenant?> Get(TenantId tenantId, CancellationToken cancellationToken)
     {
         const string sql = "select data from tenants where id = @id";
@@ -36,6 +37,16 @@ internal class ManagementRepository : IManagementRepository
         return JsonHelper.ToObject<Tenant>(result);
     }
     
+    public async Task<Tenant?> Get(Identifier identifier, CancellationToken cancellationToken)
+    {
+        const string sql = "select data from tenants where identifier = @identifier";
+        var result = await _connection.QuerySingleOrDefaultAsync<string>(sql, new
+        {
+            identifier = identifier.Value
+        });
+        return JsonHelper.ToObject<Tenant>(result);
+    }
+
     public async Task<IEnumerable<Tenant>> ListTenants(CancellationToken cancellationToken)
     {
         const string sql = $"select data from tenants";

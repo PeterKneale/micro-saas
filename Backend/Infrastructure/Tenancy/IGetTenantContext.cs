@@ -2,5 +2,5 @@
 
 internal interface IGetTenantContext
 {
-    string CurrentTenant { get; }
+    Guid CurrentTenant { get; }
 }

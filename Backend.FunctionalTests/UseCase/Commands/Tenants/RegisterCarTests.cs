@@ -20,11 +20,12 @@ public class RegisterCarTests
         // arrange
         var id = Guid.NewGuid().ToString();
         var registration = Guid.NewGuid().ToString()[..6];
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, MetaDataBuilder.WithTenant("A"));
-        await _client.RegisterCarAsync(new RegisterCarRequest {Id = id, Registration = registration}, MetaDataBuilder.WithTenant("A"));
-        var result = await _client.GetCarByRegistrationAsync(new GetCarByRegistrationRequest {Registration = registration}, MetaDataBuilder.WithTenant("A"));
+        await _client.AddCarAsync(new AddCarRequest {Id = id}, tenant);
+        await _client.RegisterCarAsync(new RegisterCarRequest {Id = id, Registration = registration}, tenant);
+        var result = await _client.GetCarByRegistrationAsync(new GetCarByRegistrationRequest {Registration = registration}, tenant);
 
         // assert
         result.Id.Should().Be(id);
@@ -37,9 +38,10 @@ public class RegisterCarTests
         // arrange
         var id = Guid.NewGuid().ToString();
         var registration = Guid.NewGuid().ToString()[..6];
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        Action act = () => _client.RegisterCar(new RegisterCarRequest {Id = id, Registration = registration}, MetaDataBuilder.WithTenant("A"));
+        Action act = () => _client.RegisterCar(new RegisterCarRequest {Id = id, Registration = registration}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*not found*")
@@ -54,30 +56,32 @@ public class RegisterCarTests
         var id1 = Guid.NewGuid().ToString();
         var id2 = Guid.NewGuid().ToString();
         var registration = Guid.NewGuid().ToString()[..6];
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id1}, MetaDataBuilder.WithTenant("A"));
-        await _client.AddCarAsync(new AddCarRequest {Id = id2}, MetaDataBuilder.WithTenant("A"));
-        await _client.RegisterCarAsync(new RegisterCarRequest {Id = id1, Registration = registration}, MetaDataBuilder.WithTenant("A"));
-        Action act = () => _client.RegisterCar(new RegisterCarRequest {Id = id2, Registration = registration}, MetaDataBuilder.WithTenant("A"));
+        await _client.AddCarAsync(new AddCarRequest {Id = id1}, tenant);
+        await _client.AddCarAsync(new AddCarRequest {Id = id2}, tenant);
+        await _client.RegisterCarAsync(new RegisterCarRequest {Id = id1, Registration = registration}, tenant);
+        Action act = () => _client.RegisterCar(new RegisterCarRequest {Id = id2, Registration = registration}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*already exists*")
             .And
             .Status.StatusCode.Should().Be(StatusCode.FailedPrecondition);
     }
-    
+
     [Fact]
     public async Task AlreadyRegistered()
     {
         // arrange
         var id = Guid.NewGuid().ToString();
         var registration = Guid.NewGuid().ToString()[..6];
+        var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, MetaDataBuilder.WithTenant("A"));
-        await _client.RegisterCarAsync(new RegisterCarRequest {Id = id, Registration = registration}, MetaDataBuilder.WithTenant("A"));
-        Action act = () => _client.RegisterCar(new RegisterCarRequest {Id = id, Registration = registration}, MetaDataBuilder.WithTenant("A"));
+        await _client.AddCarAsync(new AddCarRequest {Id = id}, tenant);
+        await _client.RegisterCarAsync(new RegisterCarRequest {Id = id, Registration = registration}, tenant);
+        Action act = () => _client.RegisterCar(new RegisterCarRequest {Id = id, Registration = registration}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*already registered*")

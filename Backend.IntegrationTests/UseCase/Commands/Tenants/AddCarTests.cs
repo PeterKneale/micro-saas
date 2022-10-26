@@ -1,6 +1,5 @@
 ﻿using Backend.Application.Commands.Tenants;
 using Backend.Application.Queries.Tenants;
-using Backend.IntegrationTests.Fixtures;
 
 namespace Backend.IntegrationTests.UseCase.Commands.Tenants;
 
@@ -19,11 +18,11 @@ public class AddCarTests
     {
         // arrange
         var id = Guid.NewGuid();
-        var tenant = "A";
+        var tenantId = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenant);
-        var result = await _provider.ExecuteQuery(new GetCar.Query(id), tenant);
+        await _provider.ExecuteCommand(new AddCar.Command(id), tenantId);
+        var result = await _provider.ExecuteQuery(new GetCar.Query(id), tenantId);
 
         // assert
         result.Id.Should().Be(id);
