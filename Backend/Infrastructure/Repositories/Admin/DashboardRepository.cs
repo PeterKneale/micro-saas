@@ -1,5 +1,6 @@
 ﻿using Backend.Application.Contracts.Admin;
 using Dapper;
+using static Backend.Infrastructure.Constants;
 
 namespace Backend.Infrastructure.Repositories.Admin;
 
@@ -14,13 +15,13 @@ internal class DashboardRepository : IDashboardRepository
     
     public async Task<int> CountTenants(CancellationToken cancellationToken)
     {
-        const string sql = $"select count(1) from tenants";
+        const string sql = $"select count(1) from {TableTenants}";
         return await _connection.QuerySingleAsync<int>(sql);
     }
 
-    public async Task<int> CountCars(CancellationToken cancellationToken)
+    public async Task<int> CountWidgets(CancellationToken cancellationToken)
     {
-        const string sql = $"select count(1) from cars";
+        const string sql = $"select count(1) from {TableWidgets}";
         return await _connection.QuerySingleAsync<int>(sql);
     }
 }

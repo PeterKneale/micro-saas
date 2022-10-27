@@ -59,7 +59,7 @@ public class AdminApi : AdminService.AdminServiceBase
         return new GetDashboardResponse
         {
             TotalTenants = result.TotalTenants,
-            TotalCars = result.TotalCars
+            TotalWidgets = result.TotalWidgets
         };
     }
 }

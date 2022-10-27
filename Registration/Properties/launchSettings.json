@@ -1,6 +1,6 @@
 ﻿{
   "profiles": {
-    "Registration": {
+    "Description": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

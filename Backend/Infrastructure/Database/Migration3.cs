@@ -16,21 +16,21 @@ public class Migration3 : Migration
         
         // Give this administrators permissions on the tables
         Execute.Sql($"GRANT SELECT, UPDATE, INSERT, DELETE ON {Constants.TableTenants} TO {Username};");
-        Execute.Sql($"GRANT SELECT, UPDATE, INSERT, DELETE ON {Constants.TableCars} TO {Username};");
+        Execute.Sql($"GRANT SELECT, UPDATE, INSERT, DELETE ON {Constants.TableWidgets} TO {Username};");
         
         // Define the policy that will be applied
         Execute.Sql($"CREATE POLICY {Policy} ON {Constants.TableTenants} FOR ALL TO {Username} USING ({Constants.ColumnId} = current_setting('app.tenant_id')::uuid);");
-        Execute.Sql($"CREATE POLICY {Policy} ON {Constants.TableCars} FOR ALL TO {Username} USING ({Constants.ColumnTenantId} = current_setting('app.tenant_id')::uuid);");
+        Execute.Sql($"CREATE POLICY {Policy} ON {Constants.TableWidgets} FOR ALL TO {Username} USING ({Constants.ColumnTenantId} = current_setting('app.tenant_id')::uuid);");
     }
 
     public override void Down()
     {
         // remove policy
         Execute.Sql($"DROP POLICY IF EXISTS {Policy} ON {Constants.TableTenants};");
-        Execute.Sql($"DROP POLICY IF EXISTS {Policy} ON {Constants.TableCars};");
+        Execute.Sql($"DROP POLICY IF EXISTS {Policy} ON {Constants.TableWidgets};");
         // revoke permission
         Execute.Sql($"REVOKE ALL ON {Constants.TableTenants} FROM {Username};");
-        Execute.Sql($"REVOKE ALL ON {Constants.TableCars} FROM {Username};");
+        Execute.Sql($"REVOKE ALL ON {Constants.TableWidgets} FROM {Username};");
         // drop user
         Execute.Sql($"DROP USER {Username};");
     }

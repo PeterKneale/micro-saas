@@ -23,8 +23,8 @@ public class TenantIsolationTests
         var id = Guid.NewGuid().ToString();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, tenant1);
-        Action act = () => _client.GetCar(new GetCarRequest {Id = id}, tenant2);
+        await _client.AddWidgetAsync(new AddWidgetRequest {Id = id}, tenant1);
+        Action act = () => _client.GetWidget(new GetWidgetRequest {Id = id}, tenant2);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*not found*")
@@ -33,7 +33,7 @@ public class TenantIsolationTests
     }
     
     [Fact]
-    public async Task CantRegister()
+    public async Task CantUpdate()
     {
         // arrange
         var tenant1 = MetaDataBuilder.WithTenant();
@@ -42,28 +42,8 @@ public class TenantIsolationTests
         var registration = Guid.NewGuid().ToString()[..6];
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, tenant1);
-        Action act = () => _client.RegisterCar(new RegisterCarRequest {Id = id, Registration = registration}, tenant2);
-
-        // assert
-        act.Should().Throw<RpcException>().WithMessage("*not found*")
-            .And
-            .Status.StatusCode.Should().Be(StatusCode.NotFound);
-    }
-    
-    [Fact]
-    public async Task CantGetByRegistration()
-    {
-        // arrange
-        var tenant1 = MetaDataBuilder.WithTenant();
-        var tenant2 = MetaDataBuilder.WithTenant();
-        var id = Guid.NewGuid().ToString();
-        var registration = Guid.NewGuid().ToString()[..6];
-
-        // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, tenant1);
-        await _client.RegisterCarAsync(new RegisterCarRequest {Id = id, Registration = registration}, tenant1);
-        Action act = () => _client.GetCarByRegistration(new GetCarByRegistrationRequest {Registration = registration}, tenant2);
+        await _client.AddWidgetAsync(new AddWidgetRequest {Id = id}, tenant1);
+        Action act = () => _client.UpdateWidget(new UpdateWidgetRequest {Id = id, Description = registration}, tenant2);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*not found*")

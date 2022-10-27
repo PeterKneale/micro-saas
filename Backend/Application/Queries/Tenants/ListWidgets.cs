@@ -3,11 +3,11 @@ using Backend.Application.Contracts.Tenants;
 
 namespace Backend.Application.Queries.Tenants;
 
-public static class ListCars
+public static class ListWidgets
 {
     public record Query : IRequest<IEnumerable<Result>>, IRequireTenantContext;
 
-    public record Result(Guid Id, string? Registration);
+    public record Result(Guid Id, string? Description);
 
     internal class Validator : AbstractValidator<Query>
     {
@@ -15,9 +15,9 @@ public static class ListCars
 
     internal class Handler : IRequestHandler<Query, IEnumerable<Result>>
     {
-        private readonly ICarRepository _cars;
+        private readonly IWidgetRepository _cars;
 
-        public Handler(ICarRepository cars)
+        public Handler(IWidgetRepository cars)
         {
             _cars = cars;
         }
@@ -27,7 +27,7 @@ public static class ListCars
             var cars = await _cars.List(cancellationToken);
 
             return cars
-                .Select(x => new Result(x.Id.Id, x.Registration?.RegistrationNumber));
+                .Select(x => new Result(x.Id.Id, x.Description?.Value));
         }
     }
 }

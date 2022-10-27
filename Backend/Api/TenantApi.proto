@@ -5,35 +5,27 @@ package Backend;
 option csharp_namespace = "Backend.Api";
 
 service TenantService {
-    rpc AddCar(AddCarRequest) returns (EmptyResponse);
-    rpc GetCar(GetCarRequest) returns (GetCarResponse);
-    rpc RegisterCar(RegisterCarRequest) returns (EmptyResponse);
-    rpc GetCarByRegistration(GetCarByRegistrationRequest) returns (GetCarByRegistrationResponse);
+    rpc AddWidget(AddWidgetRequest) returns (EmptyResponse);
+    rpc GetWidget(GetWidgetRequest) returns (GetWidgetResponse);
+    rpc UpdateWidget(UpdateWidgetRequest) returns (EmptyResponse);
 }
 
-message AddCarRequest{
+message AddWidgetRequest{
     string id = 1;
 }
 
 message EmptyResponse{
 }
 
-message GetCarRequest{
+message GetWidgetRequest{
     string id = 1;
 }
 
-message GetCarResponse{
+message GetWidgetResponse{
     string id = 1;
-    string registration = 2;
+    string description = 2;
 }
-message RegisterCarRequest{
+message UpdateWidgetRequest{
     string id = 1;
-    string registration = 2;
-}
-message GetCarByRegistrationRequest{
-    string registration = 1;
-}
-message GetCarByRegistrationResponse{
-    string id = 1;
-    string registration = 2;
+    string description = 2;
 }

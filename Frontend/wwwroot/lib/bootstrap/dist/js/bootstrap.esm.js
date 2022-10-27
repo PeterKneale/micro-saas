@@ -1138,7 +1138,7 @@ const POINTER_TYPE_PEN = 'pen';
  * ------------------------------------------------------------------------
  */
 
-class Carousel extends BaseComponent {
+class Widgetousel extends BaseComponent {
   constructor(element, config) {
     super(element);
     this._items = null;
@@ -1517,7 +1517,7 @@ class Carousel extends BaseComponent {
 
 
   static carouselInterface(element, config) {
-    const data = Carousel.getOrCreateInstance(element, config);
+    const data = Widgetousel.getOrCreateInstance(element, config);
     let {
       _config
     } = data;
@@ -1546,7 +1546,7 @@ class Carousel extends BaseComponent {
 
   static jQueryInterface(config) {
     return this.each(function () {
-      Carousel.carouselInterface(this, config);
+      Widgetousel.carouselInterface(this, config);
     });
   }
 
@@ -1566,10 +1566,10 @@ class Carousel extends BaseComponent {
       config.interval = false;
     }
 
-    Carousel.carouselInterface(target, config);
+    Widgetousel.carouselInterface(target, config);
 
     if (slideIndex) {
-      Carousel.getInstance(target).to(slideIndex);
+      Widgetousel.getInstance(target).to(slideIndex);
     }
 
     event.preventDefault();
@@ -1583,22 +1583,22 @@ class Carousel extends BaseComponent {
  */
 
 
-EventHandler.on(document, EVENT_CLICK_DATA_API$5, SELECTOR_DATA_SLIDE, Carousel.dataApiClickHandler);
+EventHandler.on(document, EVENT_CLICK_DATA_API$5, SELECTOR_DATA_SLIDE, Widgetousel.dataApiClickHandler);
 EventHandler.on(window, EVENT_LOAD_DATA_API$2, () => {
   const carousels = SelectorEngine.find(SELECTOR_DATA_RIDE);
 
   for (let i = 0, len = carousels.length; i < len; i++) {
-    Carousel.carouselInterface(carousels[i], Carousel.getInstance(carousels[i]));
+    Widgetousel.carouselInterface(carousels[i], Widgetousel.getInstance(carousels[i]));
   }
 });
 /**
  * ------------------------------------------------------------------------
  * jQuery
  * ------------------------------------------------------------------------
- * add .Carousel to jQuery only if jQuery is present
+ * add .Widgetousel to jQuery only if jQuery is present
  */
 
-defineJQueryPlugin(Carousel);
+defineJQueryPlugin(Widgetousel);
 
 /**
  * --------------------------------------------------------------------------
@@ -4973,5 +4973,5 @@ enableDismissTrigger(Toast);
 
 defineJQueryPlugin(Toast);
 
-export { Alert, Button, Carousel, Collapse, Dropdown, Modal, Offcanvas, Popover, ScrollSpy, Tab, Toast, Tooltip };
+export { Alert, Button, Widgetousel, Collapse, Dropdown, Modal, Offcanvas, Popover, ScrollSpy, Tab, Toast, Tooltip };
 //# sourceMappingURL=bootstrap.esm.js.map

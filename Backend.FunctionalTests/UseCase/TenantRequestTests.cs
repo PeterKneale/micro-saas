@@ -21,7 +21,7 @@ public class TenantRequestTests
         var id = Guid.NewGuid().ToString();
 
         // act
-        Action act = () => _client.GetCar(new GetCarRequest {Id = id});
+        Action act = () => _client.GetWidget(new GetWidgetRequest {Id = id});
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*not found*")

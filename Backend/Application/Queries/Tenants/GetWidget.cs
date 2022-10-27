@@ -1,11 +1,11 @@
 ﻿using Backend.Application.Contracts;
 using Backend.Application.Contracts.Tenants;
 using Backend.Application.Exceptions;
-using Backend.Domain.CarAggregate;
+using Backend.Domain.WidgetAggregate;
 
 namespace Backend.Application.Queries.Tenants;
 
-public static class GetCar
+public static class GetWidget
 {
     public class Query : IRequest<Result>, IRequireTenantContext
     {
@@ -17,7 +17,7 @@ public static class GetCar
         public Guid Id { get; }
     }
 
-    public record Result(Guid Id, string? Registration);
+    public record Result(Guid Id, string? Description);
 
     internal class Validator : AbstractValidator<Query>
     {
@@ -29,24 +29,24 @@ public static class GetCar
 
     internal class Handler : IRequestHandler<Query, Result>
     {
-        private readonly ICarRepository _cars;
+        private readonly IWidgetRepository _cars;
 
-        public Handler(ICarRepository cars)
+        public Handler(IWidgetRepository cars)
         {
             _cars = cars;
         }
 
         public async Task<Result> Handle(Query request, CancellationToken cancellationToken)
         {
-            var carId = CarId.CreateInstance(request.Id);
+            var widgetId = WidgetId.CreateInstance(request.Id);
 
-            var car = await _cars.Get(carId, cancellationToken);
+            var car = await _cars.Get(widgetId, cancellationToken);
             if (car == null)
             {
-                throw new CarBaseNotFoundException(request.Id);
+                throw new WidgetNotFoundException(request.Id);
             }
 
-            return new Result(car.Id.Id, car.Registration?.RegistrationNumber);
+            return new Result(car.Id.Id, car.Description?.Value);
         }
     }
 }

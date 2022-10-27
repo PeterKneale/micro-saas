@@ -17,13 +17,13 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddBackend(this IServiceCollection services, IConfiguration configuration)
     {
-        // Register libraries
+        // Update libraries
         var assembly = Assembly.GetExecutingAssembly();
         services
             .AddMediatR(assembly)
             .AddValidatorsFromAssembly(assembly);
 
-        // Register grpc request pipeline
+        // Update grpc request pipeline
         services
             // Add common interceptors for both the admin and tenant api's
             .AddGrpc(options => {
@@ -37,24 +37,24 @@ public static class ServiceCollectionExtensions
                 options.Interceptors.Add<TenantContextInterceptor>();   
             });
 
-        // Register mediatr request pipeline
+        // Update mediatr request pipeline
         services
             // Log the request
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
             // Open a connection, begin a transaction and set the tenant context for the connection
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(TenantConnectionBehaviour<,>)); 
 
-        // Register database connections and repositories
+        // Update database connections and repositories
         // Note that there is a single connection per request as this is a scoped dependency
         // This is important as this way the tenant context set by the TenantContextBehaviour
         // is the same one used by the repository
         services
             .AddScoped<IConnectionFactory,ConnectionFactory>()
-            .AddScoped<ICarRepository, CarRepository>()
+            .AddScoped<IWidgetRepository, WidgetRepository>()
             .AddScoped<IDashboardRepository, DashboardRepository>()
             .AddScoped<IManagementRepository, ManagementRepository>();
 
-        // Register tenant context
+        // Update tenant context
         // a single instance of tenant context is created per request
         // requests for ISet and IGet are both forwarded to the same instance 
         services
@@ -62,7 +62,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IGetTenantContext>(c => c.GetRequiredService<TenantContext>())
             .AddScoped<ISetTenantContext>(c => c.GetRequiredService<TenantContext>());
 
-        // Register database migrations and executor
+        // Update database migrations and executor
         services
             .AddFluentMigratorCore()
             .ConfigureRunner(runner => runner

@@ -56,7 +56,7 @@ message GetDashboardRequest {
 
 message GetDashboardResponse {
     int32 total_tenants = 1;
-    int32 total_cars = 2;
+    int32 total_widgets = 2;
 }
 
 message EmptyResponse2{

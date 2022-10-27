@@ -1,11 +1,11 @@
 ﻿using Backend.Application.Contracts;
 using Backend.Application.Contracts.Tenants;
 using Backend.Application.Exceptions;
-using Backend.Domain.CarAggregate;
+using Backend.Domain.WidgetAggregate;
 
 namespace Backend.Application.Commands.Tenants;
 
-public static class AddCar
+public static class AddWidget
 {
     public class Command : IRequest, IRequireTenantContext
     {
@@ -27,24 +27,24 @@ public static class AddCar
 
     internal class Handler : IRequestHandler<Command>
     {
-        private readonly ICarRepository _repository;
+        private readonly IWidgetRepository _repository;
 
-        public Handler(ICarRepository repository)
+        public Handler(IWidgetRepository repository)
         {
             _repository = repository;
         }
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            var carId = CarId.CreateInstance(request.Id);
+            var widgetId = WidgetId.CreateInstance(request.Id);
 
-            var exists = await _repository.Get(carId, cancellationToken);
+            var exists = await _repository.Get(widgetId, cancellationToken);
             if (exists != null)
             {
-                throw new CarAlreadyExistsException(request.Id);
+                throw new WidgetAlreadyExistsException(request.Id);
             }
 
-            var car = Car.CreateInstance(carId);
+            var car = Widget.CreateInstance(widgetId);
 
             await _repository.Insert(car, cancellationToken);
 

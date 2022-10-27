@@ -337,7 +337,7 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 	value = value.replace( /\D/g, "" );
 
 	// Basing min and max length on
-	// https://developer.ean.com/general_info/Valid_Credit_Card_Types
+	// https://developer.ean.com/general_info/Valid_Credit_Widgetd_Types
 	if ( value.length < 13 || value.length > 19 ) {
 		return false;
 	}
@@ -358,7 +358,7 @@ $.validator.addMethod( "creditcard", function( value, element ) {
 	return ( nCheck % 10 ) === 0;
 }, "Please enter a valid credit card number." );
 
-/* NOTICE: Modified version of Castle.Components.Validator.CreditCardValidator
+/* NOTICE: Modified version of Castle.Components.Validator.CreditWidgetdValidator
  * Redistributed under the the Apache License 2.0 at http://www.apache.org/licenses/LICENSE-2.0
  * Valid Types: mastercard, visa, amex, dinersclub, enroute, discover, jcb, unknown, all (overrides all other settings)
  */

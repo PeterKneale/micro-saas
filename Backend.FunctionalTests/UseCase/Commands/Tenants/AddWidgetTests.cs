@@ -1,14 +1,14 @@
 ﻿using Backend.FunctionalTests.Fixtures;
 using Grpc.Core;
 
-namespace Backend.FunctionalTests.UseCase.Commands;
+namespace Backend.FunctionalTests.UseCase.Commands.Tenants;
 
 [Collection(nameof(ServiceCollectionFixture))]
-public class AddCarTests
+public class AddWidgetTests
 {
     private readonly TenantService.TenantServiceClient _client;
 
-    public AddCarTests(ServiceFixture service, ITestOutputHelper output)
+    public AddWidgetTests(ServiceFixture service, ITestOutputHelper output)
     {
         service.OutputHelper = output;
         _client = service.TenantClient;
@@ -18,16 +18,16 @@ public class AddCarTests
     public async Task Success()
     {
         // arrange
-        var carId = Guid.NewGuid().ToString();
+        var widgetId = Guid.NewGuid().ToString();
         var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = carId}, tenant);
-        var result = await _client.GetCarAsync(new GetCarRequest {Id = carId}, tenant);
+        await _client.AddWidgetAsync(new AddWidgetRequest {Id = widgetId}, tenant);
+        var result = await _client.GetWidgetAsync(new GetWidgetRequest {Id = widgetId}, tenant);
 
         // assert
-        result.Id.Should().Be(carId);
-        result.Registration.Should().BeEmpty();
+        result.Id.Should().Be(widgetId);
+        result.Description.Should().BeEmpty();
     }
 
     [Fact]
@@ -38,8 +38,8 @@ public class AddCarTests
         var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        await _client.AddCarAsync(new AddCarRequest {Id = id}, tenant);
-        Action act = () => _client.AddCar(new AddCarRequest {Id = id}, tenant);
+        await _client.AddWidgetAsync(new AddWidgetRequest {Id = id}, tenant);
+        Action act = () => _client.AddWidget(new AddWidgetRequest {Id = id}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*already exists*")

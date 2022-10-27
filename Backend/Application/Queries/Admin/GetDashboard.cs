@@ -8,7 +8,7 @@ public static class GetDashboard
     {
     }
 
-    public record Result(int TotalTenants, int TotalCars);
+    public record Result(int TotalTenants, int TotalWidgets);
 
     internal class Validator : AbstractValidator<Query>
     {
@@ -26,9 +26,9 @@ public static class GetDashboard
         public async Task<Result> Handle(Query request, CancellationToken cancellationToken)
         {
             var totalTenants = await _repository.CountTenants(cancellationToken);
-            var totalCars = await _repository.CountCars(cancellationToken);
+            var totalWidgets = await _repository.CountWidgets(cancellationToken);
 
-            return new Result(totalTenants, totalCars);
+            return new Result(totalTenants, totalWidgets);
         }
     }
 }

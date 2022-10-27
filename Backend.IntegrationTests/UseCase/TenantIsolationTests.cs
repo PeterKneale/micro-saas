@@ -22,8 +22,8 @@ public class TenantIsolationTests
         var id = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenantId1);
-        var results = await _provider.ExecuteQuery(new ListCars.Query(), tenantId2);
+        await _provider.ExecuteCommand(new AddWidget.Command(id), tenantId1);
+        var results = await _provider.ExecuteQuery(new ListWidgets.Query(), tenantId2);
 
         // assert
         results.Should().BeEmpty();
@@ -38,26 +38,8 @@ public class TenantIsolationTests
         var id = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenantId1);
-        Func<Task> func = async () => { await _provider.ExecuteQuery(new GetCar.Query(id), tenantId2); };
-
-        // assert
-        await func.Should().ThrowAsync<Exception>().WithMessage("*not found*");
-    }
-    
-    [Fact]
-    public async Task Different_tenant_cant_get_car_by_registration()
-    {
-        // arrange
-        var tenantId1 = Guid.NewGuid();
-        var tenantId2 = Guid.NewGuid();
-        var id = Guid.NewGuid();
-        var registration = Guid.NewGuid().ToString()[..6];
-
-        // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenantId1);
-        await _provider.ExecuteCommand(new RegisterCar.Command(id, registration), tenantId1);
-        Func<Task> func = async () => { await _provider.ExecuteQuery(new GetCarByRegistration.Query(registration), tenantId2); };
+        await _provider.ExecuteCommand(new AddWidget.Command(id), tenantId1);
+        Func<Task> func = async () => { await _provider.ExecuteQuery(new GetWidget.Query(id), tenantId2); };
 
         // assert
         await func.Should().ThrowAsync<Exception>().WithMessage("*not found*");

@@ -28,14 +28,14 @@ public class GetDashboardTests
 
         // act
         var total1 = await _adminClient.GetDashboardAsync(new GetDashboardRequest());
-        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id1}, tenant1);
-        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id2}, tenant2);
-        await _tenantClient.AddCarAsync(new AddCarRequest {Id = id3}, tenant3);
+        await _tenantClient.AddWidgetAsync(new AddWidgetRequest {Id = id1}, tenant1);
+        await _tenantClient.AddWidgetAsync(new AddWidgetRequest {Id = id2}, tenant2);
+        await _tenantClient.AddWidgetAsync(new AddWidgetRequest {Id = id3}, tenant3);
         var total2 = await _adminClient.GetDashboardAsync(new GetDashboardRequest());
 
         // assert
-        var before = total1.TotalCars;
-        var after = total2.TotalCars;
+        var before = total1.TotalWidgets;
+        var after = total2.TotalWidgets;
         after.Should().Be(before + 3);
     }
 }

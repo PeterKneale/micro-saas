@@ -4,17 +4,17 @@ using Backend.Application.Queries.Tenants;
 namespace Backend.IntegrationTests.UseCase.Commands.Tenants;
 
 [Collection(nameof(ContainerCollectionFixture))]
-public class RegisterCarTests
+public class UpdateWidgetTests
 {
     private readonly IServiceProvider _provider;
 
-    public RegisterCarTests(ContainerFixture container)
+    public UpdateWidgetTests(ContainerFixture container)
     {
         _provider = container.Provider;
     }
 
     [Fact]
-    public async Task CanRegisterCar()
+    public async Task CanUpdateWidget()
     {
         // arrange
         var id = Guid.NewGuid();
@@ -22,12 +22,12 @@ public class RegisterCarTests
         var tenant = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddCar.Command(id), tenant);
-        await _provider.ExecuteCommand(new RegisterCar.Command(id, registration), tenant);
-        var result = await _provider.ExecuteQuery(new GetCarByRegistration.Query(registration), tenant);
+        await _provider.ExecuteCommand(new AddWidget.Command(id), tenant);
+        await _provider.ExecuteCommand(new UpdateWidget.Command(id, registration), tenant);
+        var result = await _provider.ExecuteQuery(new GetWidget.Query(id), tenant);
 
         // assert
         result.Id.Should().Be(id);
-        result.Registration.Should().Be(registration);
+        result.Description.Should().Be(registration);
     }
 }
