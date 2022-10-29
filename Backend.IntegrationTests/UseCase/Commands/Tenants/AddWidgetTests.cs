@@ -21,11 +21,11 @@ public class AddWidgetTests
         var tenantId = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddWidget.Command(id), tenantId);
+        await _provider.ExecuteCommand(new AddWidget.Command(id, "x"), tenantId);
         var result = await _provider.ExecuteQuery(new GetWidget.Query(id), tenantId);
 
         // assert
         result.Id.Should().Be(id);
-        result.Description.Should().BeNull();
+        result.Description.Should().Be("x");
     }
 }

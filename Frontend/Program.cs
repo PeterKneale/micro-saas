@@ -35,6 +35,12 @@ builder.Services
     .AddGrpcClient<Backend.Api.AdminService.AdminServiceClient>(o => {
         o.Address = new Uri(builder.Configuration.GetBackendAddress());
     });
+builder.Services
+    .AddGrpcClient<Backend.Api.TenantService.TenantServiceClient>(o => {
+        o.Address = new Uri(builder.Configuration.GetBackendAddress());
+    }).AddInterceptor<TenantInterceptor>();
+builder.Services
+    .AddScoped<TenantInterceptor>();
 
 var app = builder.Build();
 

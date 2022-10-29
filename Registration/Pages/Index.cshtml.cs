@@ -1,4 +1,4 @@
-﻿namespace Description.Pages;
+﻿namespace Registration.Pages;
 
 public class Index : PageModel
 {

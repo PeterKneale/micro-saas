@@ -32,7 +32,7 @@ internal class TenantContextInterceptor : Interceptor
 
         if (!Guid.TryParse(tenant, out var tenantId))
         {
-            _log.LogError("Invalid header found");
+            _log.LogError("Invalid tenant header found {Tenant}", tenant);
             throw new MissingTenantHeaderException();
         }
 

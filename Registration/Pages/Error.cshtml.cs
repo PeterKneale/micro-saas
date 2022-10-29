@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Description.Pages;
+namespace Registration.Pages;
 
 [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
 [IgnoreAntiforgeryToken]

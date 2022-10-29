@@ -12,9 +12,9 @@ public class TenantIsolationTests
     {
         _provider = container.Provider;
     }
-    
+
     [Fact]
-    public async Task Different_tenant_cant_list_car()
+    public async Task Different_tenant_cant_list_widget()
     {
         // arrange
         var tenantId1 = Guid.NewGuid();
@@ -22,15 +22,15 @@ public class TenantIsolationTests
         var id = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddWidget.Command(id), tenantId1);
+        await _provider.ExecuteCommand(new AddWidget.Command(id, "x"), tenantId1);
         var results = await _provider.ExecuteQuery(new ListWidgets.Query(), tenantId2);
 
         // assert
         results.Should().BeEmpty();
     }
-    
+
     [Fact]
-    public async Task Different_tenant_cant_get_car()
+    public async Task Different_tenant_cant_get_widget()
     {
         // arrange
         var tenantId1 = Guid.NewGuid();
@@ -38,7 +38,7 @@ public class TenantIsolationTests
         var id = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddWidget.Command(id), tenantId1);
+        await _provider.ExecuteCommand(new AddWidget.Command(id, "x"), tenantId1);
         Func<Task> func = async () => { await _provider.ExecuteQuery(new GetWidget.Query(id), tenantId2); };
 
         // assert

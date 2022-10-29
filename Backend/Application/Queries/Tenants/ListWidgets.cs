@@ -15,18 +15,18 @@ public static class ListWidgets
 
     internal class Handler : IRequestHandler<Query, IEnumerable<Result>>
     {
-        private readonly IWidgetRepository _cars;
+        private readonly IWidgetRepository _repository;
 
-        public Handler(IWidgetRepository cars)
+        public Handler(IWidgetRepository repository)
         {
-            _cars = cars;
+            _repository = repository;
         }
 
         public async Task<IEnumerable<Result>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var cars = await _cars.List(cancellationToken);
+            var widgets = await _repository.List(cancellationToken);
 
-            return cars
+            return widgets
                 .Select(x => new Result(x.Id.Id, x.Description?.Value));
         }
     }

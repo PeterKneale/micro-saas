@@ -1,6 +1,4 @@
-﻿using Backend.Application.Commands;
-using Backend.Application.Commands.Tenants;
-using Backend.Application.Queries;
+﻿using Backend.Application.Commands.Tenants;
 using Backend.Application.Queries.Tenants;
 using Grpc.Core;
 
@@ -17,7 +15,7 @@ public class TenantApi : TenantService.TenantServiceBase
 
     public override async Task<EmptyResponse> AddWidget(AddWidgetRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new AddWidget.Command(Guid.Parse(request.Id)));
+        await _mediator.Send(new AddWidget.Command(Guid.Parse(request.Id), request.Description));
         return new EmptyResponse();
     }
     
@@ -36,10 +34,37 @@ public class TenantApi : TenantService.TenantServiceBase
             Description = result.Description ?? string.Empty
         };
     }
+    public override async Task<ListWidgetsResponse> ListWidgets(ListWidgetsRequest request, ServerCallContext context)
+    {
+        var results = await _mediator.Send(new ListWidgets.Query());
+
+        return new ListWidgetsResponse
+        {
+            Items =
+            {
+                results.Select(x => new ListWidgetsResponseItem
+                {
+                    Id = x.Id.ToString(),
+                    Description = x.Description ?? string.Empty
+                }).ToList()
+            }
+        };
+    }
 
     public class GetWidgetValidator : AbstractValidator<GetWidgetRequest>
     {
         public GetWidgetValidator()
+        {
+            RuleFor(x => x.Id).NotNull()
+                .NotEmpty()
+                .Must(x => Guid.TryParse(x, out _))
+                .WithMessage("'Id' must be a valid GUID");
+        }
+    }
+    
+    public class UpdateWidgetValidator : AbstractValidator<GetWidgetRequest>
+    {
+        public UpdateWidgetValidator()
         {
             RuleFor(x => x.Id).NotNull()
                 .NotEmpty()

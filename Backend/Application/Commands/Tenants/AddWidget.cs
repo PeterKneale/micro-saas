@@ -7,21 +7,14 @@ namespace Backend.Application.Commands.Tenants;
 
 public static class AddWidget
 {
-    public class Command : IRequest, IRequireTenantContext
-    {
-        public Command(Guid id)
-        {
-            Id = id;
-        }
-
-        public Guid Id { get; }
-    }
+    public record Command(Guid Id, string Description) : IRequest, IRequireTenantContext;
 
     internal class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
             RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Description).NotEmpty();
         }
     }
 
@@ -44,9 +37,10 @@ public static class AddWidget
                 throw new WidgetAlreadyExistsException(request.Id);
             }
 
-            var car = Widget.CreateInstance(widgetId);
-
-            await _repository.Insert(car, cancellationToken);
+            var description =  Description.CreateInstance(request.Description);
+            var widget = Widget.CreateInstance(widgetId, description);
+            
+            await _repository.Insert(widget, cancellationToken);
 
             return Unit.Value;
         }

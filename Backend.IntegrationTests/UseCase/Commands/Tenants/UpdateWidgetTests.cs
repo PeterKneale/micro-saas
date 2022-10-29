@@ -22,7 +22,7 @@ public class UpdateWidgetTests
         var tenant = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddWidget.Command(id), tenant);
+        await _provider.ExecuteCommand(new AddWidget.Command(id, "x"), tenant);
         await _provider.ExecuteCommand(new UpdateWidget.Command(id, registration), tenant);
         var result = await _provider.ExecuteQuery(new GetWidget.Query(id), tenant);
 

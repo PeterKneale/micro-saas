@@ -1,5 +1,6 @@
 ﻿using Backend.Application.Commands.Tenants;
 using Backend.Application.Queries.Tenants;
+using Backend.Domain.WidgetAggregate;
 
 namespace Backend.IntegrationTests.UseCase.Queries.Tenants;
 
@@ -21,7 +22,7 @@ public class GetWidgetTests
         var tenantId =  Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddWidget.Command(widgetId), tenantId);
+        await _provider.ExecuteCommand(new AddWidget.Command(widgetId, "x"), tenantId);
         var results = await _provider.ExecuteQuery(new GetWidget.Query(widgetId), tenantId);
 
         // assert

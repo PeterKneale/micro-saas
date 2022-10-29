@@ -29,18 +29,18 @@ public static class GetWidget
 
     internal class Handler : IRequestHandler<Query, Result>
     {
-        private readonly IWidgetRepository _cars;
+        private readonly IWidgetRepository _widgets;
 
         public Handler(IWidgetRepository cars)
         {
-            _cars = cars;
+            _widgets = cars;
         }
 
         public async Task<Result> Handle(Query request, CancellationToken cancellationToken)
         {
             var widgetId = WidgetId.CreateInstance(request.Id);
 
-            var car = await _cars.Get(widgetId, cancellationToken);
+            var car = await _widgets.Get(widgetId, cancellationToken);
             if (car == null)
             {
                 throw new WidgetNotFoundException(request.Id);

@@ -2,10 +2,15 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.Extensions.DependencyInjection;
 @{
-    
+
     var services = Context.Request.HttpContext.RequestServices;
     var context = services.GetRequiredService<IMultiTenantContextAccessor<TenantInfo>>();
-    var tenant = context.MultiTenantContext!.TenantInfo;
+    var tenantContext = context.MultiTenantContext;
+    if (tenantContext == null)
+    {
+        throw new Exception("No tenant context in layout");
+    }
+    var tenant = tenantContext.TenantInfo;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +36,12 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                     </li>
+                    @if (Context.User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Widgets/Index">Widgets</a>
+                        </li>
+                    }
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
                     </li>

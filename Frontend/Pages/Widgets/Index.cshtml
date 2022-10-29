@@ -1,0 +1,26 @@
+﻿@page
+@model Frontend.Pages.Widgets.Index
+
+<partial name="_Toolbar"/>
+
+<h3>Widget Management</h3>
+@if (Model.Items.Any())
+{
+    <div class="card">
+        <div class="card-header">
+            Widgets
+        </div>
+        <ul class="list-group list-group-flush">
+            @foreach (var item in Model.Items)
+            {
+                <li class="list-group-item">@item.Id - @item.Description</li>
+            }
+        </ul>
+    </div>
+}
+else
+{
+    <div class="alert alert-light" role="alert">
+        No widgets exist
+    </div>
+}

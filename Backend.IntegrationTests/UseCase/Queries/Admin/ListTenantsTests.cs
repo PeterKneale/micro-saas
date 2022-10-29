@@ -21,8 +21,8 @@ public class ListTenantsTests
         var tenantId2 = Guid.NewGuid();
         var tenant1 = "A";
         var tenant2 = "B";
-        var identifier1 = Guid.NewGuid().ToString();
-        var identifier2 = Guid.NewGuid().ToString();
+        var identifier1 = "a";
+        var identifier2 = "b";
 
         // act
         await _provider.ExecuteCommand(new AddTenant.Command(tenantId1, tenant1, identifier1));

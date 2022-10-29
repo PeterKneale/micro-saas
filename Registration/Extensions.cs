@@ -1,4 +1,4 @@
-﻿namespace Description;
+﻿namespace Registration;
 
 internal static class Extensions
 {
