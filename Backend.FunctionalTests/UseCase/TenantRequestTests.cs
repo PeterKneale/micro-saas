@@ -6,12 +6,12 @@ namespace Backend.FunctionalTests.UseCase;
 [Collection(nameof(ServiceCollectionFixture))]
 public class TenantRequestTests
 {
-    private readonly TenantService.TenantServiceClient _client;
+    private readonly WidgetService.WidgetServiceClient _client;
 
     public TenantRequestTests(ServiceFixture service, ITestOutputHelper output)
     {
         service.OutputHelper = output;
-        _client = service.TenantClient;
+        _client = service.WidgetsClient;
     }
 
     [Fact]

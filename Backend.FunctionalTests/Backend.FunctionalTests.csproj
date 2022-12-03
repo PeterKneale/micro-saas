@@ -35,24 +35,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\Backend\Api\AdminApi.proto">
-      <GrpcServices>Client</GrpcServices>
-      <Access>Public</Access>
-      <ProtoCompile>True</ProtoCompile>
-      <CompileOutputs>True</CompileOutputs>
-      <OutputDir>obj\Debug\net6.0\</OutputDir>
-      <Generator>MSBuild:Compile</Generator>
-      <Link>Api\AdminApi.proto</Link>
-    </Protobuf>
-    <Protobuf Include="..\Backend\Api\TenantApi.proto">
-      <GrpcServices>Client</GrpcServices>
-      <Access>Public</Access>
-      <ProtoCompile>True</ProtoCompile>
-      <CompileOutputs>True</CompileOutputs>
-      <OutputDir>obj\Debug\net6.0\</OutputDir>
-      <Generator>MSBuild:Compile</Generator>
-      <Link>Api\TenantApi.proto</Link>
-    </Protobuf>
+    <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantManagementApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantStatisticsApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\Backend\Features\Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
   </ItemGroup>
 
 </Project>

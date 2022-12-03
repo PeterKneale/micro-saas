@@ -29,7 +29,7 @@ builder.Services
     });
 
 builder.Services
-    .AddGrpcClient<Backend.Api.AdminService.AdminServiceClient>(o => {
+    .AddGrpcClient<Backend.Api.TenantManagementService.TenantManagementServiceClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
 

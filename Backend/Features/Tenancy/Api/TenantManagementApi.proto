@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package Backend;
+
+option csharp_namespace = "Backend.Api";
+
+service TenantManagementService {
+    rpc AddTenant(AddTenantRequest) returns (EmptyResponse2);
+    rpc GetTenant(GetTenantRequest) returns (GetTenantResponse);
+    rpc GetTenantByIdentifier(GetTenantByIdentifierRequest) returns (GetTenantByIdentifierResponse);
+    rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse);
+}
+
+message AddTenantRequest {
+    string id = 1;
+    string name = 2;
+    string identifier = 3;
+}
+
+message GetTenantRequest{
+    string id = 1;
+}
+
+message GetTenantResponse{
+    string id = 1;
+    string name = 2;
+    string identifier = 3;
+}
+
+message GetTenantByIdentifierRequest{
+    string identifier = 1;
+}
+
+message GetTenantByIdentifierResponse{
+    string id = 1;
+    string name = 2;
+    string identifier = 3;
+}
+
+message ListTenantsRequest {
+}
+
+message ListTenantsResponse {
+    repeated ListTenantsItem items = 1;
+}
+
+message ListTenantsItem {
+    string id = 1;
+    string name = 2;
+    string identifier = 3;
+}
+
+message EmptyResponse2{
+}

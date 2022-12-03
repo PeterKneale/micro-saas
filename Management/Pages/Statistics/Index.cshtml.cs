@@ -5,9 +5,9 @@ namespace Management.Pages.Statistics;
 
 public class Index : PageModel
 {
-    private readonly AdminService.AdminServiceClient _client;
+    private readonly TenantStatisticsService.TenantStatisticsServiceClient _client;
     
-    public Index(AdminService.AdminServiceClient client)
+    public Index(TenantStatisticsService.TenantStatisticsServiceClient client)
     {
         _client = client;
     }

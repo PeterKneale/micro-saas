@@ -5,10 +5,10 @@ namespace Frontend.Infrastructure;
 
 public class CustomMultiTenantStore : IMultiTenantStore<TenantInfo>
 {
-    private readonly AdminService.AdminServiceClient _client;
+    private readonly TenantManagementService.TenantManagementServiceClient _client;
     private readonly ILogger<CustomMultiTenantStore> _log;
 
-    public CustomMultiTenantStore(AdminService.AdminServiceClient client, ILogger<CustomMultiTenantStore> log)
+    public CustomMultiTenantStore(TenantManagementService.TenantManagementServiceClient client, ILogger<CustomMultiTenantStore> log)
     {
         _client = client;
         _log = log;

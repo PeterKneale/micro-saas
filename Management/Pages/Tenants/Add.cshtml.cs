@@ -6,9 +6,9 @@ namespace Management.Pages.Tenants;
 
 public class Add : PageModel
 {
-    private readonly AdminService.AdminServiceClient _client;
+    private readonly TenantManagementService.TenantManagementServiceClient _client;
 
-    public Add(AdminService.AdminServiceClient client)
+    public Add(TenantManagementService.TenantManagementServiceClient client)
     {
         _client = client;
     }

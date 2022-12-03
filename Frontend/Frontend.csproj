@@ -18,16 +18,4 @@
         <ProjectReference Include="..\Backend.Client\Backend.Client.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <_ContentIncludedByDefault Remove="Account\AccessDenied.cshtml" />
-      <_ContentIncludedByDefault Remove="Account\Login.cshtml" />
-      <_ContentIncludedByDefault Remove="Account\Logout.cshtml" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <AdditionalFiles Include="Pages\Account\AccessDenied.cshtml" />
-      <AdditionalFiles Include="Pages\Account\Login.cshtml" />
-      <AdditionalFiles Include="Pages\Account\Logout.cshtml" />
-    </ItemGroup>
-
 </Project>

@@ -4,9 +4,9 @@ namespace Frontend.Pages.Widgets;
 
 public class Index : PageModel
 {
-    private readonly TenantService.TenantServiceClient _client;
+    private readonly WidgetService.WidgetServiceClient _client;
     
-    public Index(TenantService.TenantServiceClient client)
+    public Index(WidgetService.WidgetServiceClient client)
     {
         _client = client;
     }

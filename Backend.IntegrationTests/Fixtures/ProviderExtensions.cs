@@ -1,4 +1,4 @@
-﻿using Backend.Infrastructure.Tenancy;
+﻿using Backend.Core.Infrastructure.Tenancy;
 
 namespace Backend.IntegrationTests.Fixtures;
 

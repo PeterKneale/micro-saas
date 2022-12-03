@@ -1,6 +1,6 @@
-﻿using Backend.Domain.WidgetAggregate;
+﻿using Backend.Features.Widgets.Domain.WidgetAggregate;
 
-namespace Backend.UnitTests.CarAggregate;
+namespace Backend.UnitTests.WidgetAggregate;
 
 public class WidgetAggregateTests
 {

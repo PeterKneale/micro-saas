@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using Backend;
-using Backend.Api;
-using Backend.Infrastructure.Database;
+using Backend.Core.Infrastructure.Database;
+using Backend.Features.Tenancy.Api;
+using Backend.Features.Widgets.Api;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -24,8 +25,9 @@ builder.Services.AddLogging(c => {
 });
 var app = builder.Build();
 
-app.MapGrpcService<AdminApi>();
-app.MapGrpcService<TenantApi>();
+app.MapGrpcService<TenantManagementApi>();
+app.MapGrpcService<TenantStatisticsApi>();
+app.MapGrpcService<WidgetApi>();
 app.MapGet("/", () => "Backend");
 app.ExecuteDatabaseMigration(x=>x.ApplyDatabaseMigrations());
 app.Run();

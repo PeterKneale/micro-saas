@@ -2,9 +2,9 @@
 
 public class Index : PageModel
 {
-    private readonly AdminService.AdminServiceClient _client;
+    private readonly TenantManagementService.TenantManagementServiceClient _client;
 
-    public Index(AdminService.AdminServiceClient client)
+    public Index(TenantManagementService.TenantManagementServiceClient client)
     {
         _client = client;
     }

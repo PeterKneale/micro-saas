@@ -1,4 +1,4 @@
-﻿using Backend.Infrastructure.Database;
+﻿using Backend.Core.Infrastructure.Database;
 using Grpc.Net.Client;
 using MartinCostello.Logging.XUnit;
 using Microsoft.AspNetCore.Hosting;
@@ -18,8 +18,9 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
         {
             HttpClient = httpClient
         });
-        TenantClient = new TenantService.TenantServiceClient(_channel);
-        AdminClient = new AdminService.AdminServiceClient(_channel);
+        WidgetsClient = new WidgetService.WidgetServiceClient(_channel);
+        TenantManagementClient = new TenantManagementService.TenantManagementServiceClient(_channel);
+        TenantStatisticsClient = new TenantStatisticsService.TenantStatisticsServiceClient(_channel);
         Services.ExecuteDatabaseMigration(x => x.ResetDatabase());
     }
 
@@ -28,8 +29,9 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
 
     public ITestOutputHelper? OutputHelper { get; set; }
 
-    public TenantService.TenantServiceClient TenantClient { get; }
-    public AdminService.AdminServiceClient AdminClient { get; }
+    public WidgetService.WidgetServiceClient WidgetsClient { get; }
+    public TenantManagementService.TenantManagementServiceClient TenantManagementClient { get; }
+    public TenantStatisticsService.TenantStatisticsServiceClient TenantStatisticsClient { get; }
 
     protected override void Dispose(bool disposing)
     {

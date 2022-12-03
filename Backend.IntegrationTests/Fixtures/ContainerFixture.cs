@@ -1,4 +1,4 @@
-﻿using Backend.Infrastructure.Database;
+﻿using Backend.Core.Infrastructure.Database;
 
 namespace Backend.IntegrationTests.Fixtures;
 

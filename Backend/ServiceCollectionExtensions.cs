@@ -1,15 +1,15 @@
 ﻿using Backend.Api;
-using Backend.Application.Contracts;
-using Backend.Application.Contracts.Admin;
-using Backend.Application.Contracts.Tenants;
-using Backend.Infrastructure.Behaviours;
-using Backend.Infrastructure.Configuration;
-using Backend.Infrastructure.Database;
-using Backend.Infrastructure.Interceptors;
-using Backend.Infrastructure.Repositories;
-using Backend.Infrastructure.Repositories.Admin;
-using Backend.Infrastructure.Repositories.Tenants;
-using Backend.Infrastructure.Tenancy;
+using Backend.Core.Infrastructure.Behaviours;
+using Backend.Core.Infrastructure.Configuration;
+using Backend.Core.Infrastructure.Database;
+using Backend.Core.Infrastructure.Interceptors;
+using Backend.Core.Infrastructure.Repositories;
+using Backend.Core.Infrastructure.Tenancy;
+using Backend.Features.Tenancy.Application.Contracts;
+using Backend.Features.Tenancy.Infrastructure;
+using Backend.Features.Widgets.Api;
+using Backend.Features.Widgets.Application.Contracts;
+using Backend.Features.Widgets.Infrastructure;
 
 namespace Backend;
 
@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
                 // Validate the grpc request
                 options.Interceptors.Add<ValidationInterceptor>();      
             })
-            .AddServiceOptions<TenantApi>(options => {
+            .AddServiceOptions<WidgetApi>(options => {
                 // Capture the tenant context from grpc metadata
                 options.Interceptors.Add<TenantContextInterceptor>();   
             });
@@ -49,10 +49,11 @@ public static class ServiceCollectionExtensions
         // This is important as this way the tenant context set by the TenantContextBehaviour
         // is the same one used by the repository
         services
-            .AddScoped<IConnectionFactory,ConnectionFactory>()
+            .AddScoped<IAdminConnectionFactory,AdminConnectionFactory>()
+            .AddScoped<ITenantConnectionFactory,TenantConnectionFactory>()
             .AddScoped<IWidgetRepository, WidgetRepository>()
-            .AddScoped<IDashboardRepository, DashboardRepository>()
-            .AddScoped<IManagementRepository, ManagementRepository>();
+            .AddScoped<ITenantStatisticsRepository, TenantStatisticsRepository>()
+            .AddScoped<ITenantRepository, TenantRepository>();
 
         // Update tenant context
         // a single instance of tenant context is created per request
@@ -68,8 +69,7 @@ public static class ServiceCollectionExtensions
             .ConfigureRunner(runner => runner
                 .AddPostgres()
                 .WithGlobalConnectionString(configuration.GetSystemConnectionString())
-                .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations());
-        services
+                .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
             .AddScoped<MigrationExecutor>();
 
         return services;

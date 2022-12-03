@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package Backend;
+
+option csharp_namespace = "Backend.Api";
+
+service TenantStatisticsService {
+    rpc GetDashboard(GetDashboardRequest) returns (GetDashboardResponse);
+}
+
+message GetDashboardRequest {
+}
+
+message GetDashboardResponse {
+    int32 total_tenants = 1;
+    int32 total_widgets = 2;
+}
