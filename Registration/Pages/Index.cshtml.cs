@@ -17,7 +17,8 @@ public class Index : PageModel
         await _client.AddTenantAsync(new AddTenantRequest
         {
             Id = Guid.NewGuid().ToString(),
-            Name = Data.Name
+            Name = Data.Name,
+            Identifier = Data.Identifier
         });
 
         return RedirectToPage("Index");
@@ -26,5 +27,7 @@ public class Index : PageModel
     public record Model
     {
         public string Name { get; init; }
+        
+        public string Identifier { get; init; }
     }
 }

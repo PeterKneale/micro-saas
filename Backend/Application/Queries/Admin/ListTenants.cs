@@ -23,9 +23,9 @@ public static class ListTenants
 
         public async Task<IEnumerable<Result>> Handle(Query request, CancellationToken cancellationToken)
         {
-            var cars = await _repository.ListTenants(cancellationToken);
+            var tenants = await _repository.ListTenants(cancellationToken);
 
-            return cars
+            return tenants
                 .Select(x => new Result(x.Id.Id, x.Name.Value, x.Identifier.Value));
         }
     }

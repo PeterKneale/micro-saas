@@ -13,6 +13,7 @@ public class AdminApi : AdminService.AdminServiceBase
     {
         _mediator = mediator;
     }
+    
     public override async Task<GetTenantResponse> GetTenant(GetTenantRequest request, ServerCallContext context)
     {
         var result = await _mediator.Send(new GetTenant.Query(Guid.Parse(request.Id)));
@@ -23,6 +24,7 @@ public class AdminApi : AdminService.AdminServiceBase
             Identifier = result.Identifier
         };
     }
+    
     public override async Task<GetTenantByIdentifierResponse> GetTenantByIdentifier(GetTenantByIdentifierRequest request, ServerCallContext context)
     {
         var result = await _mediator.Send(new GetTenantByIdentifier.Query(request.Identifier));
@@ -39,13 +41,15 @@ public class AdminApi : AdminService.AdminServiceBase
         await _mediator.Send(new AddTenant.Command(Guid.Parse(request.Id), request.Name, request.Identifier));
         return new EmptyResponse2();
     }
+    
     public override async Task<ListTenantsResponse> ListTenants(ListTenantsRequest request, ServerCallContext context)
     {
         var results = await _mediator.Send(new ListTenants.Query());
         var items = results.Select(x => new ListTenantsItem
         {
             Id = x.Id.ToString(),
-            Name = x.Name
+            Name = x.Name,
+            Identifier = x.Identifier
         });
         return new ListTenantsResponse
         {

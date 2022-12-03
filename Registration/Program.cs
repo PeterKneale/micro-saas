@@ -1,4 +1,9 @@
+using System.Diagnostics;
 using Registration;
+
+Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +20,7 @@ builder.Services
 
 builder.Services
     .AddGrpcClient<AdminService.AdminServiceClient>(o => {
-        o.Address = new Uri(builder.Configuration.GetBackendAddress());
+        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
 
 var app = builder.Build();

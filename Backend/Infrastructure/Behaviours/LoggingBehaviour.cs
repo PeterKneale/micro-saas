@@ -1,20 +1,33 @@
-﻿namespace Backend.Infrastructure.Behaviours;
+﻿using System.Diagnostics;
+using Newtonsoft.Json;
 
-internal class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+namespace Backend.Infrastructure.Behaviours;
+
+internal class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
 {
     private readonly ILogger<LoggingBehaviour<TRequest, TResponse>> _log;
-    
+
     public LoggingBehaviour(ILogger<LoggingBehaviour<TRequest, TResponse>> log)
     {
         _log = log;
     }
-    
+
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        _log.LogInformation("Handling {Request}", typeof(TRequest).FullName);
-        var result = await next();
-        _log.LogInformation("Handed {Request}", typeof(TRequest).FullName);
-        return result;
+        var requestName = typeof(TRequest).FullName;
+        var requestJson = JsonConvert.SerializeObject(request, Formatting.Indented);
+
+        _log.LogInformation("Handling {RequestName}\n{RequestJson}", requestName, requestJson);
+
+        var sw = Stopwatch.StartNew();
+        var response = await next();
+        sw.Stop();
+
+        var responseJson = JsonConvert.SerializeObject(response, Formatting.Indented);
+
+        _log.LogInformation("Handled {RequestName} in {ElapsedMilliseconds}ms\n{ResponseJson}", requestName, sw.ElapsedMilliseconds, responseJson);
+        
+        return response;
     }
-    
 }

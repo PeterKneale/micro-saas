@@ -1,6 +1,9 @@
+using System.Diagnostics;
 using Finbuckle.MultiTenant;
 using Frontend;
 using Frontend.Infrastructure;
+
+Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -33,12 +36,14 @@ builder.Services
 
 builder.Services
     .AddGrpcClient<Backend.Api.AdminService.AdminServiceClient>(o => {
-        o.Address = new Uri(builder.Configuration.GetBackendAddress());
+        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
+
 builder.Services
     .AddGrpcClient<Backend.Api.TenantService.TenantServiceClient>(o => {
-        o.Address = new Uri(builder.Configuration.GetBackendAddress());
+        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     }).AddInterceptor<TenantInterceptor>();
+
 builder.Services
     .AddScoped<TenantInterceptor>();
 

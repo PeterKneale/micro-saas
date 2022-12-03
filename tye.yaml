@@ -1,0 +1,22 @@
+name: demo
+
+#extensions:
+#  - name: zipkin
+    
+services:
+  - name: Backend
+    project: Backend/Backend.csproj
+    bindings:
+      - name: http
+        port: 5000        
+      - name: grpc
+        port: 5001
+    
+  - name: Management
+    project: Management/Management.csproj
+    
+  - name: Frontend
+    project: Frontend/Frontend.csproj
+    
+  - name: Registration
+    project: Registration/Registration.csproj

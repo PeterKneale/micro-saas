@@ -1,8 +1,21 @@
-﻿using Backend;
+﻿using System.Diagnostics;
+using System.Net;
+using Backend;
 using Backend.Api;
 using Backend.Infrastructure.Database;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
+
+Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.ConfigureKestrel(opt =>
+{
+    // Operate one port in HTTP/1.1 mode for k8s health-checks etc
+    opt.Listen(IPAddress.Any, 5000, listen => listen.Protocols = HttpProtocols.Http1);
+    // Operate one port in HTTP/2 mode for GRPC
+    opt.Listen(IPAddress.Any, 5001, listen => listen.Protocols = HttpProtocols.Http2);
+});
+
 builder.Services.AddBackend(builder.Configuration);
 builder.Services.AddLogging(c => {
     c.AddSimpleConsole(opt => {

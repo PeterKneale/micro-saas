@@ -17,6 +17,11 @@
                 <span asp-validation-for="Data.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Data.Identifier"></label>
+                <input asp-for="Data.Identifier" class="form-control">
+                <span asp-validation-for="Data.Identifier" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <button type="submit" class="btn btn-primary mt-4">Add Tenant</button>
             </div>
         </form>

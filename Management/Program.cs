@@ -1,5 +1,8 @@
+using System.Diagnostics;
 using Management;
 using Microsoft.AspNetCore.Authorization;
+
+Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +30,7 @@ builder.Services
 
 builder.Services
     .AddGrpcClient<Backend.Api.AdminService.AdminServiceClient>(o => {
-        o.Address = new Uri(builder.Configuration.GetBackendAddress());
+        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
 
 var app = builder.Build();
