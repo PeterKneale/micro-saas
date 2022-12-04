@@ -1,19 +1,19 @@
 ﻿@page
-@model Frontend.Pages.Widgets.Index
+@model Admin.Pages.Tenants.Index
 
 <partial name="_Toolbar"/>
 
-<h3>Widget Admin</h3>
+<h3>Tenant Admin</h3>
 @if (Model.Items.Any())
 {
     <div class="card">
         <div class="card-header">
-            Widgets
+            Tenants
         </div>
         <ul class="list-group list-group-flush">
             @foreach (var item in Model.Items)
             {
-                <li class="list-group-item">@item.Id - @item.Description</li>
+                <li class="list-group-item">@item.Name (@item.Identifier)</li>
             }
         </ul>
     </div>
@@ -21,6 +21,6 @@
 else
 {
     <div class="alert alert-light" role="alert">
-        No widgets exist
+        No tenants exist
     </div>
 }

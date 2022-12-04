@@ -5,17 +5,17 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["Frontend/Frontend.csproj", "Frontend/"]
+COPY ["Admin/Admin.csproj", "Admin/"]
 COPY ["Client/Client.csproj", "Client/"]
-RUN dotnet restore "Frontend/Frontend.csproj"
+RUN dotnet restore "Admin/Admin.csproj"
 COPY . .
-WORKDIR "/src/Frontend"
-RUN dotnet build "Frontend.csproj" -c Release -o /app/build
+WORKDIR "/src/Admin"
+RUN dotnet build "Admin.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Frontend.csproj" -c Release -o /app/publish
+RUN dotnet publish "Admin.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Frontend.dll"]
+ENTRYPOINT ["dotnet", "Admin.dll"]

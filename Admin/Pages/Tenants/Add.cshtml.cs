@@ -1,16 +1,19 @@
-﻿namespace Registration.Pages;
+﻿using Backend.Api;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
-public class Index : PageModel
+namespace Admin.Pages.Tenants;
+
+public class Add : PageModel
 {
     private readonly TenantAdminService.TenantAdminServiceClient _client;
 
-    public Index(TenantAdminService.TenantAdminServiceClient client)
+    public Add(TenantAdminService.TenantAdminServiceClient client)
     {
         _client = client;
     }
 
-    [BindProperty]
-    public Model Data { get; set; }
+    [BindProperty] public Model Data { get; set; }
 
     public async Task<IActionResult> OnPostAsync()
     {
@@ -27,7 +30,6 @@ public class Index : PageModel
     public record Model
     {
         public string Name { get; init; }
-        
         public string Identifier { get; init; }
     }
 }

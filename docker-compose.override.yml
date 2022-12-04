@@ -7,7 +7,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: always
     
-  management:
+  admin:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     restart: always

@@ -5,12 +5,12 @@ namespace Backend.FunctionalTests.UseCase.Queries.Management;
 [Collection(nameof(ServiceCollectionFixture))]
 public class GetTenantByIdentifiers
 {
-    private readonly TenantManagementService.TenantManagementServiceClient _adminClient;
+    private readonly TenantAdminService.TenantAdminServiceClient _adminClient;
 
     public GetTenantByIdentifiers(ServiceFixture service, ITestOutputHelper output)
     {
         service.OutputHelper = output;
-        _adminClient = service.TenantManagementClient;
+        _adminClient = service.TenantAdminClient;
     }
 
     [Fact]

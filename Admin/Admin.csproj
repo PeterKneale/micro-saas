@@ -8,7 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.9.1" />
         <PackageReference Include="Grpc.Net.ClientFactory" Version="2.50.0" />
         <PackageReference Include="MediatR" Version="11.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.11" />
@@ -17,5 +16,4 @@
     <ItemGroup>
         <ProjectReference Include="..\Client\Client.csproj" />
     </ItemGroup>
-
 </Project>

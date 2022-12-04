@@ -1,4 +1,3 @@
-using Backend.Core.Infrastructure.Configuration;
 using Polly;
 using Polly.Retry;
 
@@ -7,25 +6,23 @@ namespace Backend.Core.Infrastructure.Database;
 public class MigrationExecutor
 {
     private readonly IMigrationRunner _runner;
-    private readonly IConfiguration _configuration;
     private readonly ILogger<MigrationExecutor> _log;
     private readonly RetryPolicy _policy;
 
-    public MigrationExecutor(IMigrationRunner runner, IConfiguration configuration, ILogger<MigrationExecutor> log)
+    public MigrationExecutor(IMigrationRunner runner, ILogger<MigrationExecutor> log)
     {
         _runner = runner;
-        _configuration = configuration;
         _log = log;
 
+        var attempts = 30;
+        var delay = TimeSpan.FromSeconds(2);
+        
         _policy = Policy
             .Handle<Exception>()
-            .WaitAndRetry(
-                5,
-                (x) => TimeSpan.FromSeconds(2),
-                (exception, retryDelay, retryCount, context) => {
-                    _log.LogWarning("Error while migrating database. Retrying in {RetryDelay} seconds. Retry {RetryCount}\n({Error})", retryDelay.TotalSeconds, retryCount, exception.Message);
-                }
-            );
+            .WaitAndRetry(attempts, _ => delay, (exception, timeSpan, retryCount, context) =>
+            {
+                _log.LogWarning(exception, "Failed to connect to database. Retrying in {Delay} seconds. Attempt {RetryCount} of {RetryAttempts}", delay.TotalSeconds, retryCount, attempts);
+            });
     }
 
     public void ApplyDatabaseMigrations()

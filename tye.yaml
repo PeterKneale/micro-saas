@@ -14,8 +14,8 @@ services:
       - name: http
         port: 8010
         
-  - name: Management
-    project: Management/Management.csproj
+  - name: Admin
+    project: Admin/Admin.csproj
     env:
       - name: ASPNETCORE_ENVIRONMENT
         value: Development

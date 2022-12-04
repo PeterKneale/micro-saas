@@ -6,7 +6,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Registration/Registration.csproj", "Registration/"]
-COPY ["Backend.Client/Backend.Client.csproj", "Backend.Client/"]
+COPY ["Client/Client.csproj", "Client/"]
 RUN dotnet restore "Registration/Registration.csproj"
 COPY . .
 WORKDIR "/src/Registration"

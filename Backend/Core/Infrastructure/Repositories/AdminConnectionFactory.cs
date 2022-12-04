@@ -2,11 +2,6 @@
 
 namespace Backend.Core.Infrastructure.Repositories;
 
-public interface IAdminConnectionFactory
-{
-    IDbConnection GetDbConnectionForAdmin();
-}
-
 internal class AdminConnectionFactory : IAdminConnectionFactory
 {
     private readonly NpgsqlConnection _admin;

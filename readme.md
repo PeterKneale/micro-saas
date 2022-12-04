@@ -9,11 +9,11 @@
 
 ### Admin API
 - Executes use cases in the context of an administrator on the platform
-- The security policy defined below allows read-only acccess to all tenant data
+- The security policy defined below allows read-only access to all tenant data
 
 ### Tenant API
 - Executes use cases in the context of a specific tenant on the platform
-- The security policy defined below allows full acccess to the specified tenants data
+- The security policy defined below allows full access to the specified tenants data
 
 ## GRPC Request Pipeline
 
@@ -85,10 +85,10 @@ Execute.Sql($"CREATE POLICY {Policy} ON {Table} FOR ALL TO {Username} USING ({Co
 ## Build and Deploy
 ```shell
 docker build -f Frontend/Dockerfile . -t peterkneale/frontend
-docker build -f Management/Dockerfile . -t peterkneale/management
+docker build -f Admin/Dockerfile . -t peterkneale/admin
 docker build -f Registration/Dockerfile . -t peterkneale/registration
 
 docker push peterkneale/frontend
-docker push peterkneale/management
+docker push peterkneale/admin
 docker push peterkneale/registration
 ```

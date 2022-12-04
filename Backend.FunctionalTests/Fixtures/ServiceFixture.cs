@@ -19,7 +19,7 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
             HttpClient = httpClient
         });
         WidgetsClient = new WidgetService.WidgetServiceClient(_channel);
-        TenantManagementClient = new TenantManagementService.TenantManagementServiceClient(_channel);
+        TenantAdminClient = new TenantAdminService.TenantAdminServiceClient(_channel);
         TenantStatisticsClient = new TenantStatisticsService.TenantStatisticsServiceClient(_channel);
         Services.ExecuteDatabaseMigration(x => x.ResetDatabase());
     }
@@ -30,7 +30,7 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
     public ITestOutputHelper? OutputHelper { get; set; }
 
     public WidgetService.WidgetServiceClient WidgetsClient { get; }
-    public TenantManagementService.TenantManagementServiceClient TenantManagementClient { get; }
+    public TenantAdminService.TenantAdminServiceClient TenantAdminClient { get; }
     public TenantStatisticsService.TenantStatisticsServiceClient TenantStatisticsClient { get; }
 
     protected override void Dispose(bool disposing)

@@ -11,11 +11,11 @@ services:
       - saas_public
       - saas_private
     
-  management:
-    image: ${REGISTRY_ENDPOINT:-saas}/management:${TAG:-latest}
+  admin:
+    image: ${REGISTRY_ENDPOINT:-saas}/admin:${TAG:-latest}
     build:
       context: .
-      dockerfile: ./Management/Dockerfile
+      dockerfile: ./Admin/Dockerfile
     networks:
       - saas_public
       - saas_private

@@ -2,11 +2,6 @@
 
 namespace Backend.Core.Infrastructure.Repositories;
 
-public interface ITenantConnectionFactory
-{
-    IDbConnection GetDbConnectionForTenant();
-}
-
 internal class TenantConnectionFactory : ITenantConnectionFactory
 {
     private readonly NpgsqlConnection _tenant;

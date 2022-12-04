@@ -1,6 +1,6 @@
-using Finbuckle.MultiTenant;
-using Frontend;
-using Frontend.Infrastructure;
+using System.Diagnostics;
+using Admin;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
@@ -12,6 +12,7 @@ builder.Services
     .AddRazorPages()
     .AddRazorRuntimeCompilation();
 
+
 builder.Services
     .AddHealthChecks()
     .AddAsyncCheck("Backend", async () => {
@@ -22,7 +23,8 @@ builder.Services
         return response.IsSuccessStatusCode
             ? HealthCheckResult.Healthy()
             : HealthCheckResult.Unhealthy();
-    }, tags: new[] {"ready"});
+    }, tags: new[] { "ready" });
+
 
 builder.Services
     .AddLogging(c => {
@@ -42,24 +44,14 @@ builder.Services
             .Build();
     });
 
-builder.Services.AddSingleton<CustomMultiTenantStore>();
-builder.Services
-    .AddMultiTenant<TenantInfo>()
-    .WithStaticStrategy(builder.Configuration.GetTenant())
-    .WithStore(ServiceLifetime.Singleton, sp => sp.GetRequiredService<CustomMultiTenantStore>());
-
 builder.Services
     .AddGrpcClient<Backend.Api.TenantAdminService.TenantAdminServiceClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
-
 builder.Services
-    .AddGrpcClient<Backend.Api.WidgetService.WidgetServiceClient>(o => {
+    .AddGrpcClient<Backend.Api.TenantStatisticsService.TenantStatisticsServiceClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
-    }).AddInterceptor<TenantInterceptor>();
-
-builder.Services
-    .AddScoped<TenantInterceptor>();
+    });
 
 var app = builder.Build();
 
@@ -74,22 +66,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.MapHealthChecks("/health/alive");
-app.MapHealthChecks("/health/ready", new HealthCheckOptions
-{
+app.MapHealthChecks("/health/ready", new HealthCheckOptions {
     Predicate = r => r.Tags.Contains("ready")
-});
-app.UseMultiTenant();
-app.Use(async (ctx, next) => {
-    // redirect if no tenant context available
-    if (ctx.GetMultiTenantContext<TenantInfo>()?.TenantInfo == null)
-    {
-        var redirectUri = app.Configuration.GetServiceHttpUri("registration");
-        ctx.Response.Redirect(redirectUri.ToString());
-        return;
-    }
-    await next();
 });
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapRazorPages();
 app.Run();
