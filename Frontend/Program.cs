@@ -24,6 +24,7 @@ builder.Services
             : HealthCheckResult.Unhealthy();
     }, tags: new[] {"ready"});
 
+
 builder.Services
     .AddLogging(c => {
         c.AddSimpleConsole(opt => {

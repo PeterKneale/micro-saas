@@ -12,7 +12,7 @@ public class LoginModel : PageModel
         _configuration = configuration;
         _logger = logger;
     }
-
+    
     [BindProperty]
     public InputModel Input { get; set; }
 
@@ -80,7 +80,7 @@ public class LoginModel : PageModel
 
             _logger.LogInformation("User {Email} logged in at {Time}", email, DateTime.UtcNow);
 
-            return LocalRedirect(Url.GetLocalUrl(returnUrl));
+            return LocalRedirect(Url.GetLocalUrl(returnUrl)!);
         }
         return Page();
     }

@@ -32,6 +32,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin", "Admin\Admin.csproj
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "backend", "backend", "{489831CB-8E38-42C9-AF07-6C1CA19EDEE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{38705972-230B-4223-BE99-139B6B777739}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{9B1EB04C-4A95-453E-9EE3-CABF50A7BACA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B1EB04C-4A95-453E-9EE3-CABF50A7BACA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B1EB04C-4A95-453E-9EE3-CABF50A7BACA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38705972-230B-4223-BE99-139B6B777739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38705972-230B-4223-BE99-139B6B777739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38705972-230B-4223-BE99-139B6B777739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38705972-230B-4223-BE99-139B6B777739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{10EDBFF8-A8B2-45E4-B0B5-3A2614DD5156} = {489831CB-8E38-42C9-AF07-6C1CA19EDEE4}

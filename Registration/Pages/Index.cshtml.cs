@@ -27,7 +27,7 @@ public class Index : PageModel
     public record Model
     {
         public string Name { get; init; }
-        
+
         public string Identifier { get; init; }
     }
 }
