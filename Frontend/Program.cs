@@ -23,7 +23,7 @@ builder.Services
         return response.IsSuccessStatusCode
             ? HealthCheckResult.Healthy()
             : HealthCheckResult.Unhealthy();
-    }, tags: new[] { "ready" });
+    }, tags: new[] {"ready"});
 
 builder.Services
     .AddLogging(c => {
@@ -75,10 +75,21 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 app.MapHealthChecks("/health/alive");
-app.MapHealthChecks("/health/ready", new HealthCheckOptions {
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
     Predicate = r => r.Tags.Contains("ready")
 });
 app.UseMultiTenant();
+app.Use(async (ctx, next) => {
+    // redirect if no tenant context available
+    if (ctx.GetMultiTenantContext<TenantInfo>()?.TenantInfo == null)
+    {
+        var redirectUri = app.Configuration.GetServiceHttpUri("registration");
+        ctx.Response.Redirect(redirectUri.ToString());
+        return;
+    }
+    await next();
+});
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapRazorPages();

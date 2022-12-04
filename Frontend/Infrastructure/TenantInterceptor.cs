@@ -23,7 +23,7 @@ public class TenantInterceptor : Interceptor
             throw new Exception("No tenant context available");
         }
         
-        var tenantId = tenantInfo.Id;
+        var tenantId = tenantInfo.Id!;
         if (tenantInfo == null)
         {
             throw new Exception("No tenant identifier available");

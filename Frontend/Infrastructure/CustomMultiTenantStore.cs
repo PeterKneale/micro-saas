@@ -1,5 +1,6 @@
 ﻿using Backend.Api;
 using Finbuckle.MultiTenant;
+using Grpc.Core;
 
 namespace Frontend.Infrastructure;
 
@@ -13,7 +14,7 @@ public class CustomMultiTenantStore : IMultiTenantStore<TenantInfo>
         _client = client;
         _log = log;
     }
-    
+
     public async Task<TenantInfo?> TryGetByIdentifierAsync(string identifier)
     {
         try
@@ -23,12 +24,21 @@ public class CustomMultiTenantStore : IMultiTenantStore<TenantInfo>
             _log.LogInformation("Identified tenant {TenantId}", result!.Id);
             return result;
         }
+        catch (RpcException e)
+        {
+            if (e.StatusCode == StatusCode.NotFound)
+                _log.LogInformation("Tenant {Identifier} not found", identifier);
+            else
+                _log.LogError(e, "Error {StatusCode} attempting to identify tenant {Identifier} ", e.StatusCode, identifier);
+            throw;
+        }
         catch (Exception e)
         {
-            _log.LogError(e, "Failed to identify tenant {Identifier} ", identifier);
-            return null;
+            _log.LogError(e, "Unknown error attempting to identify tenant {Identifier} ", identifier);
+            throw;
         }
     }
+
     private async Task<TenantInfo?> GetByIdentifierAsync(string identifier)
     {
         var request = new GetTenantByIdentifierRequest {Identifier = identifier};
@@ -40,7 +50,7 @@ public class CustomMultiTenantStore : IMultiTenantStore<TenantInfo>
             Name = response.Name
         };
     }
-    
+
     public Task<TenantInfo?> TryGetAsync(string id) => throw new NotImplementedException();
     public Task<bool> TryAddAsync(TenantInfo tenantInfo) => throw new NotImplementedException();
     public Task<bool> TryUpdateAsync(TenantInfo tenantInfo) => throw new NotImplementedException();

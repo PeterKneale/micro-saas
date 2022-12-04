@@ -4,10 +4,12 @@ namespace Frontend.Pages;
 
 public class IndexModel : PageModel
 {
+    private readonly IMultiTenantContextAccessor<TenantInfo> _accessor;
     private readonly ILogger<IndexModel> _logger;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    public IndexModel(IMultiTenantContextAccessor<TenantInfo> accessor, ILogger<IndexModel> logger)
     {
+        _accessor = accessor;
         _logger = logger;
     }
     
@@ -15,8 +17,6 @@ public class IndexModel : PageModel
 
     public void OnGet()
     {
-        TenantInfo = HttpContext
-            .GetMultiTenantContext<TenantInfo>()?
-            .TenantInfo!;
+        TenantInfo = _accessor.MultiTenantContext?.TenantInfo;
     }
 }

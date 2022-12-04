@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using Backend;
-using Backend.Core.Infrastructure.Configuration;
 using Backend.Core.Infrastructure.Database;
 using Backend.Features.Tenancy.Api;
 using Backend.Features.Widgets.Api;

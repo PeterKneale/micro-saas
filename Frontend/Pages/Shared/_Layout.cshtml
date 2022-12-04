@@ -2,15 +2,9 @@
 @using Microsoft.AspNetCore.Mvc.TagHelpers
 @using Microsoft.Extensions.DependencyInjection;
 @{
-
     var services = Context.Request.HttpContext.RequestServices;
     var context = services.GetRequiredService<IMultiTenantContextAccessor<TenantInfo>>();
-    var tenantContext = context.MultiTenantContext;
-    if (tenantContext == null)
-    {
-        throw new Exception("No tenant context in layout");
-    }
-    var tenant = tenantContext.TenantInfo;
+    var tenant = context.MultiTenantContext!.TenantInfo;
 }
 <!DOCTYPE html>
 <html lang="en">
