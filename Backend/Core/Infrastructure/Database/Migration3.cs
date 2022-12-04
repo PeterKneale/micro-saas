@@ -5,14 +5,15 @@ namespace Backend.Core.Infrastructure.Database;
 [Migration(3,"Create a tenant security policy")]
 public class Migration3 : Migration
 {
-    const string Username = "tenant";
+    const string Username = "saas_tenant";
     const string Password = "password";
     const string Policy = "tenant_security_policy";
 
     public override void Up()
     {
         // Create a separate account for tenants to login with
-        Execute.Sql($"CREATE USER {Username} LOGIN PASSWORD '{Password}';");
+        Execute.Sql(@$"DROP USER IF EXISTS {Username};");
+        Execute.Sql(@$"CREATE USER {Username} LOGIN PASSWORD '{Password}';");
         
         // Give this administrators permissions on the tables
         Execute.Sql($"GRANT SELECT, UPDATE, INSERT, DELETE ON {Constants.TableTenants} TO {Username};");

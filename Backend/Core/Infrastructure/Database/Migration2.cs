@@ -5,14 +5,15 @@ namespace Backend.Core.Infrastructure.Database;
 [Migration(2,"Create an admin security policy")]
 public class Migration2 : Migration
 {
-    const string Username = "admin";
+    const string Username = "saas_admin";
     const string Password = "password";
     const string Policy = "admin_security_policy";
 
     public override void Up()
     {
         // Create a separate account for administrators to login with
-        Execute.Sql($"CREATE USER {Username} LOGIN PASSWORD '{Password}';");
+        Execute.Sql(@$"DROP USER IF EXISTS {Username};");
+        Execute.Sql(@$"CREATE USER {Username} LOGIN PASSWORD '{Password}';");
         
         // Give this administrators permissions on the tables
         Execute.Sql($"GRANT SELECT, UPDATE, INSERT, DELETE ON {Constants.TableTenants} TO {Username};");

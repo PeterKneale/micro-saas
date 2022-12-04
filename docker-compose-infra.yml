@@ -2,18 +2,13 @@ version: '3.8'
 
 services:
 
-  postgres:
+  db:
     image: postgres
-    container_name: postgres
+    container_name: db
     environment:
-      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      POSTGRES_DB: saas
       PGDATA: /data/postgres
-    volumes:
-      - postgres:/data/postgres
-    ports:
-      - "5432:5432"
-
-volumes:
-  postgres:
+    networks:
+      - saas_private

@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  
+  frontend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    restart: always
+    
+  management:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    restart: always
+    
+  registration:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    restart: always
+    
+  backend:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    restart: always
+
+  db:
+    ports:
+      - "5432:5432"

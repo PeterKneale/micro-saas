@@ -4,19 +4,54 @@ name: demo
 #  - name: zipkin
     
 services:
-  - name: Backend
-    project: Backend/Backend.csproj
-    bindings:
-      - name: http
-        port: 5000        
-      - name: grpc
-        port: 5001
-    
-  - name: Management
-    project: Management/Management.csproj
-    
+
   - name: Frontend
     project: Frontend/Frontend.csproj
+    env:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: Development
+    bindings:
+      - name: http
+        port: 8010
+        
+  - name: Management
+    project: Management/Management.csproj
+    env:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: Development
+    bindings:
+      - name: http
+        port: 8020
     
   - name: Registration
     project: Registration/Registration.csproj
+    env:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: Development
+    bindings:
+      - name: http
+        port: 8030
+
+  - name: Backend
+    project: Backend/Backend.csproj
+    env:
+      - name: ASPNETCORE_ENVIRONMENT
+        value: Development
+    bindings:
+      - name: http
+        port: 5000
+      - name: grpc
+        port: 5001
+
+  - name: db
+    image: postgres:latest
+    env:
+      - name: POSTGRES_USER
+        value: postgres
+      - name: POSTGRES_PASSWORD
+        value: password
+      - name: POSTGRES_DB
+        value: saas
+    bindings:
+      - port: 5432
+    

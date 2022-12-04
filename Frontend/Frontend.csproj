@@ -8,14 +8,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.9.0" />
-        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
-        <PackageReference Include="MediatR" Version="11.0.0" />
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
+        <PackageReference Include="Finbuckle.MultiTenant.AspNetCore" Version="6.9.0"/>
+        <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0"/>
+        <PackageReference Include="MediatR" Version="11.0.0"/>
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10"/>
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Backend.Client\Backend.Client.csproj" />
+        <ProjectReference Include="..\Backend.Client\Backend.Client.csproj"/>
     </ItemGroup>
 
 </Project>

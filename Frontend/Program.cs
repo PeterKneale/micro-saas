@@ -2,6 +2,8 @@ using System.Diagnostics;
 using Finbuckle.MultiTenant;
 using Frontend;
 using Frontend.Infrastructure;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
@@ -10,6 +12,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services
     .AddRazorPages()
     .AddRazorRuntimeCompilation();
+
+builder.Services
+    .AddHealthChecks()
+    .AddAsyncCheck("Backend", async () => {
+        var baseUri = builder.Configuration.GetServiceHttpUri("backend");
+        var readyUri = new Uri(baseUri, "/health/ready");
+        using var client = new HttpClient();
+        var response = await client.GetAsync(readyUri);
+        return response.IsSuccessStatusCode
+            ? HealthCheckResult.Healthy()
+            : HealthCheckResult.Unhealthy();
+    }, tags: new[] { "ready" });
 
 builder.Services
     .AddLogging(c => {
@@ -28,6 +42,7 @@ builder.Services
             .RequireAuthenticatedUser()
             .Build();
     });
+
 builder.Services.AddSingleton<CustomMultiTenantStore>();
 builder.Services
     .AddMultiTenant<TenantInfo>()
@@ -59,6 +74,10 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
+app.MapHealthChecks("/health/alive");
+app.MapHealthChecks("/health/ready", new HealthCheckOptions {
+    Predicate = r => r.Tags.Contains("ready")
+});
 app.UseMultiTenant();
 app.UseAuthentication();
 app.UseAuthorization();

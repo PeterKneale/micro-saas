@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  
+  frontend:
+    image: ${REGISTRY_ENDPOINT:-saas}/frontend:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ./Frontend/Dockerfile
+    networks:
+      - saas_public
+      - saas_private
+    
+  management:
+    image: ${REGISTRY_ENDPOINT:-saas}/management:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ./Management/Dockerfile
+    networks:
+      - saas_public
+      - saas_private
+
+  registration:
+    image: ${REGISTRY_ENDPOINT:-saas}/backend:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ./Registration/Dockerfile
+    networks:
+      - saas_public
+      - saas_private
+            
+  backend:
+    image: ${REGISTRY_ENDPOINT:-saas}/backend:${TAG:-latest}
+    build:
+      context: .
+      dockerfile: ./Backend/Dockerfile
+    environment:
+      - SystemConnectionString=Username=postgres;Password=password;Database=saas;Host=db
+      - AdminConnectionString=Username=postgres;Password=password;Database=saas;Host=db
+      - TenantConnectionString=Username=postgres;Password=password;Database=saas;Host=db
+    networks:
+      - saas_public
+      - saas_private
+  
+networks:
+  saas_public:
+    name: saas_public
+    driver: bridge
+  saas_private:
+    name: saas_private
+    driver: bridge

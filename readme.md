@@ -84,11 +84,11 @@ Execute.Sql($"CREATE POLICY {Policy} ON {Table} FOR ALL TO {Username} USING ({Co
 
 ## Build and Deploy
 ```shell
-docker build -f Frontend/Dockerfile . -t peterkneale/micro-saas-frontend
-docker build -f Management/Dockerfile . -t peterkneale/micro-saas-management
-docker build -f Registration/Dockerfile . -t peterkneale/micro-saas-registration
+docker build -f Frontend/Dockerfile . -t peterkneale/frontend
+docker build -f Management/Dockerfile . -t peterkneale/management
+docker build -f Registration/Dockerfile . -t peterkneale/registration
 
-docker push peterkneale/micro-saas-frontend
-docker push peterkneale/micro-saas-management
-docker push peterkneale/micro-saas-registration
+docker push peterkneale/frontend
+docker push peterkneale/management
+docker push peterkneale/registration
 ```
