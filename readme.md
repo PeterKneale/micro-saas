@@ -81,3 +81,14 @@ Execute.Sql($"GRANT {Permissions} ON {Table} TO {Username};");
 // Define the policy that will be applied
 Execute.Sql($"CREATE POLICY {Policy} ON {Table} FOR ALL TO {Username} USING ({Column} = current_setting('app.tenant')::VARCHAR);");
 ```
+
+## Build and Deploy
+```shell
+docker build -f Frontend/Dockerfile . -t peterkneale/micro-saas-frontend
+docker build -f Management/Dockerfile . -t peterkneale/micro-saas-management
+docker build -f Registration/Dockerfile . -t peterkneale/micro-saas-registration
+
+docker push peterkneale/micro-saas-frontend
+docker push peterkneale/micro-saas-management
+docker push peterkneale/micro-saas-registration
+```

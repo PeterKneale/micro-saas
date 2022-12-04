@@ -6,14 +6,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Backend.Client\Backend.Client.csproj" />
-    </ItemGroup>
     
     <ItemGroup>
         <PackageReference Include="Grpc.Net.ClientFactory" Version="2.49.0" />
         <PackageReference Include="MediatR" Version="11.0.0" />
         <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.10" />
-    </ItemGroup>    
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Backend.Client\Backend.Client.csproj" />
+    </ItemGroup>
 </Project>
