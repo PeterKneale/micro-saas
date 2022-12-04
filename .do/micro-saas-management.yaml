@@ -1,0 +1,44 @@
+name: micro-saas
+region: syd
+services:
+
+- name: micro-saas-frontend
+  source_dir: Frontend
+  dockerfile_path: Dockerfile
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: PeterKneale/micro-saas
+  http_port: 443
+  instance_count: 1
+  instance_size_slug: basic-xs
+  routes:
+    - path: /
+
+- name: micro-saas-management
+  source_dir: Management
+  dockerfile_path: Dockerfile
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: PeterKneale/micro-saas
+  http_port: 443
+  instance_count: 1
+  instance_size_slug: basic-xs
+  routes:
+  - path: /
+
+- name: micro-saas-registration
+  source_dir: Registration
+  dockerfile_path: Dockerfile
+  github:
+    branch: master
+    deploy_on_push: true
+    repo: PeterKneale/micro-saas
+  http_port: 443
+  instance_count: 1
+  instance_size_slug: basic-xs
+  routes:
+    - path: /
+
+
