@@ -26,7 +26,7 @@ internal class LoggingBehaviour<TRequest, TResponse> : IPipelineBehavior<TReques
 
         var responseJson = JsonConvert.SerializeObject(response, Formatting.Indented);
 
-        _log.LogInformation("Handled {RequestName} in {ElapsedMilliseconds}ms\n{ResponseJson}", requestName, sw.ElapsedMilliseconds, responseJson);
+        _log.LogInformation("Handled {RequestName} in {ElapsedMilliseconds}ms\n{RequestJson}\n{ResponseJson}", requestName, sw.ElapsedMilliseconds, requestJson, responseJson);
         
         return response;
     }

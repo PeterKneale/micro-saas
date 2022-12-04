@@ -10,8 +10,8 @@ internal static class Extensions
 
     private static Uri GetServiceUri(this IConfiguration configuration, string key, string binding)
     {
-        var host = Get(configuration, $"service:{key}:{binding}:host");
-        var port = GetInt(configuration, $"service:{key}:{binding}:port");
+        var host = configuration[$"service:{key}:{binding}:host"] ?? "localhost";
+        var port = configuration[$"service:{key}:{binding}:port"] ?? "5001";
         var protocol = configuration[$"service:{key}:{binding}:protocol"] ?? "http";
         return new Uri(protocol + "://" + host + ":" + port + "/");
     }
@@ -21,10 +21,9 @@ internal static class Extensions
 
     public static string GetPassword(this IConfiguration configuration) =>
         Get(configuration, "Password");
-    
+
     public static string GetTenant(this IConfiguration configuration) =>
         Get(configuration, "Tenant");
-    
     
     // see https://github.com/dotnet/AspNetCore.Docs/blob/main/aspnetcore/security/authentication/cookie/samples/6.x/CookieSample/Extensions/UrlHelperExtensions.cs
     public static string? GetLocalUrl(this IUrlHelper urlHelper, string? localUrl)
@@ -33,10 +32,7 @@ internal static class Extensions
             ? urlHelper.Page("/Index")
             : localUrl;
     }
-    
+
     private static string Get(this IConfiguration configuration, string key) =>
         configuration[key] ?? throw new Exception($"missing {key}");
-
-    private static int GetInt(this IConfiguration configuration, string key) =>
-        int.Parse(configuration.Get(key));
 }
