@@ -1,7 +1,7 @@
 ﻿using Backend.Features.Tenancy.Application.Commands;
 using Backend.Features.Tenancy.Application.Queries;
 
-namespace Backend.IntegrationTests.UseCase.Commands.Management;
+namespace Backend.IntegrationTests.UseCase.Tenancy;
 
 [Collection(nameof(ContainerCollectionFixture))]
 public class AddTenantTests

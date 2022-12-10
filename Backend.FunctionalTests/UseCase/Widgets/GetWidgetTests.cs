@@ -1,7 +1,7 @@
 ﻿using Backend.FunctionalTests.Fixtures;
 using Grpc.Core;
 
-namespace Backend.FunctionalTests.UseCase.Queries.Widgets;
+namespace Backend.FunctionalTests.UseCase.Widgets;
 
 [Collection(nameof(ServiceCollectionFixture))]
 public class GetWidgetTests

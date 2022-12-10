@@ -1,7 +1,7 @@
 ﻿using Backend.Features.Widgets.Application.Commands;
 using Backend.Features.Widgets.Application.Queries;
 
-namespace Backend.IntegrationTests.UseCase.Commands.Widgets;
+namespace Backend.IntegrationTests.UseCase.Widgets;
 
 [Collection(nameof(ContainerCollectionFixture))]
 public class UpdateWidgetTests

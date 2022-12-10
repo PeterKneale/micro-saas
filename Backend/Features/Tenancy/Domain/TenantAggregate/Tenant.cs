@@ -2,7 +2,7 @@
 
 public class Tenant
 {
-    private Tenant(TenantId id, Name name, Identifier identifier)
+    private Tenant(TenantId id, TenantName name, Identifier identifier)
     {
         Id = id;
         Name = name;
@@ -16,14 +16,14 @@ public class Tenant
 
     // Private setter for serialisation
     public TenantId Id { get; private set; } = null!;
-    public Name Name { get; private set; } = null!;
+    public TenantName Name { get; private set; } = null!;
     public Identifier Identifier { get; private set; } = null!;
 
-    public void SetName(Name name)
+    public void SetName(TenantName name)
     {
         Name = name;
     }
 
-    public static Tenant CreateInstance(TenantId id, Name name, Identifier identifier) =>
+    public static Tenant Provision(TenantId id, TenantName name, Identifier identifier) =>
         new(id, name, identifier);
 }

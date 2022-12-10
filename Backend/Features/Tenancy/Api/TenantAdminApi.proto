@@ -5,10 +5,17 @@ package Backend;
 option csharp_namespace = "Backend.Api";
 
 service TenantAdminService {
+    rpc RegisterTenant(RegisterTenantRequest) returns (EmptyResponse2);
     rpc AddTenant(AddTenantRequest) returns (EmptyResponse2);
     rpc GetTenant(GetTenantRequest) returns (GetTenantResponse);
     rpc GetTenantByIdentifier(GetTenantByIdentifierRequest) returns (GetTenantByIdentifierResponse);
     rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse);
+}
+
+message RegisterTenantRequest {
+    string name = 1;
+    string email = 2;
+    string identifier = 3;    
 }
 
 message AddTenantRequest {

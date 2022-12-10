@@ -1,10 +1,11 @@
 ﻿using Backend.Core.Exceptions;
+using Backend.Features.Tenancy.Domain.TenantAggregate;
 
 namespace Backend.Features.Tenancy.Application.Exceptions;
 
 internal class TenantAlreadyExistsException : BaseAlreadyExistsException
 {
-    public TenantAlreadyExistsException(Guid id) : base("tenant", id.ToString())
+    public TenantAlreadyExistsException(TenantId id) : base("tenant", id.Id.ToString())
     {
     }
 }

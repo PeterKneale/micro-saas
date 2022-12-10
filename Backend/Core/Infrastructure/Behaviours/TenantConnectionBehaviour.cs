@@ -22,29 +22,26 @@ internal class TenantConnectionBehaviour<TRequest, TResponse> : IPipelineBehavio
     {
         _log.LogInformation("Opening connection and beginning transaction");
         using var connection = _factory.GetDbConnectionForTenant();
+        connection.Open();
+        using var transaction = connection.BeginTransaction();
+        try
         {
-            connection.Open();
-            using var transaction = connection.BeginTransaction();
-            {
-                try
-                {
-                    _log.LogInformation("Setting the tenant context");
-                    await connection.ExecuteAsync($"SET app.tenant_id = '{_context.CurrentTenant}';");
+            var currentTenant = _context.CurrentTenant;
+            _log.LogInformation("Setting the tenant context {CurrentTenant}", currentTenant);
+            await connection.ExecuteAsync($"SET app.tenant_id = '{currentTenant}';");
 
-                    var result = await next();
+            var result = await next();
 
-                    _log.LogInformation("Committing transaction and closing connection");
-                    transaction.Commit();
-                    connection.Close();
-                    return result;
-                }
-                catch (Exception ex)
-                {
-                    _log.LogError(ex, "Rolling back transaction");
-                    transaction.Rollback();
-                    throw;
-                }
-            }
+            _log.LogInformation("Committing transaction and closing connection");
+            transaction.Commit();
+            connection.Close();
+            return result;
+        }
+        catch (Exception ex)
+        {
+            _log.LogError(ex, "Rolling back transaction");
+            transaction.Rollback();
+            throw;
         }
     }
 }

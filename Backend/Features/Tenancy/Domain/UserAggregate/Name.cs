@@ -1,4 +1,4 @@
-﻿namespace Backend.Features.Tenancy.Domain.TenantAggregate;
+﻿namespace Backend.Features.Tenancy.Domain.UserAggregate;
 
 public class Name
 {
@@ -19,4 +19,7 @@ public class Name
     {
         return new Name(value);
     }
+    
+    public static Name Administrator => 
+        new Name("Administrator");
 }

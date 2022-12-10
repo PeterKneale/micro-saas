@@ -2,7 +2,7 @@
 
 public class Widget
 {
-    private Widget(WidgetId id, Description description)
+    private Widget(WidgetId id, Description? description)
     {
         Id = id;
         Description = description;
@@ -16,13 +16,13 @@ public class Widget
     // Private setter for serialisation
     public WidgetId Id { get; private set; } = null!;
 
-    public Description Description { get; private set; }
+    public Description? Description { get; private set; }
 
     public void Update(Description registration)
     {
         Description = registration;
     }
 
-    public static Widget CreateInstance(WidgetId id, Description description) => 
+    public static Widget CreateInstance(WidgetId id, Description? description) => 
         new(id, description);
 }
