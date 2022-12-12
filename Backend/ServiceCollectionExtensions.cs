@@ -5,7 +5,6 @@ using Backend.Core.Infrastructure.Database;
 using Backend.Core.Infrastructure.Interceptors;
 using Backend.Core.Infrastructure.Repositories;
 using Backend.Core.Infrastructure.Tenancy;
-using Backend.Features.Tenancy.Application.Contracts;
 using Backend.Features.Tenancy.Infrastructure;
 using Backend.Features.Widgets.Api;
 using Backend.Features.Widgets.Application.Contracts;
@@ -41,6 +40,8 @@ public static class ServiceCollectionExtensions
         services
             // Log the request
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehaviour<,>))
+            // Validate the request
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>))
             // Open a connection, begin a transaction and set the tenant context for the connection
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(TenantConnectionBehaviour<,>)); 
 
@@ -49,11 +50,18 @@ public static class ServiceCollectionExtensions
         // This is important as this way the tenant context set by the TenantContextBehaviour
         // is the same one used by the repository
         services
+            // Common
             .AddScoped<IAdminConnectionFactory,AdminConnectionFactory>()
             .AddScoped<ITenantConnectionFactory,TenantConnectionFactory>()
+            // Widgets
             .AddScoped<IWidgetRepository, WidgetRepository>()
+            // Tenancy            
+            .AddScoped<ITenantRepository, TenantRepository>()
             .AddScoped<ITenantStatisticsRepository, TenantStatisticsRepository>()
-            .AddScoped<ITenantRepository, TenantRepository>();
+            .AddScoped<IRegistrationRepository, RegistrationRepository>();
+        
+        services
+            .AddScoped<IEmailSender, EmailSender>();
 
         // Update tenant context
         // a single instance of tenant context is created per request

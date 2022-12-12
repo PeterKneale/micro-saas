@@ -1,4 +1,4 @@
-﻿namespace Backend.Features.Tenancy.Domain.TenantAggregate;
+﻿namespace Backend.Features.Tenancy.Domain.Common;
 
 public class TenantId
 {

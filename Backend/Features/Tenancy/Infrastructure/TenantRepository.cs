@@ -1,6 +1,5 @@
 ﻿using Backend.Core.Infrastructure.Repositories;
 using Backend.Core.Infrastructure.Repositories.Serialisation;
-using Backend.Features.Tenancy.Application.Contracts;
 using Backend.Features.Tenancy.Domain.TenantAggregate;
 using Dapper;
 using static Backend.Core.Infrastructure.Constants;
@@ -24,7 +23,7 @@ internal class TenantRepository : ITenantRepository
         {
             id = tenant.Id.Id,
             name = tenant.Name.Value,
-            identifier = tenant.Identifier.Value,
+            identifier = tenant.TenantIdentifier.Value,
             data = json
         });
     }
@@ -39,7 +38,7 @@ internal class TenantRepository : ITenantRepository
         return JsonHelper.ToObject<Tenant>(result);
     }
 
-    public async Task<Tenant?> Get(Identifier identifier, CancellationToken cancellationToken)
+    public async Task<Tenant?> Get(TenantIdentifier identifier, CancellationToken cancellationToken)
     {
         const string sql = $"select {ColumnData} from {TableTenants} where {ColumnTenantIdentifier} = @identifier";
         var result = await _connection.QuerySingleOrDefaultAsync<string>(sql, new

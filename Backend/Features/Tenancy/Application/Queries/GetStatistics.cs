@@ -1,6 +1,4 @@
-﻿using Backend.Features.Tenancy.Application.Contracts;
-
-namespace Backend.Features.Tenancy.Application.Queries;
+﻿namespace Backend.Features.Tenancy.Application.Queries;
 
 public static class GetStatistics
 {

@@ -5,7 +5,7 @@ namespace Backend.Features.Tenancy.Application.Exceptions;
 
 internal class TenantIdentifierAlreadyExistsException : BaseAlreadyExistsException
 {
-    public TenantIdentifierAlreadyExistsException(Identifier identifier) : base("tenant", identifier.Value)
+    public TenantIdentifierAlreadyExistsException(TenantIdentifier identifier) : base("tenant", identifier.Value)
     {
     }
 }

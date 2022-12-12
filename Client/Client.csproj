@@ -9,6 +9,7 @@
     <ItemGroup>
         <Protobuf Include="..\Backend\Features\Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
         <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Client" />
+        <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantRegistrationApi.proto" GrpcServices="Client" />
         <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantStatisticsApi.proto" GrpcServices="Client" />
     </ItemGroup>
 

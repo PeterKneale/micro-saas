@@ -1,4 +1,4 @@
-﻿namespace Backend.Features.Tenancy.Domain.UserAggregate;
+﻿namespace Backend.Features.Tenancy.Domain.Common;
 
 public class UserId
 {

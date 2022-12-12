@@ -12,3 +12,11 @@ services:
       PGDATA: /data/postgres
     networks:
       - saas_private
+
+  smtp:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - saas_private

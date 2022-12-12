@@ -27,6 +27,7 @@ builder.Services.AddLogging(c => {
 
 var app = builder.Build();
 app.MapGrpcService<TenantAdminApi>();
+app.MapGrpcService<TenantRegistrationApi>();
 app.MapGrpcService<TenantStatisticsApi>();
 app.MapGrpcService<WidgetApi>();
 app.MapGet("/", () => "Backend");

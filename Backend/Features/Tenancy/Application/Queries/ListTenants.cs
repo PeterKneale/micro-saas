@@ -1,6 +1,4 @@
-﻿using Backend.Features.Tenancy.Application.Contracts;
-
-namespace Backend.Features.Tenancy.Application.Queries;
+﻿namespace Backend.Features.Tenancy.Application.Queries;
 
 public static class ListTenants
 {
@@ -26,7 +24,7 @@ public static class ListTenants
             var tenants = await _repository.ListTenants(cancellationToken);
 
             return tenants
-                .Select(x => new Result(x.Id.Id, x.Name.Value, x.Identifier.Value));
+                .Select(x => new Result(x.Id.Id, x.Name.Value, x.TenantIdentifier.Value));
         }
     }
 }

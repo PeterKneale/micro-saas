@@ -12,3 +12,9 @@ services:
       PGDATA: /data/postgres
     ports:
       - "5432:5432"
+  
+  smtp:
+    image: mailhog/mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025

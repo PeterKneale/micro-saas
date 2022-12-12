@@ -1,5 +1,4 @@
 ﻿using Backend.Core.Infrastructure.Repositories;
-using Backend.Features.Tenancy.Application.Contracts;
 using Dapper;
 using static Backend.Core.Infrastructure.Constants;
 

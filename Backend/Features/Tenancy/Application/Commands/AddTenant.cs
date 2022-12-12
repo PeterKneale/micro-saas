@@ -1,6 +1,4 @@
-﻿using Backend.Features.Tenancy.Application.Contracts;
-using Backend.Features.Tenancy.Application.Exceptions;
-using Backend.Features.Tenancy.Domain.TenantAggregate;
+﻿using Backend.Features.Tenancy.Domain.TenantAggregate;
 
 namespace Backend.Features.Tenancy.Application.Commands;
 
@@ -31,7 +29,7 @@ public static class AddTenant
         {
             var tenantId = TenantId.CreateInstance(request.Id);
             var name = TenantName.CreateInstance(request.Name);
-            var identifier = Identifier.CreateInstance(request.Identifier);
+            var identifier = TenantIdentifier.CreateInstance(request.Identifier);
 
             var idExists = await _repository.Get(tenantId, cancellationToken);
             if (idExists != null)

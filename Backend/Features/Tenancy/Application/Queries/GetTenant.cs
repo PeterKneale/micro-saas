@@ -1,6 +1,4 @@
-﻿using Backend.Features.Tenancy.Application.Contracts;
-using Backend.Features.Tenancy.Application.Exceptions;
-using Backend.Features.Tenancy.Domain.TenantAggregate;
+﻿using Backend.Features.Tenancy.Domain.TenantAggregate;
 
 namespace Backend.Features.Tenancy.Application.Queries;
 
@@ -37,7 +35,7 @@ public static class GetTenant
                 throw new TenantNotFoundException(request.Id);
             }
 
-            return new Result(tenant.Id.Id, tenant.Name.Value, tenant.Identifier.Value);
+            return new Result(tenant.Id.Id, tenant.Name.Value, tenant.TenantIdentifier.Value);
         }
     }
 }

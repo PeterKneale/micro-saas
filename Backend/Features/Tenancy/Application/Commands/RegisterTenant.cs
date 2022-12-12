@@ -1,53 +1,56 @@
-﻿using Backend.Features.Tenancy.Application.Contracts;
-using Backend.Features.Tenancy.Application.Exceptions;
-using Backend.Features.Tenancy.Domain.TenantAggregate;
-using Backend.Features.Tenancy.Domain.UserAggregate;
+﻿using Backend.Features.Tenancy.Domain.RegistrationAggregate;
 
 namespace Backend.Features.Tenancy.Application.Commands;
 
 public static class RegisterTenant
 {
-    public record Command(string Name, string Email, string Identifier) : IRequest;
+    public record Command(string Email, string Name, string Identifier, string? OverrideToken = null) : IRequest;
 
     internal class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
-            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
             RuleFor(x => x.Email).NotEmpty().EmailAddress();
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
             RuleFor(x => x.Identifier).NotEmpty().MaximumLength(100);
         }
     }
 
     internal class Handler : IRequestHandler<Command>
     {
-        private readonly ITenantRepository _repository;
+        private readonly IRegistrationRepository _repository;
+        private readonly ITenantRepository _tenants;
+        private readonly IPublisher _publisher;
 
-        public Handler(ITenantRepository repository)
+        public Handler(IRegistrationRepository repository, ITenantRepository tenants, IPublisher publisher)
         {
             _repository = repository;
+            _tenants = tenants;
+            _publisher = publisher;
         }
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            var email = Email.CreateInstance(request.Email);
-            var token = Guid.NewGuid().ToString();
-
-            var name = TenantName.CreateInstance(request.Name);
-            var identifier = Identifier.CreateInstance(request.Identifier);
-
-            var tenantId = TenantId.CreateInstance();
-            var exists = await _repository.Get(identifier, cancellationToken);
-            if (exists != null)
+            var identifier = TenantIdentifier.CreateInstance(request.Identifier);
+            var tenant = await _tenants.Get(identifier, cancellationToken);
+            if (tenant != null)
             {
                 throw new TenantIdentifierAlreadyExistsException(identifier);
             }
 
-            var tenant = Tenant.Provision(tenantId, name, identifier);
-            await _repository.Insert(tenant, cancellationToken);
+            var email = Email.CreateInstance(request.Email);
+            var name = TenantName.CreateInstance(request.Name);
 
-            var userId = UserId.CreateInstance();
-            var user = User.ProvisionAdministrator(tenantId, userId, email, token);
+            var registration = Registration.Register(email, name, identifier);
+
+            if (!string.IsNullOrWhiteSpace(request.OverrideToken))
+            {
+                registration.OverrideToken(request.OverrideToken);
+            }
+
+            await _repository.Insert(registration, cancellationToken);
+
+            await _publisher.Publish(new TenantRegistered.Notification(registration.Id), cancellationToken);
 
             return Unit.Value;
         }

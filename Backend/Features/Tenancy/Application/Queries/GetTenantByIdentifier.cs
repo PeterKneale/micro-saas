@@ -1,6 +1,4 @@
-﻿using Backend.Features.Tenancy.Application.Contracts;
-using Backend.Features.Tenancy.Application.Exceptions;
-using Backend.Features.Tenancy.Domain.TenantAggregate;
+﻿using Backend.Features.Tenancy.Domain.TenantAggregate;
 
 namespace Backend.Features.Tenancy.Application.Queries;
 
@@ -29,7 +27,7 @@ public static class GetTenantByIdentifier
 
         public async Task<Result> Handle(Query request, CancellationToken cancellationToken)
         {
-            var identifier = Identifier.CreateInstance(request.Identifier);
+            var identifier = TenantIdentifier.CreateInstance(request.Identifier);
 
             var tenant = await _repository.Get(identifier, cancellationToken);
             if (tenant == null)
@@ -37,7 +35,7 @@ public static class GetTenantByIdentifier
                 throw new TenantNotFoundException(request.Identifier);
             }
 
-            return new Result(tenant.Id.Id, tenant.Name.Value, tenant.Identifier.Value);
+            return new Result(tenant.Id.Id, tenant.Name.Value, tenant.TenantIdentifier.Value);
         }
     }
 }
