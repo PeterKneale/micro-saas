@@ -1,5 +1,3 @@
-using Tests.Helpers;
-
 namespace Tests.Tests;
 
 public class RegistrationTests : HeadPageTest
@@ -11,16 +9,18 @@ public class RegistrationTests : HeadPageTest
         var name = UniqueHelper.GetUniqueName();
         var identifier = UniqueHelper.GetUniqueIdentifier();
 
-        var registerPage = await Page.GotoRegisterPage();
-        await registerPage.EnterEmail(email);
-        await registerPage.EnterName(name);
-        await registerPage.EnterIdentifier(identifier);
-        await registerPage.ClickRegister();
+        var register = await Page.GotoRegisterPage();
+        await register.EnterEmail(email);
+        await register.EnterName(name);
+        await register.EnterIdentifier(identifier);
+        await register.ClickRegister();
 
-        var claimLink = await EmailHelper.GetClaimLink(email);
+        var link = await EmailHelper.GetFirstClaimLink(email);
 
-        var claimPage = await Page.GotoClaimPage(claimLink);
-        await claimPage.EnterPassword("password");
-        await claimPage.ClickClaim();
+        var claim = await Page.GotoClaimPage(link);
+        await claim.EnterPassword("password");
+        
+        var claimed = await claim.ClickClaim();
+        await claimed.AssertClaimedSuccessfully();
     }
 }

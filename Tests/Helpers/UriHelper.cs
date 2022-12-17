@@ -1,6 +1,6 @@
-﻿namespace Tests;
+﻿namespace Tests.Helpers;
 
-public static class Uris
+public static class UriHelper
 {
     public static class FrontEnd
     {

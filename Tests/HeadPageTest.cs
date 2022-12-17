@@ -16,7 +16,7 @@ public abstract class HeadPageTest : IDisposable
       _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
       {
          Headless = false,
-         SlowMo = 500
+         SlowMo = 100
       });
       Page = await _browser.NewPageAsync();
    }

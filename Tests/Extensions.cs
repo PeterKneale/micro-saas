@@ -1,4 +1,4 @@
-﻿using Tests.Pages;
+﻿using FluentAssertions;
 
 namespace Tests;
 
@@ -6,7 +6,7 @@ public static class Extensions
 {
     public static async Task<RegisterPage> GotoRegisterPage(this IPage page)
     {
-        await page.GotoAsync(Uris.Registration.Register.ToString());
+        await page.GotoAsync(UriHelper.Registration.Register.ToString());
         return new RegisterPage(page);
     }
     

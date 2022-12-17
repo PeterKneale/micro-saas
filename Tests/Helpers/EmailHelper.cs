@@ -6,7 +6,7 @@ namespace Tests.Helpers;
 
 public static class EmailHelper
 {
-    public static async Task<string> GetClaimLink(string email)
+    public static async Task<string> GetFirstClaimLink(string email)
     {
         var message = await GetSingleMessageTo(email);
         await DeleteMessage(message);
@@ -17,7 +17,7 @@ public static class EmailHelper
     {
         var client = new MailhogClient(new Uri("http://localhost:8025"));
         var messages = await client.SearchAsync(SearchKind.To, email);
-        return GetSingleMessage(messages);
+        return GetFirstMessage(messages);
     }
 
     private static async Task DeleteMessage(Message message)
@@ -31,16 +31,12 @@ public static class EmailHelper
         // hack
         message.Raw.Data[11..110];
     
-    private static Message GetSingleMessage(Messages messages)
+    private static Message GetFirstMessage(Messages messages)
     {
         if (!messages.Items.Any())
         {
             throw new Exception("No messages found");
         }
-        if (messages.Items.Length > 1)
-        {
-            throw new Exception("too many messages found");
-        }
-        return messages.Items.Single();
+        return messages.Items.First();
     }
 }

@@ -1,19 +1,24 @@
 ﻿namespace Tests.Pages;
 
-public class ClaimPage
+public class ClaimPage : PageModel
 {
-    private readonly IPage _page;
-
-    public ClaimPage(IPage page)
+    public ClaimPage(IPage page) : base(page)
     {
-        _page = page;
     }
-    
+
     public async Task EnterPassword(string password) =>
-        await _page
+        await Page
             .GetByTestId("Password")
             .FillAsync(password);
-    
-    public async Task ClickClaim() =>
-        await _page.GetByTestId("Claim").ClickAsync();
+
+    public async Task<ClaimedPage> ClickClaim()
+    {
+        await Page.GetByTestId("Claim").ClickAsync();
+        return new ClaimedPage(Page);
+    }
+
+    public async Task ClickClaimButRemain()
+    {
+        await Page.GetByTestId("Claim").ClickAsync();
+    }
 }

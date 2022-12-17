@@ -1,31 +1,28 @@
 ﻿namespace Tests.Pages;
 
-public class RegisterPage
+public class RegisterPage : PageModel
 {
-    private readonly IPage _page;
-
-    public RegisterPage(IPage page)
+    public RegisterPage(IPage page) : base(page)
     {
-        _page = page;
     }
 
     public async Task EnterName(string name) =>
-        await _page
+        await Page
             .GetByTestId("Name")
             .FillAsync(name);
-    
+
     public async Task EnterEmail(string email) =>
-        await _page
+        await Page
             .GetByTestId("Email")
             .FillAsync(email);
 
     public async Task EnterIdentifier(string identifier) =>
-        await _page
+        await Page
             .GetByTestId("Identifier")
             .FillAsync(identifier);
 
     public async Task ClickRegister() =>
-        await _page
+        await Page
             .GetByTestId("Register")
             .ClickAsync();
 }
