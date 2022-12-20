@@ -1,9 +1,6 @@
-﻿using Backend.Core.Infrastructure.Repositories;
-using Backend.Core.Infrastructure.Repositories.Serialisation;
-using Backend.Core.Infrastructure.Tenancy;
+﻿using Backend.Core.Infrastructure.Tenancy;
 using Backend.Features.Widgets.Application.Contracts;
 using Backend.Features.Widgets.Domain.WidgetAggregate;
-using Dapper;
 using static Backend.Core.Infrastructure.Constants;
 
 namespace Backend.Features.Widgets.Infrastructure;

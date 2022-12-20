@@ -27,7 +27,7 @@
 
     <ItemGroup>
         <Protobuf Include="Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Server" />
-        <Protobuf Include="Features\Tenancy\Api\TenantRegistrationApi.proto" GrpcServices="Server" />
+        <Protobuf Include="Features\Tenancy\Api\TenantSettingsApi.proto" GrpcServices="Server" />
         <Protobuf Include="Features\Tenancy\Api\TenantStatisticsApi.proto" GrpcServices="Server" />
         <Protobuf Include="Features\Widgets\Api\WidgetApi.proto" GrpcServices="Server" />
     </ItemGroup>

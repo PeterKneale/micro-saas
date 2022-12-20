@@ -27,7 +27,9 @@ public class MigrationExecutor
 
     public void ApplyDatabaseMigrations()
     {
+        _log.LogInformation("Applying database migrations");
         _policy.Execute(() => _runner.MigrateUp());
+        _log.LogInformation("Applied database migrations");
     }
 
     public void ResetDatabase()

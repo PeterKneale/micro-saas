@@ -36,6 +36,7 @@
 
   <ItemGroup>
     <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantSettingsApi.proto" GrpcServices="Client" />
     <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantStatisticsApi.proto" GrpcServices="Client" />
     <Protobuf Include="..\Backend\Features\Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
   </ItemGroup>

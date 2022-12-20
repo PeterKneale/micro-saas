@@ -1,4 +1,5 @@
-﻿using Backend.Features.Widgets.Application.Contracts;
+﻿using Backend.Core.Application;
+using Backend.Features.Widgets.Application.Contracts;
 using Backend.Features.Widgets.Application.Exceptions;
 using Backend.Features.Widgets.Domain.WidgetAggregate;
 

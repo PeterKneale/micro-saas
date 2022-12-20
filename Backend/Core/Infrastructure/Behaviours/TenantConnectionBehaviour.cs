@@ -1,7 +1,6 @@
-﻿using Backend.Core.Infrastructure.Repositories;
+﻿using Backend.Core.Application;
 using Backend.Core.Infrastructure.Tenancy;
 using Backend.Features.Widgets.Application.Contracts;
-using Dapper;
 
 namespace Backend.Core.Infrastructure.Behaviours;
 

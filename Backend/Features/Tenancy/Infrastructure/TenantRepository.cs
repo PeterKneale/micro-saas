@@ -1,7 +1,4 @@
-﻿using Backend.Core.Infrastructure.Repositories;
-using Backend.Core.Infrastructure.Repositories.Serialisation;
-using Backend.Features.Tenancy.Domain.TenantAggregate;
-using Dapper;
+﻿using Backend.Features.Tenancy.Domain.TenantAggregate;
 using static Backend.Core.Infrastructure.Constants;
 
 namespace Backend.Features.Tenancy.Infrastructure;

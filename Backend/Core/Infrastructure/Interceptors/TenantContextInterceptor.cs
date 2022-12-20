@@ -1,5 +1,4 @@
 ﻿using Backend.Core.Infrastructure.Tenancy;
-using Grpc.Core;
 using Grpc.Core.Interceptors;
 
 namespace Backend.Core.Infrastructure.Interceptors;

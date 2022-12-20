@@ -1,6 +1,4 @@
-﻿using Backend.Core.Infrastructure.Repositories;
-using Dapper;
-using static Backend.Core.Infrastructure.Constants;
+﻿using static Backend.Core.Infrastructure.Constants;
 
 namespace Backend.Features.Tenancy.Infrastructure;
 

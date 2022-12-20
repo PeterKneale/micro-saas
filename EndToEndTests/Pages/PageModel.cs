@@ -1,4 +1,4 @@
-﻿namespace Tests.Pages;
+﻿namespace EndToEndTests.Pages;
 
 public abstract class PageModel
 {

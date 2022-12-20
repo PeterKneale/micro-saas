@@ -56,4 +56,5 @@ public class CustomMultiTenantStore : IMultiTenantStore<TenantInfo>
     public Task<bool> TryUpdateAsync(TenantInfo tenantInfo) => throw new NotImplementedException();
     public Task<bool> TryRemoveAsync(string tenantInfo) => throw new NotImplementedException();
     public Task<IEnumerable<TenantInfo>> GetAllAsync() => throw new NotImplementedException();
+    
 }

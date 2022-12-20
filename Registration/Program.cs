@@ -34,7 +34,7 @@ builder.Services
     });
 
 builder.Services
-    .AddGrpcClient<TenantRegistrationService.TenantRegistrationServiceClient>(o => {
+    .AddGrpcClient<TenantAdminService.TenantAdminServiceClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
 

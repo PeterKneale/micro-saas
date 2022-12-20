@@ -1,7 +1,5 @@
-﻿using Backend.Api;
-using Backend.Features.Widgets.Application.Commands;
+﻿using Backend.Features.Widgets.Application.Commands;
 using Backend.Features.Widgets.Application.Queries;
-using Grpc.Core;
 
 namespace Backend.Features.Widgets.Api;
 

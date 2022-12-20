@@ -10,4 +10,10 @@ internal static class MetaDataBuilder
             "tenant", Guid.NewGuid().ToString()
         }
     };
+    public static Metadata WithTenant(string id) => new()
+    {
+        {
+            "tenant", id
+        }
+    };
 }

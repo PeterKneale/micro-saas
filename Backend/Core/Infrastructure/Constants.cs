@@ -16,6 +16,9 @@ public class Constants
     internal const string ColumnTenantName = "name";
     internal const string ColumnTenantIdentifier = "identifier";
 
+    // settings
+    internal const string TableSettings = "settings";
+
     // widgets
     internal const string TableWidgets = "widgets";
 }

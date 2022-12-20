@@ -1,10 +1,9 @@
-﻿using Backend.Api;
-using Backend.Core.Infrastructure.Behaviours;
+﻿using Backend.Core.Infrastructure.Behaviours;
 using Backend.Core.Infrastructure.Configuration;
 using Backend.Core.Infrastructure.Database;
 using Backend.Core.Infrastructure.Interceptors;
-using Backend.Core.Infrastructure.Repositories;
 using Backend.Core.Infrastructure.Tenancy;
+using Backend.Features.Tenancy.Api;
 using Backend.Features.Tenancy.Infrastructure;
 using Backend.Features.Widgets.Api;
 using Backend.Features.Widgets.Application.Contracts;
@@ -34,6 +33,10 @@ public static class ServiceCollectionExtensions
             .AddServiceOptions<WidgetApi>(options => {
                 // Capture the tenant context from grpc metadata
                 options.Interceptors.Add<TenantContextInterceptor>();   
+            })
+            .AddServiceOptions<TenantSettingsApi>(options => {
+                // Capture the tenant context from grpc metadata
+                options.Interceptors.Add<TenantContextInterceptor>();   
             });
 
         // Update mediatr request pipeline
@@ -57,6 +60,7 @@ public static class ServiceCollectionExtensions
             .AddScoped<IWidgetRepository, WidgetRepository>()
             // Tenancy            
             .AddScoped<ITenantRepository, TenantRepository>()
+            .AddScoped<ISettingsRepository, SettingsRepository>()
             .AddScoped<ITenantStatisticsRepository, TenantStatisticsRepository>()
             .AddScoped<IRegistrationRepository, RegistrationRepository>();
         

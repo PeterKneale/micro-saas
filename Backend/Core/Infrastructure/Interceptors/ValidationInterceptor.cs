@@ -1,5 +1,4 @@
-﻿using Grpc.Core;
-using Grpc.Core.Interceptors;
+﻿using Grpc.Core.Interceptors;
 
 namespace Backend.Core.Infrastructure.Interceptors;
 

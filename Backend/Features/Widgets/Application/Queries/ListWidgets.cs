@@ -1,4 +1,5 @@
-﻿using Backend.Features.Widgets.Application.Contracts;
+﻿using Backend.Core.Application;
+using Backend.Features.Widgets.Application.Contracts;
 
 namespace Backend.Features.Widgets.Application.Queries;
 

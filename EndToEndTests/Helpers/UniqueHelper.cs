@@ -1,4 +1,4 @@
-﻿namespace Tests.Helpers;
+﻿namespace EndToEndTests.Helpers;
 
 public static class UniqueHelper
 {

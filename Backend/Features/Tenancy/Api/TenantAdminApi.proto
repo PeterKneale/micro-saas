@@ -9,6 +9,8 @@ service TenantAdminService {
     rpc GetTenant(GetTenantRequest) returns (GetTenantResponse);
     rpc GetTenantByIdentifier(GetTenantByIdentifierRequest) returns (GetTenantByIdentifierResponse);
     rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse);
+    rpc Register(RegisterRequest) returns (EmptyResponse2);
+    rpc Claim(ClaimRequest) returns (EmptyResponse2);
 }
 
 message AddTenantRequest {
@@ -48,6 +50,19 @@ message ListTenantsItem {
     string id = 1;
     string name = 2;
     string identifier = 3;
+}
+
+message RegisterRequest {
+    string name = 1;
+    string email = 2;
+    string identifier = 3;    
+    string override_token = 4;
+}
+
+message ClaimRequest {
+    string identifier = 1;
+    string password = 2;
+    string token =3;
 }
 
 message EmptyResponse2{

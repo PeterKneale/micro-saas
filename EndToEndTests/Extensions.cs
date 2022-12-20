@@ -1,6 +1,7 @@
-﻿using FluentAssertions;
+﻿using EndToEndTests.Helpers;
+using EndToEndTests.Pages;
 
-namespace Tests;
+namespace EndToEndTests;
 
 public static class Extensions
 {

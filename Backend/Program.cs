@@ -7,6 +7,7 @@ using Backend.Features.Widgets.Api;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+Console.WriteLine("Starting");
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,7 +28,7 @@ builder.Services.AddLogging(c => {
 
 var app = builder.Build();
 app.MapGrpcService<TenantAdminApi>();
-app.MapGrpcService<TenantRegistrationApi>();
+app.MapGrpcService<TenantSettingsApi>();
 app.MapGrpcService<TenantStatisticsApi>();
 app.MapGrpcService<WidgetApi>();
 app.MapGet("/", () => "Backend");

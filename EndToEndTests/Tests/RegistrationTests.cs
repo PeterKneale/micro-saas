@@ -1,4 +1,6 @@
-namespace Tests.Tests;
+using EndToEndTests.Helpers;
+
+namespace EndToEndTests.Tests;
 
 public class RegistrationTests : HeadPageTest
 {

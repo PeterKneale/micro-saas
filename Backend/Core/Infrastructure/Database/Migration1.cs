@@ -18,6 +18,10 @@ public class Migration1 : Migration
             .WithColumn(Constants.ColumnTenantIdentifier).AsString().NotNullable().Unique()
             .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
         
+        Create.Table(Constants.TableSettings)
+            .WithColumn(Constants.ColumnTenantId).AsGuid().NotNullable().PrimaryKey()
+            .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
+        
         Create.Table(Constants.TableWidgets)
             .WithColumn(Constants.ColumnId).AsGuid().NotNullable().PrimaryKey()
             .WithColumn(Constants.ColumnTenantId).AsGuid().NotNullable()
@@ -26,12 +30,14 @@ public class Migration1 : Migration
         // This table should have row level security that ensure a tenant can only manage their own data
         Execute.Sql($"ALTER TABLE {Constants.TableRegistrations} ENABLE ROW LEVEL SECURITY;");
         Execute.Sql($"ALTER TABLE {Constants.TableTenants} ENABLE ROW LEVEL SECURITY;");
+        Execute.Sql($"ALTER TABLE {Constants.TableSettings} ENABLE ROW LEVEL SECURITY;");
         Execute.Sql($"ALTER TABLE {Constants.TableWidgets} ENABLE ROW LEVEL SECURITY;");
     }
 
     public override void Down()
     {
         Delete.Table(Constants.TableWidgets);
+        Delete.Table(Constants.TableSettings);
         Delete.Table(Constants.TableTenants);
         Delete.Table(Constants.TableRegistrations);
     }

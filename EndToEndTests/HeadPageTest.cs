@@ -1,4 +1,4 @@
-﻿namespace Tests;
+﻿namespace EndToEndTests;
 
 public abstract class HeadPageTest : IDisposable
 {

@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
 
-namespace Tests.Pages;
+namespace EndToEndTests.Pages;
 
 public static class ClaimedPageAssertions
 {

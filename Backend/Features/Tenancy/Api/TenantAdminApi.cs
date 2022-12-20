@@ -1,7 +1,5 @@
-﻿using Backend.Api;
-using Backend.Features.Tenancy.Application.Commands;
+﻿using Backend.Features.Tenancy.Application.Commands;
 using Backend.Features.Tenancy.Application.Queries;
-using Grpc.Core;
 
 namespace Backend.Features.Tenancy.Api;
 
@@ -55,5 +53,17 @@ public class TenantAdminApi : TenantAdminService.TenantAdminServiceBase
         {
             Items = {items}
         };
+    }
+
+    public override async Task<EmptyResponse2> Register(RegisterRequest request, ServerCallContext context)
+    {
+        await _mediator.Send(new RegisterTenant.Command(request.Email, request.Name, request.Identifier, request.OverrideToken));
+        return new EmptyResponse2();
+    }
+
+    public override async Task<EmptyResponse2> Claim(ClaimRequest request, ServerCallContext context)
+    {
+        await _mediator.Send(new ClaimTenant.Command(request.Identifier, request.Password, request.Token));
+        return new EmptyResponse2();
     }
 }

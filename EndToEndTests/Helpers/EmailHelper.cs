@@ -1,8 +1,7 @@
-﻿using System.Text.Encodings.Web;
-using Mailhog;
+﻿using Mailhog;
 using Mailhog.Models;
 
-namespace Tests.Helpers;
+namespace EndToEndTests.Helpers;
 
 public static class EmailHelper
 {

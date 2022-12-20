@@ -1,7 +1,5 @@
-﻿using Backend.Api;
-using Backend.Features.Tenancy.Application.Commands;
+﻿using Backend.Features.Tenancy.Application.Commands;
 using Backend.Features.Tenancy.Application.Queries;
-using Grpc.Core;
 
 namespace Backend.Features.Tenancy.Api;
 

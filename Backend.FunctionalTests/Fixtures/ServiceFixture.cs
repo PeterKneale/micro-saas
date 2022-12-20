@@ -21,6 +21,7 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
         WidgetsClient = new WidgetService.WidgetServiceClient(_channel);
         TenantAdminClient = new TenantAdminService.TenantAdminServiceClient(_channel);
         TenantStatisticsClient = new TenantStatisticsService.TenantStatisticsServiceClient(_channel);
+        TenantSettingsClient = new TenantSettingsService.TenantSettingsServiceClient(_channel);
         Services.ExecuteDatabaseMigration(x => x.ResetDatabase());
     }
 
@@ -28,10 +29,10 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
         builder.ConfigureLogging(x => x.AddXUnit(this));
 
     public ITestOutputHelper? OutputHelper { get; set; }
-
-    public WidgetService.WidgetServiceClient WidgetsClient { get; }
     public TenantAdminService.TenantAdminServiceClient TenantAdminClient { get; }
+    public TenantSettingsService.TenantSettingsServiceClient TenantSettingsClient { get; set; }
     public TenantStatisticsService.TenantStatisticsServiceClient TenantStatisticsClient { get; }
+    public WidgetService.WidgetServiceClient WidgetsClient { get; }
 
     protected override void Dispose(bool disposing)
     {

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package Backend;
+
+option csharp_namespace = "Backend.Api";
+
+service TenantSettingsService {
+    rpc GetTheme(GetThemeRequest) returns (GetThemeResponse);
+    rpc SetTheme(SetThemeRequest) returns (EmptyResponse4);
+    rpc ResetTheme(ResetThemeRequest) returns (EmptyResponse4);
+}
+
+message GetThemeRequest {}
+message GetThemeResponse {
+    string theme = 1;
+}
+
+message SetThemeRequest {
+    string theme = 1;
+}
+
+message ResetThemeRequest {
+}
+
+message EmptyResponse4{
+}

@@ -1,5 +1,4 @@
 ﻿using Backend.Core.Exceptions;
-using Grpc.Core;
 using Grpc.Core.Interceptors;
 
 namespace Backend.Core.Infrastructure.Interceptors;

@@ -2,9 +2,9 @@
 
 public class Register : PageModel
 {
-    private readonly TenantRegistrationService.TenantRegistrationServiceClient _client;
+    private readonly TenantAdminService.TenantAdminServiceClient _client;
 
-    public Register(TenantRegistrationService.TenantRegistrationServiceClient client)
+    public Register(TenantAdminService.TenantAdminServiceClient client)
     {
         _client = client;
     }
