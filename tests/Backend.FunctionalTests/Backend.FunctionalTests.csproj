@@ -31,14 +31,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Backend\Backend.csproj" />
+    <Protobuf Include="..\..\src\Backend\Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\src\Backend\Features\Tenancy\Api\TenantSettingsApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\src\Backend\Features\Tenancy\Api\TenantStatisticsApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\src\Backend\Features\Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Client" />
-    <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantSettingsApi.proto" GrpcServices="Client" />
-    <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantStatisticsApi.proto" GrpcServices="Client" />
-    <Protobuf Include="..\Backend\Features\Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
+    <ProjectReference Include="..\..\src\Backend\Backend.csproj" />
   </ItemGroup>
 
 </Project>

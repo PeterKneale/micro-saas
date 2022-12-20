@@ -1,4 +1,5 @@
 ﻿using EndToEndTests.Helpers;
+using EndToEndTests.Pages;
 
 namespace EndToEndTests.Tests;
 
