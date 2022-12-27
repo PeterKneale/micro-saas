@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{3A59
 		docker-compose.yml = docker-compose.yml
 		docker-compose.override.yml = docker-compose.override.yml
 		local-infra.yml = local-infra.yml
+		.dockerignore = .dockerignore
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{61DBEDDD-8598-4A03-A107-A05485F968CE}"

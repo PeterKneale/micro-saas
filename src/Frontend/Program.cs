@@ -55,12 +55,17 @@ builder.Services
     });
 
 builder.Services
-    .AddGrpcClient<Backend.Api.WidgetService.WidgetServiceClient>(o => {
+    .AddGrpcClient<Backend.Api.TenantSettingsService.TenantSettingsServiceClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
-    }).AddInterceptor<TenantInterceptor>();
+    }).AddInterceptor<TenantContextInterceptor>();;
 
 builder.Services
-    .AddScoped<TenantInterceptor>();
+    .AddGrpcClient<Backend.Api.WidgetService.WidgetServiceClient>(o => {
+        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
+    }).AddInterceptor<TenantContextInterceptor>();
+
+builder.Services
+    .AddScoped<TenantContextInterceptor>();
 
 var app = builder.Build();
 

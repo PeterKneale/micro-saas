@@ -3,20 +3,21 @@
 
 <partial name="_Toolbar"/>
 
-<h3>Widget Admin</h3>
+<h1>Widget Admin</h1>
+
 <div class="card">
     <div class="card-header">
         Add a new Widget
     </div>
     <div class="card-body">
         <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Data.Description"></label>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div  class="mb-3">
+                <label asp-for="Data.Description" class="form-label"></label>
                 <input asp-for="Data.Description" class="form-control">
                 <span asp-validation-for="Data.Description" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div  class="mb-3">
                 <button type="submit" class="btn btn-primary mt-4">Add Widget</button>
             </div>
         </form>

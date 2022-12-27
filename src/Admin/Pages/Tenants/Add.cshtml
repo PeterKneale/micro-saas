@@ -3,25 +3,26 @@
 
 <partial name="_Toolbar"/>
 
-<h3>Tenant Admin</h3>
+<h1>Tenant Administration</h1>
+
 <div class="card">
     <div class="card-header">
-        Add a new Widget
+        Add a new Tenant
     </div>
     <div class="card-body">
         <form method="post">
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Data.Name"></label>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div  class="mb-3">
+                <label asp-for="Data.Name" class="form-label"></label>
                 <input asp-for="Data.Name" class="form-control">
                 <span asp-validation-for="Data.Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Data.Identifier"></label>
+            <div  class="mb-3">
+                <label asp-for="Data.Identifier" class="form-label"></label>
                 <input asp-for="Data.Identifier" class="form-control">
                 <span asp-validation-for="Data.Identifier" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div  class="mb-3">
                 <button type="submit" class="btn btn-primary mt-4">Add Tenant</button>
             </div>
         </form>

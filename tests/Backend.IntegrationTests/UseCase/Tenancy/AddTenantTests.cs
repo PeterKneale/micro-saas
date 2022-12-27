@@ -29,12 +29,4 @@ public class AddTenantTests
         result.Id.Should().Be(id);
         result.Name.Should().Be(name);
     }
-    
-    [Fact]
-    public async Task CanAddTenants()
-    {
-        await _provider.ExecuteCommand(new AddTenant.Command(Guid.NewGuid(), "Tenant A", Guid.NewGuid().ToString()));
-        await _provider.ExecuteCommand(new AddTenant.Command(Guid.NewGuid(), "Tenant B", Guid.NewGuid().ToString()));
-        await _provider.ExecuteCommand(new AddTenant.Command(Guid.NewGuid(), "Tenant C", Guid.NewGuid().ToString()));
-    }
 }

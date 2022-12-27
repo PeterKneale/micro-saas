@@ -1,4 +1,16 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿// jQuery unobtrusive validation defaults
+// https://designmodo.com/validate-forms-bootstrap/
+$.validator.setDefaults({
+    errorClass: "",
+    validClass: "",
 
-// Write your JavaScript code.
+    highlight: function (element, errorClass, validClass) {
+        $(element).addClass("is-invalid").removeClass("is-valid");
+        $(element.form).find("[data-valmsg-for=" + element.id + "]").addClass("invalid-feedback");
+    },
+
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).addClass("is-valid").removeClass("is-invalid");
+        $(element.form).find("[data-valmsg-for=" + element.id + "]").removeClass("invalid-feedback");
+    },
+});

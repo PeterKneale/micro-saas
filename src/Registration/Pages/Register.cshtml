@@ -11,22 +11,22 @@
     <div class="card-body">
         <form method="post">
             <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
+            <div  class="mb-3">
                 <label asp-for="Data.Email"></label>
                 <input asp-for="Data.Email" class="form-control" data-testid="Email">
                 <span asp-validation-for="Data.Email" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div  class="mb-3">
                 <label asp-for="Data.Name"></label>
                 <input asp-for="Data.Name" class="form-control" data-testid="Name">
                 <span asp-validation-for="Data.Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div  class="mb-3">
                 <label asp-for="Data.Identifier"></label>
                 <input asp-for="Data.Identifier" class="form-control" data-testid="Identifier">
                 <span asp-validation-for="Data.Identifier" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div  class="mb-3">
                 <button type="submit" class="btn btn-primary mt-4" data-testid="Register">Register</button>
             </div>
         </form>
