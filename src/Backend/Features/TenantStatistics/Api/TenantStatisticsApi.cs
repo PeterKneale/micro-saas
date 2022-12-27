@@ -1,7 +1,6 @@
-﻿using Backend.Features.Tenancy.Application.Commands;
-using Backend.Features.Tenancy.Application.Queries;
+﻿using Backend.Features.TenantStatistics.Application.Queries;
 
-namespace Backend.Features.Tenancy.Api;
+namespace Backend.Features.TenantStatistics.Api;
 
 public class TenantStatisticsApi : TenantStatisticsService.TenantStatisticsServiceBase
 {

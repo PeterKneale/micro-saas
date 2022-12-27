@@ -3,6 +3,7 @@ using System.Net;
 using Backend;
 using Backend.Core.Infrastructure.Database;
 using Backend.Features.Tenancy.Api;
+using Backend.Features.TenantStatistics.Api;
 using Backend.Features.Widgets.Api;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 

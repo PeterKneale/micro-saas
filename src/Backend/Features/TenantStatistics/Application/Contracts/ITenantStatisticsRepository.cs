@@ -1,4 +1,4 @@
-﻿namespace Backend.Features.Tenancy.Application.Contracts;
+﻿namespace Backend.Features.TenantStatistics.Application.Contracts;
 
 internal interface ITenantStatisticsRepository
 {

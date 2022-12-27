@@ -5,6 +5,8 @@ using Backend.Core.Infrastructure.Interceptors;
 using Backend.Core.Infrastructure.Tenancy;
 using Backend.Features.Tenancy.Api;
 using Backend.Features.Tenancy.Infrastructure;
+using Backend.Features.TenantStatistics.Application.Contracts;
+using Backend.Features.TenantStatistics.Infrastructure;
 using Backend.Features.Widgets.Api;
 using Backend.Features.Widgets.Application.Contracts;
 using Backend.Features.Widgets.Infrastructure;

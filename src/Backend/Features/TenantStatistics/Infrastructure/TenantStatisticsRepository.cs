@@ -1,6 +1,7 @@
-﻿using static Backend.Core.Infrastructure.Constants;
+﻿using Backend.Features.TenantStatistics.Application.Contracts;
+using static Backend.Core.Infrastructure.Constants;
 
-namespace Backend.Features.Tenancy.Infrastructure;
+namespace Backend.Features.TenantStatistics.Infrastructure;
 
 internal class TenantStatisticsRepository : ITenantStatisticsRepository
 {

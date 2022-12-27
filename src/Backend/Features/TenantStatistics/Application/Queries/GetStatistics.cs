@@ -1,4 +1,6 @@
-﻿namespace Backend.Features.Tenancy.Application.Queries;
+﻿using Backend.Features.TenantStatistics.Application.Contracts;
+
+namespace Backend.Features.TenantStatistics.Application.Queries;
 
 public static class GetStatistics
 {
