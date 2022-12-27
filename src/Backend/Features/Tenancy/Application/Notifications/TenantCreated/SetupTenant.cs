@@ -6,13 +6,13 @@ public class SetupTenant
 {
     internal class Handler : INotificationHandler<Notification>
     {
-        private readonly ISettingsRepository _settings;
         private readonly ITenantRepository _tenants;
+        private readonly ILogger<Handler> _logs;
 
-        public Handler(ISettingsRepository settings, ITenantRepository tenants)
+        public Handler(ITenantRepository tenants, ILogger<Handler> logs)
         {
-            _settings = settings;
             _tenants = tenants;
+            _logs = logs;
         }
 
         public async Task Handle(Notification notification, CancellationToken cancellationToken)
@@ -23,7 +23,7 @@ public class SetupTenant
                 throw new RegistrationNotFoundException(notification.TenantId.Id);
             }
 
-            await _settings.Insert(Settings.Create(), cancellationToken);
+            _logs.LogInformation("Tenant created {TenantName}", tenant.Name);
         }
     }
 }
