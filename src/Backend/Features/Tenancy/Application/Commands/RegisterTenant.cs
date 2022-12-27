@@ -50,7 +50,7 @@ public static class RegisterTenant
 
             await _repository.Insert(registration, cancellationToken);
 
-            await _publisher.Publish(new TenantRegistered.Notification(registration.Id), cancellationToken);
+            await _publisher.Publish(new Notifications.TenantRegistered.Notification(registration.Id), cancellationToken);
 
             return Unit.Value;
         }

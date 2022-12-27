@@ -18,6 +18,17 @@ public class TenantThemeTests
     }
 
     [Fact]
+    public async Task Can_get_default_theme()
+    {
+        // arrange
+        var metadata = await _helper.CreateTenant();
+
+        // assert
+        (await _settings.GetThemeAsync(new GetThemeRequest(), metadata))
+            .Theme.Should().Be(DefaultThemeName);
+    }
+    
+    [Fact]
     public async Task Can_set_theme()
     {
         // arrange

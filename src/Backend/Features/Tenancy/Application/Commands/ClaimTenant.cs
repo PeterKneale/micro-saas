@@ -41,9 +41,7 @@ public static class ClaimTenant
 
             await _repository.Update(registration, cancellationToken);
 
-            // todo: do via domain events later
-
-            await _publisher.Publish(new TenantClaimed.Notification(registration.Id), cancellationToken);
+            await _publisher.Publish(new Notifications.TenantClaimed.Notification(registration.Id), cancellationToken);
 
             return Unit.Value;
         }
