@@ -1,5 +1,5 @@
-﻿using Backend.Features.Widgets.Application.Commands;
-using Backend.Features.Widgets.Application.Queries;
+﻿using Backend.Modules.Widgets.Application.Commands;
+using Backend.Modules.Widgets.Application.Queries;
 
 namespace Backend.IntegrationTests.UseCase;
 

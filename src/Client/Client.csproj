@@ -7,18 +7,22 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\Backend\Features\Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
-        <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Client" />
-        <Protobuf Include="..\Backend\Features\Tenancy\Api\TenantSettingsApi.proto" GrpcServices="Client" />
-        <Protobuf Include="..\Backend\Features\Statistics\Api\TenantStatisticsApi.proto" GrpcServices="Client" />
+        <Protobuf Include="..\..\src\Backend.Modules.Tenants\Api\TenantsApi.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\src\Backend.Modules.Statistics\Api\StatisticsApi.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\src\Backend.Modules.Settings\Api\SettingsApi.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\src\Backend.Modules.Widgets\Api\WidgetApi.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Google.Protobuf" Version="3.21.10" />
-      <PackageReference Include="Grpc.Net.Client" Version="2.50.0" />
-      <PackageReference Include="Grpc.Tools" Version="2.50.0">
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        <PrivateAssets>all</PrivateAssets>
-      </PackageReference>
+        <PackageReference Include="Google.Protobuf" Version="3.21.10"/>
+        <PackageReference Include="Grpc.Net.Client" Version="2.50.0"/>
+        <PackageReference Include="Grpc.Tools" Version="2.50.0">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Backend.Modules.Statistics\Backend.Modules.Statistics.csproj"/>
     </ItemGroup>
 </Project>

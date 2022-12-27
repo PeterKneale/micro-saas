@@ -26,10 +26,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Protobuf Include="Features\TenantStatistics\Api\TenantStatisticsApi.proto" GrpcServices="Server" />
-        <Protobuf Include="Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Server" />
-        <Protobuf Include="Features\Tenancy\Api\TenantSettingsApi.proto" GrpcServices="Server" />
-        <Protobuf Include="Features\Widgets\Api\WidgetApi.proto" GrpcServices="Server" />
+      <ProjectReference Include="..\Backend.Modules.Settings\Backend.Modules.Settings.csproj" />
+      <ProjectReference Include="..\Backend.Modules.Statistics\Backend.Modules.Statistics.csproj" />
+      <ProjectReference Include="..\Backend.Modules.Tenants\Backend.Modules.Tenants.csproj" />
+      <ProjectReference Include="..\Backend.Modules.Widgets\Backend.Modules.Widgets.csproj" />
+      <ProjectReference Include="..\Backend.Modules\Backend.Modules.csproj" />
     </ItemGroup>
 
 </Project>

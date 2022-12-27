@@ -1,4 +1,4 @@
-﻿using Backend.Features.Tenancy.Application.Commands;
+﻿using Backend.Modules.Tenants.Application.Commands;
 
 namespace Backend.IntegrationTests.UseCase.Tenancy;
 

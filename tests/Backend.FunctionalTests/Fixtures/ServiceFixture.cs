@@ -1,4 +1,4 @@
-﻿using Backend.Core.Infrastructure.Database;
+﻿using Backend.Modules.Infrastructure.Database;
 using Grpc.Net.Client;
 using MartinCostello.Logging.XUnit;
 using Microsoft.AspNetCore.Hosting;

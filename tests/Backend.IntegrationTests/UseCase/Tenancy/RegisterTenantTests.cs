@@ -1,5 +1,4 @@
-﻿using Backend.Features.Tenancy.Application.Commands;
-using Backend.Features.Tenancy.Application.Queries;
+﻿using Backend.Modules.Tenants.Application.Commands;
 
 namespace Backend.IntegrationTests.UseCase.Tenancy;
 

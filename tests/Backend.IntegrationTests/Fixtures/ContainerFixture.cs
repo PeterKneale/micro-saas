@@ -1,4 +1,4 @@
-﻿using Backend.Core.Infrastructure.Database;
+﻿using Backend.Modules.Infrastructure.Database;
 
 namespace Backend.IntegrationTests.Fixtures;
 
@@ -12,7 +12,7 @@ public class ContainerFixture : IDisposable
             .AddJsonFile("appsettings.json", optional: false)
             .Build();
         var services = new ServiceCollection();
-        services.AddBackend(configuration);
+        services.AddServices(configuration);
         services.AddSingleton<IConfiguration>(configuration);
         _provider = services.BuildServiceProvider();
         _provider.ExecuteDatabaseMigration(x => x.ResetDatabase());

@@ -31,10 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Protobuf Include="..\..\src\Backend\Features\Tenancy\Api\TenantAdminApi.proto" GrpcServices="Client" />
-    <Protobuf Include="..\..\src\Backend\Features\Tenancy\Api\TenantSettingsApi.proto" GrpcServices="Client" />
-    <Protobuf Include="..\..\src\Backend\Features\TenantStatistics\Api\TenantStatisticsApi.proto" GrpcServices="Client" />
-    <Protobuf Include="..\..\src\Backend\Features\Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\src\Backend.Modules.Statistics\Api\StatisticsApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\src\Backend.Modules.Tenants\Api\TenantsApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\src\Backend.Modules.Settings\Api\SettingsApi.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\src\Backend.Modules.Widgets\Api\WidgetApi.proto" GrpcServices="Client" />
   </ItemGroup>
 
   <ItemGroup>

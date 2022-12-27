@@ -1,4 +1,4 @@
-﻿using Backend.Features.Widgets.Domain.WidgetAggregate;
+﻿using Backend.Modules.Widgets.Domain.WidgetAggregate;
 
 namespace Backend.UnitTests.WidgetAggregate;
 

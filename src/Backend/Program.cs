@@ -1,10 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Net;
 using Backend;
-using Backend.Core.Infrastructure.Database;
-using Backend.Features.Tenancy.Api;
-using Backend.Features.TenantStatistics.Api;
-using Backend.Features.Widgets.Api;
+using Backend.Modules.Infrastructure.Database;
+using Backend.Modules.Settings.Api;
+using Backend.Modules.Statistics.Api;
+using Backend.Modules.Tenants.Api;
+using Backend.Modules.Widgets.Api;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -19,7 +20,7 @@ builder.WebHost.ConfigureKestrel(opt => {
     opt.Listen(IPAddress.Any, 5001, listen => listen.Protocols = HttpProtocols.Http2);
 });
 
-builder.Services.AddBackend(builder.Configuration);
+builder.Services.AddServices(builder.Configuration);
 builder.Services.AddHealthChecks();
 builder.Services.AddLogging(c => {
     c.AddSimpleConsole(opt => {
