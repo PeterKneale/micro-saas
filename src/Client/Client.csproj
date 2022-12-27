@@ -21,8 +21,4 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>
-
-    <ItemGroup>
-        <ProjectReference Include="..\Backend.Modules.Statistics\Backend.Modules.Statistics.csproj"/>
-    </ItemGroup>
 </Project>

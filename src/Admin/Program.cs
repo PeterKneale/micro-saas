@@ -49,7 +49,7 @@ builder.Services
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
 builder.Services
-    .AddGrpcClient<Backend.Api.TenantStatisticsService.TenantStatisticsServiceClient>(o => {
+    .AddGrpcClient<Backend.Api.StatisticsApi.StatisticsApiClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
 
