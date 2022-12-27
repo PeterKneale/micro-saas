@@ -4,9 +4,9 @@ namespace Backend.FunctionalTests.UseCase;
 
 public class TenantTestHelper
 {
-    private readonly TenantAdminService.TenantAdminServiceClient _admin;
+    private readonly TenantsApi.TenantsApiClient _admin;
 
-    public TenantTestHelper(TenantAdminService.TenantAdminServiceClient admin)
+    public TenantTestHelper(TenantsApi.TenantsApiClient admin)
     {
         _admin = admin;
     }

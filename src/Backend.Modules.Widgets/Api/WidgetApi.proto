@@ -4,7 +4,7 @@ package Backend;
 
 option csharp_namespace = "Backend.Api";
 
-service WidgetService {
+service WidgetsApi {
     rpc AddWidget(AddWidgetRequest) returns (EmptyResponse);
     rpc GetWidget(GetWidgetRequest) returns (GetWidgetResponse);
     rpc UpdateWidget(UpdateWidgetRequest) returns (EmptyResponse);

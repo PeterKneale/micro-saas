@@ -18,10 +18,10 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
         {
             HttpClient = httpClient
         });
-        WidgetsClient = new WidgetService.WidgetServiceClient(_channel);
-        TenantAdminClient = new TenantAdminService.TenantAdminServiceClient(_channel);
-        TenantStatisticsClient = new TenantStatisticsService.TenantStatisticsServiceClient(_channel);
-        TenantSettingsClient = new TenantSettingsService.TenantSettingsServiceClient(_channel);
+        WidgetsClient = new WidgetsApi.WidgetsApiClient(_channel);
+        TenantAdminClient = new TenantsApi.TenantsApiClient(_channel);
+        TenantStatisticsClient = new StatisticsApi.StatisticsApiClient(_channel);
+        TenantSettingsClient = new SettingsApi.SettingsApiClient(_channel);
         Services.ExecuteDatabaseMigration(x => x.ResetDatabase());
     }
 
@@ -29,10 +29,10 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
         builder.ConfigureLogging(x => x.AddXUnit(this));
 
     public ITestOutputHelper? OutputHelper { get; set; }
-    public TenantAdminService.TenantAdminServiceClient TenantAdminClient { get; }
-    public TenantSettingsService.TenantSettingsServiceClient TenantSettingsClient { get; set; }
-    public TenantStatisticsService.TenantStatisticsServiceClient TenantStatisticsClient { get; }
-    public WidgetService.WidgetServiceClient WidgetsClient { get; }
+    public TenantsApi.TenantsApiClient TenantAdminClient { get; }
+    public SettingsApi.SettingsApiClient TenantSettingsClient { get; set; }
+    public StatisticsApi.StatisticsApiClient TenantStatisticsClient { get; }
+    public WidgetsApi.WidgetsApiClient WidgetsClient { get; }
 
     protected override void Dispose(bool disposing)
     {

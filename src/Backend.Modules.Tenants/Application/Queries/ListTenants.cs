@@ -1,6 +1,4 @@
-﻿using Backend.Modules.Tenants.Application.Contracts;
-
-namespace Backend.Modules.Tenants.Application.Queries;
+﻿namespace Backend.Modules.Tenants.Application.Queries;
 
 public static class ListTenants
 {

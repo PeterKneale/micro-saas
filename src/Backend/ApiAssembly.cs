@@ -1,9 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-
-[assembly: InternalsVisibleTo("Backend.IntegrationTests")]
-
-namespace Backend;
-
+﻿namespace Backend;
+// just a marker for tests
 public class ApiAssembly
 {
     

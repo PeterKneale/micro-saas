@@ -4,9 +4,9 @@ namespace Frontend.Pages.Widgets;
 
 public class Add : PageModel
 {
-    private readonly WidgetService.WidgetServiceClient _client;
+    private readonly WidgetsApi.WidgetsApiClient _client;
 
-    public Add(WidgetService.WidgetServiceClient client)
+    public Add(WidgetsApi.WidgetsApiClient client)
     {
         _client = client;
     }

@@ -3,11 +3,11 @@ using Backend.Modules.Settings.Application.Queries;
 
 namespace Backend.Modules.Settings.Api;
 
-public class TenantSettingsApi : TenantSettingsService.TenantSettingsServiceBase
+public class SettingsApi : Backend.Api.SettingsApi.SettingsApiBase
 {
     private readonly IMediator _mediator;
 
-    public TenantSettingsApi(IMediator mediator)
+    public SettingsApi(IMediator mediator)
     {
         _mediator = mediator;
     }

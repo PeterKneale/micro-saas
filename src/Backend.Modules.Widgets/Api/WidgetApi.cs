@@ -1,13 +1,14 @@
-﻿using Backend.Modules.Widgets.Application.Commands;
+﻿using Backend.Api;
+using Backend.Modules.Widgets.Application.Commands;
 using Backend.Modules.Widgets.Application.Queries;
 
 namespace Backend.Modules.Widgets.Api;
 
-public class WidgetApi : WidgetService.WidgetServiceBase
+public class WidgetsApi : Backend.Api.WidgetsApi.WidgetsApiBase
 {
     private readonly IMediator _mediator;
 
-    public WidgetApi(IMediator mediator)
+    public WidgetsApi(IMediator mediator)
     {
         _mediator = mediator;
     }

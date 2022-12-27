@@ -1,8 +1,6 @@
 ﻿using Backend.Modules.Application;
-using Backend.Modules.Tenants.Application.Contracts;
-using Backend.Modules.Tenants.Application.Exceptions;
 
-namespace Backend.Modules.Tenants.Application.Notifications.TenantRegistered;
+namespace Backend.Modules.Tenants.Application.DomainEvents.TenantRegistered;
 
 public class SendRegisteredEmail
 {

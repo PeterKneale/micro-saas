@@ -5,7 +5,7 @@ namespace Backend.FunctionalTests.UseCase.Tenancy;
 [Collection(nameof(ServiceCollectionFixture))]
 public class TenantThemeTests
 {
-    private readonly TenantSettingsService.TenantSettingsServiceClient _settings;
+    private readonly SettingsApi.SettingsApiClient _settings;
     private readonly TenantTestHelper _helper;
     private string DefaultThemeName = "Default";
     private string AlternateThemeName = "X";

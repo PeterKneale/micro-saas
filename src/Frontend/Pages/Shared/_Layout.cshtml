@@ -6,7 +6,7 @@
     var services = Context.Request.HttpContext.RequestServices;
     var context = services.GetRequiredService<IMultiTenantContextAccessor<TenantInfo>>();
     var tenant = context.MultiTenantContext!.TenantInfo;
-    var client = services.GetRequiredService<TenantSettingsService.TenantSettingsServiceClient>();
+    var client = services.GetRequiredService<SettingsApi.SettingsApiClient>();
     var response = await client.GetThemeAsync(new GetThemeRequest());
     var themeCss = $"~/css/themes/{response.Theme}.min.css";
 }

@@ -3,11 +3,11 @@ using Backend.Modules.Statistics.Application.Queries;
 
 namespace Backend.Modules.Statistics.Api;
 
-public class TenantStatisticsApi : TenantStatisticsService.TenantStatisticsServiceBase
+public class StatisticsApi : Backend.Api.StatisticsApi.StatisticsApiBase
 {
     private readonly IMediator _mediator;
 
-    public TenantStatisticsApi(IMediator mediator)
+    public StatisticsApi(IMediator mediator)
     {
         _mediator = mediator;
     }

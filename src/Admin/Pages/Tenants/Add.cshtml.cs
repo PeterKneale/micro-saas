@@ -6,9 +6,9 @@ namespace Admin.Pages.Tenants;
 
 public class Add : PageModel
 {
-    private readonly TenantAdminService.TenantAdminServiceClient _client;
+    private readonly TenantsApi.TenantsApiClient _client;
 
-    public Add(TenantAdminService.TenantAdminServiceClient client)
+    public Add(TenantsApi.TenantsApiClient client)
     {
         _client = client;
     }

@@ -1,7 +1,4 @@
-﻿using Backend.Modules.Tenants.Application.Contracts;
-using Backend.Modules.Tenants.Application.Exceptions;
-
-namespace Backend.Modules.Tenants.Application.Notifications.TenantCreated;
+﻿namespace Backend.Modules.Tenants.Application.DomainEvents.TenantCreated;
 
 public class SetupTenant
 {

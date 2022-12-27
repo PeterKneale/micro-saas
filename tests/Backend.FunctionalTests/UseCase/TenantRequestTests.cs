@@ -6,7 +6,7 @@ namespace Backend.FunctionalTests.UseCase;
 [Collection(nameof(ServiceCollectionFixture))]
 public class TenantRequestTests
 {
-    private readonly WidgetService.WidgetServiceClient _client;
+    private readonly WidgetsApi.WidgetsApiClient _client;
 
     public TenantRequestTests(ServiceFixture service, ITestOutputHelper output)
     {

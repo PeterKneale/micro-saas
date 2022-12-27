@@ -4,11 +4,11 @@ using Backend.Modules.Tenants.Application.Queries;
 
 namespace Backend.Modules.Tenants.Api;
 
-public class TenantAdminApi : TenantAdminService.TenantAdminServiceBase
+public class TenantsApi : Backend.Api.TenantsApi.TenantsApiBase
 {
     private readonly IMediator _mediator;
 
-    public TenantAdminApi(IMediator mediator)
+    public TenantsApi(IMediator mediator)
     {
         _mediator = mediator;
     }

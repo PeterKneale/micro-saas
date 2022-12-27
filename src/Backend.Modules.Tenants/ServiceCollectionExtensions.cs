@@ -8,6 +8,9 @@ using Backend.Modules.Infrastructure.Tenancy;
 using Backend.Modules.Tenants.Application.Contracts;
 using Backend.Modules.Tenants.Infrastructure;
 using FluentMigrator.Runner;
+using Grpc.AspNetCore.Server;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +18,17 @@ namespace Backend.Modules.Tenants;
 
 public static class ServiceCollectionExtensions
 {
+    public static IEndpointRouteBuilder AddTenants(this IEndpointRouteBuilder builder)
+    {
+        builder.MapGrpcService<Api.TenantsApi>();
+        return builder;
+    }
+    
+    public static IGrpcServerBuilder AddTenants(this IGrpcServerBuilder builder)
+    {
+        return builder;
+    }
+    
     public static IServiceCollection AddTenants(this IServiceCollection services, IConfiguration configuration)
     {
         

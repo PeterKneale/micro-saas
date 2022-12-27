@@ -1,4 +1,5 @@
 ﻿using Backend.Modules.Tenants.Application.Contracts;
+using Backend.Modules.Tenants.Application.DomainEvents.TenantClaimed;
 using Backend.Modules.Tenants.Application.Exceptions;
 using Backend.Modules.Tenants.Domain.Common;
 
@@ -45,7 +46,7 @@ public static class ClaimTenant
 
             await _repository.Update(registration, cancellationToken);
 
-            await _publisher.Publish(new Notifications.TenantClaimed.Notification(registration.Id), cancellationToken);
+            await _publisher.Publish(new Notification(registration.Id), cancellationToken);
 
             return Unit.Value;
         }

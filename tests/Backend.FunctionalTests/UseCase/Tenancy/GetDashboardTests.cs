@@ -5,8 +5,8 @@ namespace Backend.FunctionalTests.UseCase.Tenancy;
 [Collection(nameof(ServiceCollectionFixture))]
 public class GetDashboardTests
 {
-    private readonly WidgetService.WidgetServiceClient _widgets;
-    private readonly TenantStatisticsService.TenantStatisticsServiceClient _statistics;
+    private readonly WidgetsApi.WidgetsApiClient _widgets;
+    private readonly StatisticsApi.StatisticsApiClient _statistics;
 
     public GetDashboardTests(ServiceFixture service, ITestOutputHelper output)
     {

@@ -1,4 +1,5 @@
 ﻿using Backend.Modules.Tenants.Application.Contracts;
+using Backend.Modules.Tenants.Application.DomainEvents.TenantRegistered;
 using Backend.Modules.Tenants.Application.Exceptions;
 using Backend.Modules.Tenants.Domain.Common;
 using Backend.Modules.Tenants.Domain.RegistrationAggregate;
@@ -53,7 +54,7 @@ public static class RegisterTenant
 
             await _repository.Insert(registration, cancellationToken);
 
-            await _publisher.Publish(new Notifications.TenantRegistered.Notification(registration.Id), cancellationToken);
+            await _publisher.Publish(new Notification(registration.Id), cancellationToken);
 
             return Unit.Value;
         }

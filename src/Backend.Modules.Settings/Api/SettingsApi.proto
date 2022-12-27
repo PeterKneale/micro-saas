@@ -4,13 +4,16 @@ package Backend;
 
 option csharp_namespace = "Backend.Api";
 
-service TenantSettingsService {
+service SettingsApi {
     rpc GetTheme(GetThemeRequest) returns (GetThemeResponse);
     rpc SetTheme(SetThemeRequest) returns (EmptyResponse4);
     rpc ResetTheme(ResetThemeRequest) returns (EmptyResponse4);
 }
 
-message GetThemeRequest {}
+message GetThemeRequest {
+    
+}
+
 message GetThemeResponse {
     string theme = 1;
 }

@@ -2,9 +2,9 @@
 
 public class Claim : PageModel
 {
-    private readonly TenantAdminService.TenantAdminServiceClient _client;
+    private readonly TenantsApi.TenantsApiClient _client;
 
-    public Claim(TenantAdminService.TenantAdminServiceClient client)
+    public Claim(TenantsApi.TenantsApiClient client)
     {
         _client = client;
     }

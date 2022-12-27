@@ -6,7 +6,7 @@ namespace Backend.FunctionalTests.UseCase;
 [Collection(nameof(ServiceCollectionFixture))]
 public class TenantIsolationTests
 {
-    private readonly WidgetService.WidgetServiceClient _client;
+    private readonly WidgetsApi.WidgetsApiClient _client;
 
     public TenantIsolationTests(ServiceFixture service, ITestOutputHelper output)
     {

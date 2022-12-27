@@ -6,7 +6,7 @@ namespace Backend.FunctionalTests.UseCase.Widgets;
 [Collection(nameof(ServiceCollectionFixture))]
 public class GetWidgetTests
 {
-    private readonly WidgetService.WidgetServiceClient _client;
+    private readonly WidgetsApi.WidgetsApiClient _client;
 
     public GetWidgetTests(ServiceFixture service, ITestOutputHelper output)
     {

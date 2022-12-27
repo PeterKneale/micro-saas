@@ -50,17 +50,17 @@ builder.Services
     .WithStore(ServiceLifetime.Singleton, sp => sp.GetRequiredService<CustomMultiTenantStore>());
 
 builder.Services
-    .AddGrpcClient<Backend.Api.TenantAdminService.TenantAdminServiceClient>(o => {
+    .AddGrpcClient<Backend.Api.TenantsApi.TenantsApiClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     });
 
 builder.Services
-    .AddGrpcClient<Backend.Api.TenantSettingsService.TenantSettingsServiceClient>(o => {
+    .AddGrpcClient<Backend.Api.SettingsApi.SettingsApiClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     }).AddInterceptor<TenantContextInterceptor>();;
 
 builder.Services
-    .AddGrpcClient<Backend.Api.WidgetService.WidgetServiceClient>(o => {
+    .AddGrpcClient<Backend.Api.WidgetsApi.WidgetsApiClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri("backend");
     }).AddInterceptor<TenantContextInterceptor>();
 

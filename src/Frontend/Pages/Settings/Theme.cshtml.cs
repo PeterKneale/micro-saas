@@ -5,9 +5,9 @@ namespace Frontend.Pages.Settings;
 
 public class Theme : PageModel
 {
-    private readonly TenantSettingsService.TenantSettingsServiceClient _client;
+    private readonly SettingsApi.SettingsApiClient _client;
 
-    public Theme(TenantSettingsService.TenantSettingsServiceClient client)
+    public Theme(SettingsApi.SettingsApiClient client)
     {
         _client = client;
     }
