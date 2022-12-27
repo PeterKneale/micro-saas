@@ -1,23 +1,17 @@
 ﻿@page
 @model Theme
 
-<h1>Settings - Theme</h1>
+<h1>Settings</h1>
 
 <div class="card">
     <div class="card-header">
-        Set Theme
+        Choose a Theme
     </div>
     <div class="card-body">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="mb-3">
-                <select class="form-select" >
-                    <option selected>@Model.Data.CurrentTheme</option>
-                    @foreach (var option in Model.Data.OtherThemes)
-                    {
-                        <option value="@option">@option</option>
-                    }
-                </select>
+                <select asp-for="Data.Theme" asp-items="Model.Data.Themes" class="form-select"></select>
             </div>
             <div  class="mb-3">
                 <button type="submit" class="btn btn-primary mt-4">Save</button>

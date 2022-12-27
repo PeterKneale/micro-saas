@@ -1,12 +1,9 @@
-﻿using Backend.Features.Tenancy.Domain.RegistrationAggregate;
-using Backend.Features.Tenancy.Domain.TenantAggregate;
+﻿using Backend.Features.Tenancy.Domain.TenantAggregate;
 
-namespace Backend.Features.Tenancy.Application.Notifications;
+namespace Backend.Features.Tenancy.Application.Notifications.TenantClaimed;
 
 public class TenantClaimed
 {
-    public record Notification(RegistrationId RegistrationId) : INotification;
-
     internal class Handler : INotificationHandler<Notification>
     {
         private readonly IRegistrationRepository _registrations;

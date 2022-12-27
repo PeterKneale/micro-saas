@@ -35,4 +35,5 @@ app.MapGet("/", () => "Backend");
 app.MapHealthChecks("/health/alive");
 app.MapHealthChecks("/health/ready");
 app.Services.ExecuteDatabaseMigration(x => x.ApplyDatabaseMigrations());
+Console.WriteLine("Started");
 app.Run();

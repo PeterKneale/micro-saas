@@ -16,37 +16,47 @@ public class Theme : PageModel
 
     public async Task OnGetAsync()
     {
+        var currentTheme = await GetCurrentTheme();
         Data = new Model
         {
-            Themes = new SelectList(Themes, nameof(ThemeItem.Name), nameof(ThemeItem.Value))
+            Themes = new SelectList(Themes, SelectListValueField, SelectListTextField, currentTheme)
         };
-        //
-        // var response = await _client.GetThemeAsync(new GetThemeRequest());
-        // Data.Themes.SelectedValue = response.Theme;
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        var theme = Data.Themes.SelectedValue.ToString();
+        var theme = Data.Theme;
         await _client.SetThemeAsync(new SetThemeRequest
         {
             Theme = theme
         });
 
-        return RedirectToPage("Index");
+        return RedirectToPage(nameof(Theme));
+    }
+
+    private async Task<string> GetCurrentTheme()
+    {
+        var response = await _client.GetThemeAsync(new GetThemeRequest());
+        return response.Theme;
     }
 
     public record Model
     {
+        public string Theme { get; set; }
         public SelectList Themes { get; set; }
     }
 
     public static readonly IEnumerable<ThemeItem> Themes = new[]
     {
-        new ThemeItem("A", "Theme A"),
-        new ThemeItem("B", "Theme B"),
-        new ThemeItem("C", "Theme C"),
+        new ThemeItem("Theme A", "A"),
+        new ThemeItem("Theme B", "B"),
+        new ThemeItem("Theme C", "C"),
+        new ThemeItem("Theme D", "D"),
+        new ThemeItem("Theme E", "E"),
     };
 
     public record ThemeItem(string Name, string Value);
+
+    private const string SelectListTextField = nameof(ThemeItem.Name);
+    private const string SelectListValueField = nameof(ThemeItem.Value);
 }
