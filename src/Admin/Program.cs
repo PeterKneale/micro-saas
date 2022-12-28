@@ -14,53 +14,53 @@ builder.Services
 
 builder.Services
     .AddHealthChecks()
-    .AddAsyncCheck("Backend", async () => {
+    .AddAsyncCheck("Backend", async () =>
+    {
         using var client = new HttpClient();
-        var baseUri = builder.Configuration.GetServiceHttpUri("backend");
+        var baseUri = builder.Configuration.GetServiceHttpUri();
         var readyUri = new Uri(baseUri, "/health/ready");
         var response = await client.GetAsync(readyUri);
         return response.IsSuccessStatusCode
             ? HealthCheckResult.Healthy()
             : HealthCheckResult.Unhealthy();
-    }, tags: new[] { "ready" });
+    }, tags: new[] {"ready"});
 
 builder.Services
-    .AddLogging(c => {
-        c.AddSimpleConsole(opt => {
-            opt.SingleLine = true;
-        });
-    });
+    .AddLogging(c => { c.AddSimpleConsole(opt => { opt.SingleLine = true; }); });
 
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie();
 
 builder.Services
-    .AddAuthorization(options => {
+    .AddAuthorization(options =>
+    {
         options.FallbackPolicy = new AuthorizationPolicyBuilder()
             .RequireAuthenticatedUser()
             .Build();
     });
 
-builder.Services
-    .AddGrpcClient<Backend.Api.TenantsApi.TenantsApiClient>(o => {
-        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
-    });
-builder.Services
-    .AddGrpcClient<Backend.Api.StatisticsApi.StatisticsApiClient>(o => {
-        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
-    });
+builder.Services.AddGrpcClient<Backend.Api.TenantsApi.TenantsApiClient>(o =>
+{
+    o.Address = builder.Configuration.GetServiceGrpcUri();
+});
+builder.Services.AddGrpcClient<Backend.Api.StatisticsApi.StatisticsApiClient>(o =>
+{
+    o.Address = builder.Configuration.GetServiceGrpcUri();
+});
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-app.MapHealthChecks("/health/alive").AllowAnonymous();
-app.MapHealthChecks("/health/ready", new HealthCheckOptions {
+app.MapHealthChecks("/health/alive", new HealthCheckOptions
+{
+    Predicate = _ => false
+}).AllowAnonymous();
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
     Predicate = r => r.Tags.Contains("ready")
 }).AllowAnonymous();
 app.UseHttpsRedirection();

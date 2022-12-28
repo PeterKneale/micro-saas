@@ -14,7 +14,7 @@ builder.Services
 builder.Services
     .AddHealthChecks()
     .AddAsyncCheck("Backend", async () => {
-        var baseUri = builder.Configuration.GetServiceHttpUri("backend");
+        var baseUri = builder.Configuration.GetServiceHttpUri();
         var readyUri = new Uri(baseUri, "/health/ready");
         using var client = new HttpClient();
         var response = await client.GetAsync(readyUri);
@@ -33,7 +33,7 @@ builder.Services
 
 builder.Services
     .AddGrpcClient<TenantsApi.TenantsApiClient>(o => {
-        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
+        o.Address = builder.Configuration.GetServiceGrpcUri();
     });
 
 var app = builder.Build();
@@ -48,10 +48,14 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.MapHealthChecks("/health/alive");
-app.MapHealthChecks("/health/ready", new HealthCheckOptions {
+app.MapHealthChecks("/health/alive", new HealthCheckOptions
+{
+    Predicate = _ => false
+}).AllowAnonymous();
+app.MapHealthChecks("/health/ready", new HealthCheckOptions
+{
     Predicate = r => r.Tags.Contains("ready")
-});
+}).AllowAnonymous();
 app.UseAuthorization();
 app.MapRazorPages();
 app.Run();

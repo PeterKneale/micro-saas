@@ -15,7 +15,7 @@ builder.Services
 builder.Services
     .AddHealthChecks()
     .AddAsyncCheck("Backend", async () => {
-        var baseUri = builder.Configuration.GetServiceHttpUri("backend");
+        var baseUri = builder.Configuration.GetServiceHttpUri();
         var readyUri = new Uri(baseUri, "/health/ready");
         using var client = new HttpClient();
         var response = await client.GetAsync(readyUri);
@@ -51,17 +51,17 @@ builder.Services
 
 builder.Services
     .AddGrpcClient<Backend.Api.TenantsApi.TenantsApiClient>(o => {
-        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
+        o.Address = builder.Configuration.GetServiceGrpcUri();
     });
 
 builder.Services
     .AddGrpcClient<Backend.Api.SettingsApi.SettingsApiClient>(o => {
-        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
+        o.Address = builder.Configuration.GetServiceGrpcUri();
     }).AddInterceptor<TenantContextInterceptor>();;
 
 builder.Services
     .AddGrpcClient<Backend.Api.WidgetsApi.WidgetsApiClient>(o => {
-        o.Address = builder.Configuration.GetServiceGrpcUri("backend");
+        o.Address = builder.Configuration.GetServiceGrpcUri();
     }).AddInterceptor<TenantContextInterceptor>();
 
 builder.Services
@@ -79,17 +79,20 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.MapHealthChecks("/health/alive");
+app.MapHealthChecks("/health/alive", new HealthCheckOptions
+{
+    Predicate = _ => false
+}).AllowAnonymous();
 app.MapHealthChecks("/health/ready", new HealthCheckOptions
 {
     Predicate = r => r.Tags.Contains("ready")
-});
+}).AllowAnonymous();
 app.UseMultiTenant();
 app.Use(async (ctx, next) => {
     // redirect if no tenant context available
     if (ctx.GetMultiTenantContext<TenantInfo>()?.TenantInfo == null)
     {
-        var redirectUri = app.Configuration.GetServiceHttpUri("registration");
+        var redirectUri = app.Configuration.GetRegistrationHttpUri();
         ctx.Response.Redirect(redirectUri.ToString());
         return;
     }

@@ -11,6 +11,8 @@ services:
       dockerfile: ./src/Admin/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - service:backend:http:host=backend
+      - service:backend:grpc:host=backend
     ports:
       - '8000:80'
     depends_on:
@@ -25,6 +27,8 @@ services:
       dockerfile: ./src/Registration/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - service:backend:http:host=backend
+      - service:backend:grpc:host=backend
     ports:
       - '8010:80'
     depends_on:
@@ -39,6 +43,8 @@ services:
       dockerfile: ./src/Frontend/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - service:backend:http:host=backend
+      - service:backend:grpc:host=backend
     ports:
       - '8020:80'
     depends_on:
@@ -53,8 +59,8 @@ services:
       dockerfile: ./src/Backend/Dockerfile
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://localhost:5001;http://localhost:5000
       - service:db:host=db
+      - SmtpHost=smtp
     ports:
       - '5000:5000'
       - '5001:5001'

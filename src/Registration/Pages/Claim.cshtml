@@ -13,11 +13,11 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div  class="mb-3">
                 <label asp-for="Data.Password"></label>
-                <input asp-for="Data.Password" class="form-control" data-testid="Password">
+                <input type="password" asp-for="Data.Password" class="form-control" data-testid="Password">
                 <span asp-validation-for="Data.Password" class="text-danger"></span>
             </div>
-            <input type="text" asp-for="Identifier" data-testid="Identifier">
-            <input type="text" asp-for="Token" data-testid="Token">
+            <input type="hidden" asp-for="Identifier" data-testid="Identifier">
+            <input type="hidden" asp-for="Token" data-testid="Token">
             <div  class="mb-3">
                 <button type="submit" class="btn btn-primary mt-4" data-testid="Claim">Claim</button>
             </div>

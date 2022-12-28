@@ -2,17 +2,30 @@
 
 internal static class Extensions
 {
-    public static Uri GetServiceHttpUri(this IConfiguration configuration, string key) =>
-        configuration.GetServiceUri(key, "http");
-
-    public static Uri GetServiceGrpcUri(this IConfiguration configuration, string key) =>
-        configuration.GetServiceUri(key, "grpc");
-
-    private static Uri GetServiceUri(this IConfiguration configuration, string key, string binding)
+    private const string BackendKey = "backend";
+    
+    public static Uri GetRegistrationHttpUri(this IConfiguration configuration)
     {
-        var host = configuration[$"service:{key}:{binding}:host"] ?? "backend";
-        var port = configuration[$"service:{key}:{binding}:port"] ?? "5001";
-        var protocol = configuration[$"service:{key}:{binding}:protocol"] ?? "http";
+        var key = "registration";
+        var host = configuration[$"service:{key}:http:host"] ?? "localhost";
+        var port = configuration[$"service:{key}:http:port"] ?? "8010";
+        var protocol = configuration[$"service:{key}:http:protocol"] ?? "http";
+        return new Uri(protocol + "://" + host + ":" + port + "/");
+    }
+    
+    public static Uri GetServiceHttpUri(this IConfiguration configuration)
+    {
+        var host = configuration[$"service:{BackendKey}:http:host"] ?? "localhost";
+        var port = configuration[$"service:{BackendKey}:http:port"] ?? "5000";
+        var protocol = configuration[$"service:{BackendKey}:http:protocol"] ?? "http";
+        return new Uri(protocol + "://" + host + ":" + port + "/");
+    }
+
+    public static Uri GetServiceGrpcUri(this IConfiguration configuration)
+    {
+        var host = configuration[$"service:{BackendKey}:grpc:host"] ?? "localhost";
+        var port = configuration[$"service:{BackendKey}:grpc:port"] ?? "5001";
+        var protocol = configuration[$"service:{BackendKey}:grpc:protocol"] ?? "http";
         return new Uri(protocol + "://" + host + ":" + port + "/");
     }
 

@@ -12,7 +12,7 @@ internal class EmailSender : IEmailSender
 
     public EmailSender(IConfiguration configuration)
     {
-        _smtpHost = configuration["SmtpHost"] ?? "localhost";
+        _smtpHost = configuration ["SmtpHost"] ?? "localhost";
         _smtpPort = int.Parse(configuration["SmtpPort"] ?? "1025");
         _smtpUsername = configuration["SmtpUsername"];
         _smtpPassword = configuration["SmtpPassword"];
