@@ -1,14 +1,14 @@
 ﻿using Backend.FunctionalTests.Fixtures;
 using Grpc.Core;
 
-namespace Backend.FunctionalTests.UseCase;
+namespace Backend.FunctionalTests.UseCases.Widgets;
 
 [Collection(nameof(ServiceCollectionFixture))]
-public class TenantIsolationTests
+public class DataIsolationTests
 {
     private readonly WidgetsApi.WidgetsApiClient _client;
 
-    public TenantIsolationTests(ServiceFixture service, ITestOutputHelper output)
+    public DataIsolationTests(ServiceFixture service, ITestOutputHelper output)
     {
         service.OutputHelper = output;
         _client = service.WidgetsClient;

@@ -14,7 +14,7 @@ public class DevelopmentTests
     }
 
     [Fact]
-    public async Task CanAddTenants()
+    public async Task SeedTenants()
     {
         var tenantA = Guid.NewGuid();
         var tenantB = Guid.NewGuid();
@@ -23,5 +23,10 @@ public class DevelopmentTests
         await _provider.ExecuteCommand(new AddTenant.Command(tenantA, "Tenant A", "A"));
         await _provider.ExecuteCommand(new AddTenant.Command(tenantB, "Tenant B", "B"));
         await _provider.ExecuteCommand(new AddTenant.Command(tenantC, "Tenant C", "C"));
+    }
+
+    [Fact]
+    public void EmptyDatabase()
+    {
     }
 }

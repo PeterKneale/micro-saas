@@ -35,7 +35,7 @@ public class ClaimTests : HeadPageTest
         await Claim(email1);
 
         // unable to claim second
-        await FailToClaim(email1);
+        await FailToClaim(email2);
     }
     
     [Test]
@@ -54,7 +54,7 @@ public class ClaimTests : HeadPageTest
     
     private async Task Claim(string email)
     {
-        var link = await EmailHelper.GetFirstClaimLink(email);
+        var link = await EmailHelper.GetClaimLinkFromRegisteredEmail(email);
         var claim = await Page.GotoClaimPage(link);
         await claim.EnterPassword("password");
         var claimed = await claim.ClickClaim();
@@ -63,7 +63,7 @@ public class ClaimTests : HeadPageTest
     
     private async Task FailToClaim(string email)
     {
-        var link = await EmailHelper.GetFirstClaimLink(email);
+        var link = await EmailHelper.GetClaimLinkFromRegisteredEmail(email);
         var claim = await Page.GotoClaimPage(link);
         await claim.EnterPassword("password");
         await claim.ClickClaimButRemain();

@@ -1,6 +1,6 @@
 ﻿using Grpc.Core;
 
-namespace Backend.FunctionalTests.UseCase;
+namespace Backend.FunctionalTests.UseCases;
 
 public class TenantTestHelper
 {

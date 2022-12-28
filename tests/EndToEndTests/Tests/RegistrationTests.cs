@@ -18,7 +18,7 @@ public class RegistrationTests : HeadPageTest
         await register.EnterIdentifier(identifier);
         await register.ClickRegister();
 
-        var link = await EmailHelper.GetFirstClaimLink(email);
+        var link = await EmailHelper.GetClaimLinkFromRegisteredEmail(email);
 
         var claim = await Page.GotoClaimPage(link);
         await claim.EnterPassword("password");

@@ -1,6 +1,6 @@
 ﻿using Backend.FunctionalTests.Fixtures;
 
-namespace Backend.FunctionalTests.UseCase.Tenancy;
+namespace Backend.FunctionalTests.UseCases.Settings;
 
 [Collection(nameof(ServiceCollectionFixture))]
 public class TenantThemeTests

@@ -1,6 +1,6 @@
 ﻿using Backend.FunctionalTests.Fixtures;
 
-namespace Backend.FunctionalTests.UseCase.Tenancy;
+namespace Backend.FunctionalTests.UseCases.Statistics;
 
 [Collection(nameof(ServiceCollectionFixture))]
 public class GetDashboardTests

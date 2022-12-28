@@ -5,23 +5,20 @@ namespace EndToEndTests.Helpers;
 
 public static class EmailHelper
 {
-    public static async Task<string> GetFirstClaimLink(string email)
+    private static readonly Uri MailHogUri = new("http://localhost:8025", UriKind.Absolute);
+
+    public static async Task<string> GetClaimLinkFromRegisteredEmail(string email)
     {
-        var message = await GetSingleMessageTo(email);
+        var client = new MailhogClient(MailHogUri);
+        var messages = await client.SearchAsync(SearchKind.To, email);
+        var message =  messages.Items.Single(x => x.Subject == "Registered");
         await DeleteMessage(message);
         return GetLinkFromMessage(message);
     }
 
-    private static async Task<Message> GetSingleMessageTo(string email)
-    {
-        var client = new MailhogClient(new Uri("http://localhost:8025"));
-        var messages = await client.SearchAsync(SearchKind.To, email);
-        return GetFirstMessage(messages);
-    }
-
     private static async Task DeleteMessage(Message message)
     {
-        var client = new MailhogClient(new Uri("http://localhost:8025"));
+        var client = new MailhogClient(MailHogUri);
         await client.DeleteAsync(message.ID);
     }
 
@@ -29,13 +26,4 @@ public static class EmailHelper
         //x-cta-url: http://localhost:8030/claim?identifier=identifier-f51aef&token=e490f6bf-b6a5-4e24-8e9c-033b1530d6e7
         // hack
         message.Raw.Data[11..110];
-    
-    private static Message GetFirstMessage(Messages messages)
-    {
-        if (!messages.Items.Any())
-        {
-            throw new Exception("No messages found");
-        }
-        return messages.Items.First();
-    }
 }

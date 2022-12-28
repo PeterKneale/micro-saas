@@ -1,14 +1,14 @@
 ﻿using Backend.FunctionalTests.Fixtures;
 using Grpc.Core;
 
-namespace Backend.FunctionalTests.UseCase.Widgets;
+namespace Backend.FunctionalTests.UseCases.Widgets;
 
 [Collection(nameof(ServiceCollectionFixture))]
-public class UpdateWidgetTests
+public class GetWidgetTests
 {
     private readonly WidgetsApi.WidgetsApiClient _client;
 
-    public UpdateWidgetTests(ServiceFixture service, ITestOutputHelper output)
+    public GetWidgetTests(ServiceFixture service, ITestOutputHelper output)
     {
         service.OutputHelper = output;
         _client = service.WidgetsClient;
@@ -19,17 +19,15 @@ public class UpdateWidgetTests
     {
         // arrange
         var id = Guid.NewGuid().ToString();
-        var registration = Guid.NewGuid().ToString()[..6];
         var tenant = MetaDataBuilder.WithTenant();
 
         // act
         await _client.AddWidgetAsync(new AddWidgetRequest {Id = id}, tenant);
-        await _client.UpdateWidgetAsync(new UpdateWidgetRequest {Id = id, Description = registration}, tenant);
         var result = await _client.GetWidgetAsync(new GetWidgetRequest {Id = id}, tenant);
 
         // assert
         result.Id.Should().Be(id);
-        result.Description.Should().Be(registration);
+        result.Description.Should().BeEmpty();
     }
 
     [Fact]
@@ -37,15 +35,31 @@ public class UpdateWidgetTests
     {
         // arrange
         var id = Guid.NewGuid().ToString();
-        var registration = Guid.NewGuid().ToString()[..6];
         var tenant = MetaDataBuilder.WithTenant();
 
         // act
-        Action act = () => _client.UpdateWidget(new UpdateWidgetRequest {Id = id, Description = registration}, tenant);
+        Action act = () => _client.GetWidget(new GetWidgetRequest {Id = id}, tenant);
 
         // assert
         act.Should().Throw<RpcException>().WithMessage("*not found*")
             .And
             .Status.StatusCode.Should().Be(StatusCode.NotFound);
+    }
+
+
+    [Fact]
+    public void BadRequest()
+    {
+        // arrange
+        var id = "X";
+        var tenant = MetaDataBuilder.WithTenant();
+
+        // act
+        Action act = () => _client.GetWidget(new GetWidgetRequest {Id = id}, tenant);
+
+        // assert
+        act.Should().Throw<RpcException>().WithMessage("*'Id' must be a valid GUID*")
+            .And
+            .Status.StatusCode.Should().Be(StatusCode.InvalidArgument);
     }
 }
