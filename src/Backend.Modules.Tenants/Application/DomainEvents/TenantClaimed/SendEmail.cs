@@ -1,6 +1,9 @@
 ﻿using Backend.Modules.Application;
+using Backend.Modules.Tenants.Application.DomainEvents.TenantRegistered;
+using Backend.Modules.Tenants.Application.Extensions;
 using Backend.Modules.Tenants.Domain.Common;
 using Backend.Modules.Tenants.Domain.TenantAggregate;
+using Microsoft.Extensions.Configuration;
 
 namespace Backend.Modules.Tenants.Application.DomainEvents.TenantClaimed;
 
@@ -11,13 +14,15 @@ public class SendEmail
         private readonly IRegistrationRepository _registrations;
         private readonly ITenantRepository _tenants;
         private readonly IEmailSender _emails;
+        private readonly IConfiguration _configuration;
         private readonly IPublisher _publisher;
 
-        public Handler(IRegistrationRepository registrations, ITenantRepository tenants, IEmailSender emails, IPublisher publisher)
+        public Handler(IRegistrationRepository registrations, ITenantRepository tenants, IEmailSender emails, IConfiguration configuration, IPublisher publisher)
         {
             _registrations = registrations;
             _tenants = tenants;
             _emails = emails;
+            _configuration = configuration;
             _publisher = publisher;
         }
 
@@ -36,7 +41,7 @@ public class SendEmail
             await _tenants.Insert(tenant, cancellationToken);
 
             var email = registration.Email.Value;
-            var link = "https://todo";
+            var link = _configuration.GetFrontendSiteUri();
             await _emails.SendClaimedEmail(email, link, cancellationToken);
 
             await _publisher.Publish(new TenantCreated.Notification(tenantId), cancellationToken);

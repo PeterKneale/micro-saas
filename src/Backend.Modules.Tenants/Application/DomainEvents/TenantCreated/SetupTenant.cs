@@ -21,7 +21,7 @@ public class SetupTenant
                 throw new RegistrationNotFoundException(notification.TenantId.Id);
             }
 
-            _logs.LogInformation("Tenant created {TenantName}", tenant.Name);
+            _logs.LogInformation("Tenant created {TenantName}", tenant.Name.Value);
         }
     }
 }

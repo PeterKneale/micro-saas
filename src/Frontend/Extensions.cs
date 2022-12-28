@@ -15,18 +15,16 @@ internal static class Extensions
     
     public static Uri GetServiceHttpUri(this IConfiguration configuration)
     {
-        var host = configuration[$"service:{BackendKey}:http:host"] ?? "localhost";
-        var port = configuration[$"service:{BackendKey}:http:port"] ?? "5000";
-        var protocol = configuration[$"service:{BackendKey}:http:protocol"] ?? "http";
-        return new Uri(protocol + "://" + host + ":" + port + "/");
+        var host = configuration["API_HOST"] ?? "localhost";
+        var port = configuration["API_PORT"] ?? "5000";
+        return new Uri("http://" + host + ":" + port + "/");
     }
 
     public static Uri GetServiceGrpcUri(this IConfiguration configuration)
     {
-        var host = configuration[$"service:{BackendKey}:grpc:host"] ?? "localhost";
-        var port = configuration[$"service:{BackendKey}:grpc:port"] ?? "5001";
-        var protocol = configuration[$"service:{BackendKey}:grpc:protocol"] ?? "http";
-        return new Uri(protocol + "://" + host + ":" + port + "/");
+        var host = configuration["API_HOST"] ?? "localhost";
+        var port = configuration["API_PORT"] ?? "5001";
+        return new Uri("http://" + host + ":" + port + "/");
     }
 
     public static string GetEmail(this IConfiguration configuration) =>

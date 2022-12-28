@@ -6,8 +6,8 @@ public static class DbConfigurationExtensions
 
     public static string GetSystemConnectionString(this IConfiguration configuration)
     {
-        var username = configuration["service:db:username"] ?? "postgres";
-        var password = configuration["service:db:password"] ?? "password";
+        var username = configuration["DB_SYSTEM_USERNAME"] ?? "postgres";
+        var password = configuration["DB_SYSTEM_PASSWORD"] ?? "password";
         var database = GetDbDatabase(configuration);
         var host = GetDbHost(configuration);
         var port = GetDbPort(configuration);
@@ -16,8 +16,8 @@ public static class DbConfigurationExtensions
 
     public static string GetConnectionStringForAdmin(this IConfiguration configuration)
     {
-        var username = "saas_admin";
-        var password = "password";
+        var username = configuration["DB_SYSTEM_USERNAME"] ?? "saas_admin";
+        var password = configuration["DB_SYSTEM_PASSWORD"] ?? "password";
         var database = GetDbDatabase(configuration);
         var host = GetDbHost(configuration);
         var port = GetDbPort(configuration);
@@ -26,8 +26,8 @@ public static class DbConfigurationExtensions
 
     public static string GetConnectionStringForTenant(this IConfiguration configuration)
     {
-        var username = "saas_tenant";
-        var password = "password";
+        var username = configuration["DB_SYSTEM_USERNAME"] ?? "saas_tenant";
+        var password = configuration["DB_SYSTEM_PASSWORD"] ?? "password";
         var database = GetDbDatabase(configuration);
         var host = GetDbHost(configuration);
         var port = GetDbPort(configuration);
@@ -35,11 +35,11 @@ public static class DbConfigurationExtensions
     }
 
     private static string GetDbHost(IConfiguration configuration) =>
-        configuration["service:db:host"] ?? "localhost";
+        configuration["DB_HOST"] ?? "localhost";
 
     private static string GetDbDatabase(IConfiguration configuration) =>
-        configuration["service:db:database"] ?? "saas";
+        configuration["DB_DATABASE"] ?? "saas";
 
     private static string GetDbPort(IConfiguration configuration) =>
-        configuration["service:db:port"] ?? "5432";
+        configuration["DB_PORT"] ?? "5432";
 }

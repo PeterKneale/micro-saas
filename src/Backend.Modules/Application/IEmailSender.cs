@@ -2,6 +2,6 @@
 
 public interface IEmailSender
 {
-    Task SendRegisteredEmail(string email, string claimUri, CancellationToken cancellationToken);
-    Task SendClaimedEmail(string email, string loginUri, CancellationToken cancellationToken);
+    Task SendRegisteredEmail(string email, Uri claimUri, CancellationToken cancellationToken);
+    Task SendClaimedEmail(string email, Uri loginUri, CancellationToken cancellationToken);
 }

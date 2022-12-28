@@ -13,7 +13,7 @@ public class MigrationExecutor
         _runner = runner;
         _log = log;
 
-        var attempts = 30;
+        var attempts = 60;
         var delay = TimeSpan.FromSeconds(1);
 
         _policy = Policy

@@ -12,26 +12,26 @@ internal class EmailSender : IEmailSender
 
     public EmailSender(IConfiguration configuration)
     {
-        _smtpHost = configuration ["SmtpHost"] ?? "localhost";
-        _smtpPort = int.Parse(configuration["SmtpPort"] ?? "1025");
-        _smtpUsername = configuration["SmtpUsername"];
-        _smtpPassword = configuration["SmtpPassword"];
+        _smtpHost = configuration.GetSmtpHost();
+        _smtpPort = configuration.GetSmtpPort();
+        _smtpUsername = configuration.GetSmtpUsername();
+        _smtpPassword = configuration.GetSmtpPassword();
     }
 
-    public async Task SendRegisteredEmail(string email, string claimUri, CancellationToken cancellationToken)
+    public async Task SendRegisteredEmail(string email, Uri claimUri, CancellationToken cancellationToken)
     {
         var message = new MailMessage
         {
             To = {new MailAddress(email)},
             Subject = "Registered",
             From = new MailAddress("DoNotReply@localhost.com"),
-            Body = claimUri
+            Body = claimUri.ToString()
         };
-        message.Headers.Add("x-cta-url", claimUri);
+        message.Headers.Add("x-cta-url", claimUri.ToString());
         await SendEmail(message, cancellationToken);
     }
 
-    public async Task SendClaimedEmail(string email, string loginUri, CancellationToken cancellationToken)
+    public async Task SendClaimedEmail(string email, Uri loginUri, CancellationToken cancellationToken)
     {
         var message = new MailMessage
         {
