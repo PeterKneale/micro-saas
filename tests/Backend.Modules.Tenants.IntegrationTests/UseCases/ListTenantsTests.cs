@@ -1,7 +1,8 @@
 ﻿using Backend.Modules.Tenants.Application.Commands;
 using Backend.Modules.Tenants.Application.Queries;
+using Backend.Modules.Tenants.IntegrationTests.Fixtures;
 
-namespace Backend.IntegrationTests.UseCase.Tenancy;
+namespace Backend.Modules.Tenants.IntegrationTests.UseCases;
 
 [Collection(nameof(ContainerCollectionFixture))]
 public class ListTenantsTests

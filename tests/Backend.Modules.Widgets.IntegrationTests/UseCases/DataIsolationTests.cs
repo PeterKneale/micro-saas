@@ -1,14 +1,14 @@
 ﻿using Backend.Modules.Widgets.Application.Commands;
 using Backend.Modules.Widgets.Application.Queries;
 
-namespace Backend.IntegrationTests.UseCase;
+namespace Backend.Modules.Widgets.IntegrationTests.UseCases;
 
 [Collection(nameof(ContainerCollectionFixture))]
-public class TenantIsolationTests
+public class DataIsolationTests
 {
     private readonly IServiceProvider _provider;
 
-    public TenantIsolationTests(ContainerFixture container)
+    public DataIsolationTests(ContainerFixture container)
     {
         _provider = container.Provider;
     }

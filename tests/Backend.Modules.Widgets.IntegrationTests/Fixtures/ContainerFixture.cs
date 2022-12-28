@@ -1,11 +1,6 @@
-﻿using Backend.Modules;
-using Backend.Modules.Infrastructure.Database;
-using Backend.Modules.Settings;
-using Backend.Modules.Statistics;
-using Backend.Modules.Tenants;
-using Backend.Modules.Widgets;
+﻿using Backend.Modules.Infrastructure.Database;
 
-namespace Backend.IntegrationTests.Fixtures;
+namespace Backend.Modules.Widgets.IntegrationTests.Fixtures;
 
 public class ContainerFixture : IDisposable
 {
@@ -14,14 +9,12 @@ public class ContainerFixture : IDisposable
     public ContainerFixture()
     {
         var configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json", optional: false)
+            .AddInMemoryCollection()
+            .AddEnvironmentVariables()
             .Build();
         
         var services = new ServiceCollection()
             .AddModules(configuration)
-            .AddSettings(configuration)
-            .AddStatistics(configuration)
-            .AddTenants(configuration)
             .AddWidgets(configuration);
         
         services

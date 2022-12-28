@@ -23,6 +23,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\Backend\Backend.csproj" />
+      <ProjectReference Include="..\..\src\Backend.Modules.Widgets\Backend.Modules.Widgets.csproj" />
     </ItemGroup>
+
 </Project>

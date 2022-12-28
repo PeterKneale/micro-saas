@@ -1,6 +1,6 @@
 ﻿using Backend.Modules.Infrastructure.Tenancy;
 
-namespace Backend.IntegrationTests.Fixtures;
+namespace Backend.Modules.Widgets.IntegrationTests.Fixtures;
 
 public static class ProviderExtensions
 {

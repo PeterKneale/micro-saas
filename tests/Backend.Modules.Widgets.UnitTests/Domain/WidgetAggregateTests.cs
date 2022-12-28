@@ -1,6 +1,6 @@
 ﻿using Backend.Modules.Widgets.Domain.WidgetAggregate;
 
-namespace Backend.UnitTests.WidgetAggregate;
+namespace Backend.Modules.Widgets.UnitTests.Domain;
 
 public class WidgetAggregateTests
 {
@@ -11,7 +11,7 @@ public class WidgetAggregateTests
     }
 
     [Fact]
-    public void WidgetCanBeUpdateed()
+    public void WidgetCanBeUpdated()
     {
         // arrange
         var widgetId = WidgetId.CreateInstance();
