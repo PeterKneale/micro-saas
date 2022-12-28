@@ -41,7 +41,13 @@ builder.Services
     .AddWidgets(builder.Configuration);
 
 builder.Services.AddHealthChecks();
-builder.Services.AddLogging(c => { c.AddSimpleConsole(opt => { opt.SingleLine = true; }); });
+builder.Services.AddLogging(c =>
+{
+    c.AddSimpleConsole(opt =>
+    {
+        opt.SingleLine = true;
+    });
+});
 
 var app = builder.Build();
 app.MapGet("/", () => "Backend");

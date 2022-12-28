@@ -26,7 +26,7 @@ internal static class Extensions
 
     private static Uri GetServiceUri(this IConfiguration configuration, string key, string binding)
     {
-        var host = configuration[$"service:{key}:{binding}:host"] ?? "localhost";
+        var host = configuration[$"service:{key}:{binding}:host"] ?? "backend";
         var port = configuration[$"service:{key}:{binding}:port"] ?? "5001";
         var protocol = configuration[$"service:{key}:{binding}:protocol"] ?? "http";
         return new Uri(protocol + "://" + host + ":" + port + "/");

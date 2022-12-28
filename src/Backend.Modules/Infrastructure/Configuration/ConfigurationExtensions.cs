@@ -11,7 +11,9 @@ public static class ConfigurationExtensions
         var database = GetDatabase(configuration);
         var host = GetHost(configuration);
         var port = GetPort(configuration);
-        return string.Format(template, username, password, database, host, port);
+        var connectionString = string.Format(template, username, password, database, host, port);
+        Console.WriteLine(connectionString);;
+        return connectionString;
     }
     
     public static string GetConnectionStringForAdmin(this IConfiguration configuration)

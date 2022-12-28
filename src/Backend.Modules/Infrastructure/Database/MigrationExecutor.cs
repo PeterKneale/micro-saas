@@ -13,14 +13,15 @@ public class MigrationExecutor
         _runner = runner;
         _log = log;
 
-        var attempts = 1;
-        var delay = TimeSpan.FromSeconds(2);
-        
+        var attempts = 30;
+        var delay = TimeSpan.FromSeconds(1);
+
         _policy = Policy
             .Handle<Exception>()
             .WaitAndRetry(attempts, _ => delay, (exception, timeSpan, retryCount, context) =>
             {
-                _log.LogWarning(exception, "Failed to connect to database. Retrying in {Delay} seconds. Attempt {RetryCount} of {RetryAttempts}", delay.TotalSeconds, retryCount, attempts);
+                _log.LogWarning("Failed to connect to database. {Message} Retrying in {Delay} seconds. Attempt {RetryCount} of {RetryAttempts}", 
+                    exception.Message, delay.TotalSeconds, retryCount, attempts);
             });
     }
 
@@ -33,7 +34,8 @@ public class MigrationExecutor
 
     public void ResetDatabase()
     {
-        _policy.Execute(() => {
+        _policy.Execute(() =>
+        {
             _runner.MigrateDown(0);
             _runner.MigrateUp();
         });

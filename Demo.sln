@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 #
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".docker", ".docker", "{3A59BB6C-580C-47F0-8E7C-40F3E1D896D0}"
 	ProjectSection(SolutionItems) = preProject
-		docker-compose-infra.yml = docker-compose-infra.yml
 		docker-compose.yml = docker-compose.yml
-		docker-compose.override.yml = docker-compose.override.yml
 		local-infra.yml = local-infra.yml
 		.dockerignore = .dockerignore
 	EndProjectSection

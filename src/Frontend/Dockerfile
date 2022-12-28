@@ -4,16 +4,19 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
-WORKDIR /src
-COPY ["Frontend/Frontend.csproj", "Frontend/"]
-COPY ["Client/Client.csproj", "Client/"]
-RUN dotnet restore "Frontend/Frontend.csproj"
+WORKDIR /work
+COPY *.sln ./
+COPY src/*/*.csproj ./
+RUN for file in $(ls *.csproj); do mkdir -p ./src/${file%.*}/ && mv $file ./src/${file%.*}/; done
+COPY tests/*/*.csproj ./
+RUN for file in $(ls *.csproj); do mkdir -p ./tests/${file%.*}/ && mv $file ./tests/${file%.*}/; done
+RUN dotnet restore
 COPY . .
-WORKDIR "/src/Frontend"
-RUN dotnet build "Frontend.csproj" -c Release -o /app/build
+WORKDIR /work/src/Frontend
+RUN dotnet build -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Frontend.csproj" -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app

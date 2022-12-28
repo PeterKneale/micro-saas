@@ -2,50 +2,82 @@ version: '3.8'
 
 services:
   
-  frontend:
-    image: ${REGISTRY_ENDPOINT:-saas}/frontend:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: ./Frontend/Dockerfile
-    networks:
-      - saas_public
-      - saas_private
-    
   admin:
-    image: ${REGISTRY_ENDPOINT:-saas}/admin:${TAG:-latest}
+    image: '${REGISTRY_ENDPOINT:-saas}/admin:${TAG:-latest}'
+    hostname: admin
+    container_name: admin
     build:
       context: .
-      dockerfile: ./Admin/Dockerfile
-    networks:
-      - saas_public
-      - saas_private
-
-  registration:
-    image: ${REGISTRY_ENDPOINT:-saas}/backend:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: ./Registration/Dockerfile
-    networks:
-      - saas_public
-      - saas_private
-            
-  backend:
-    image: ${REGISTRY_ENDPOINT:-saas}/backend:${TAG:-latest}
-    build:
-      context: .
-      dockerfile: ./Backend/Dockerfile
+      dockerfile: ./src/Admin/Dockerfile
     environment:
-      - SystemConnectionString=Username=postgres;Password=password;Database=saas;Host=db
-      - AdminConnectionString=Username=postgres;Password=password;Database=saas;Host=db
-      - TenantConnectionString=Username=postgres;Password=password;Database=saas;Host=db
-    networks:
-      - saas_public
-      - saas_private
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - '8000:80'
+    depends_on:
+      - backend
   
-networks:
-  saas_public:
-    name: saas_public
-    driver: bridge
-  saas_private:
-    name: saas_private
-    driver: bridge
+  registration:
+    image: '${REGISTRY_ENDPOINT:-saas}/registration:${TAG:-latest}'
+    hostname: registration
+    container_name: registration
+    build:
+      context: .
+      dockerfile: ./src/Registration/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - '8010:80'
+    depends_on:
+      - backend
+  
+  frontend:
+    image: '${REGISTRY_ENDPOINT:-saas}/frontend:${TAG:-latest}'
+    hostname: frontend
+    container_name: frontend
+    build:
+      context: .
+      dockerfile: ./src/Frontend/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - '8020:80'
+    depends_on:
+      - backend
+  
+  backend:
+    image: '${REGISTRY_ENDPOINT:-saas}/backend:${TAG:-latest}'
+    hostname: backend
+    container_name: backend
+    build:
+      context: .
+      dockerfile: ./src/Backend/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://localhost:5001;http://localhost:5000
+      - service:db:host=db
+    ports:
+      - '5000:5000'
+      - '5001:5001'
+    depends_on:
+      - db
+      - smtp
+  
+  db:
+    image: postgres
+    hostname: db
+    container_name: db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: saas
+      PGDATA: /data/postgres
+    ports:
+      - '5432:5432'
+  
+  smtp:
+    image: mailhog/mailhog
+    hostname: smtp
+    container_name: smtp
+    ports:
+      - '1025:1025'
+      - '8025:8025'

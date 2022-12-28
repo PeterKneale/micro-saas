@@ -12,19 +12,17 @@ builder.Services
     .AddRazorPages()
     .AddRazorRuntimeCompilation();
 
-
 builder.Services
     .AddHealthChecks()
     .AddAsyncCheck("Backend", async () => {
+        using var client = new HttpClient();
         var baseUri = builder.Configuration.GetServiceHttpUri("backend");
         var readyUri = new Uri(baseUri, "/health/ready");
-        using var client = new HttpClient();
         var response = await client.GetAsync(readyUri);
         return response.IsSuccessStatusCode
             ? HealthCheckResult.Healthy()
             : HealthCheckResult.Unhealthy();
     }, tags: new[] { "ready" });
-
 
 builder.Services
     .AddLogging(c => {
@@ -61,16 +59,14 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
-
+app.MapHealthChecks("/health/alive").AllowAnonymous();
+app.MapHealthChecks("/health/ready", new HealthCheckOptions {
+    Predicate = r => r.Tags.Contains("ready")
+}).AllowAnonymous();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-app.MapHealthChecks("/health/alive");
-app.MapHealthChecks("/health/ready", new HealthCheckOptions {
-    Predicate = r => r.Tags.Contains("ready")
-});
 app.UseAuthentication();
 app.UseAuthorization();
-
 app.MapRazorPages();
 app.Run();

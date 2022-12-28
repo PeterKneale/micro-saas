@@ -4,8 +4,6 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Registration;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
-AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
-AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2Support", true);
 
 var builder = WebApplication.CreateBuilder(args);
 
