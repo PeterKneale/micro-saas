@@ -1,6 +1,4 @@
-﻿using Backend.Modules.Tenants.Application.Contracts;
-using Backend.Modules.Tenants.Application.Exceptions;
-using Backend.Modules.Tenants.Domain.Common;
+﻿using Backend.Modules.Tenants.Domain.Common;
 using Backend.Modules.Tenants.Domain.TenantAggregate;
 
 namespace Backend.Modules.Tenants.Application.Commands;

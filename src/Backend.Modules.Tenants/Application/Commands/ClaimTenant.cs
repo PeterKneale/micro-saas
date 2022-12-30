@@ -1,7 +1,7 @@
-﻿using Backend.Modules.Tenants.Application.Contracts;
-using Backend.Modules.Tenants.Application.DomainEvents.TenantClaimed;
-using Backend.Modules.Tenants.Application.Exceptions;
+﻿using Backend.Modules.Tenants.Application.IntegrationEvents;
 using Backend.Modules.Tenants.Domain.Common;
+using Backend.Modules.Tenants.Messages;
+using DotNetCore.CAP;
 
 namespace Backend.Modules.Tenants.Application.Commands;
 
@@ -22,9 +22,9 @@ public static class ClaimTenant
     internal class Handler : IRequestHandler<Command>
     {
         private readonly IRegistrationRepository _repository;
-        private readonly IPublisher _publisher;
+        private readonly ICapPublisher _publisher;
 
-        public Handler(IRegistrationRepository repository, IPublisher publisher)
+        public Handler(IRegistrationRepository repository, ICapPublisher publisher)
         {
             _repository = repository;
             _publisher = publisher;
@@ -46,7 +46,8 @@ public static class ClaimTenant
 
             await _repository.Update(registration, cancellationToken);
 
-            await _publisher.Publish(new Notification(registration.Id), cancellationToken);
+            var message = new TenantClaimedIntegrationEvent {RegistrationId = registration.Id.Id};
+            await _publisher.PublishAsync("tenant-claimed", message, cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

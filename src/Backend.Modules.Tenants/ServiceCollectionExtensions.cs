@@ -1,13 +1,5 @@
 ﻿using System.Reflection;
-using Backend.Modules.Application;
-using Backend.Modules.Infrastructure.Behaviours;
-using Backend.Modules.Infrastructure.Configuration;
-using Backend.Modules.Infrastructure.Database;
-using Backend.Modules.Infrastructure.Emails;
-using Backend.Modules.Infrastructure.Tenancy;
-using Backend.Modules.Tenants.Application.Contracts;
 using Backend.Modules.Tenants.Infrastructure;
-using FluentMigrator.Runner;
 using Grpc.AspNetCore.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -38,6 +30,11 @@ public static class ServiceCollectionExtensions
             .AddMediatR(assembly)
             .AddValidatorsFromAssembly(assembly);
         
+        services.AddTransient<Application.IntegrationEvents.OnTenantClaimed.CreateTenant>();
+        services.AddTransient<Application.IntegrationEvents.OnTenantClaimed.SendEmail>();
+        services.AddTransient<Application.IntegrationEvents.OnTenantRegistered.SendEmail>();
+        
+        // infrastructure
         services
             .AddScoped<IRegistrationRepository, RegistrationRepository>()
             .AddScoped<ITenantRepository, TenantRepository>();

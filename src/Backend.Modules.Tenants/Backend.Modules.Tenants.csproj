@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Backend.Modules.Tenants.Messages\Backend.Modules.Tenants.Messages.csproj" />
     <ProjectReference Include="..\Backend.Modules\Backend.Modules.csproj" />
   </ItemGroup>
 

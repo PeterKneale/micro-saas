@@ -46,7 +46,20 @@ public static class ServiceCollectionExtensions
                 .WithGlobalConnectionString(configuration.GetSystemConnectionString())
                 .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
             .AddScoped<MigrationExecutor>();
-
+        
+        services.AddCap(x =>
+        {
+            x.UsePostgreSql(configuration.GetSystemConnectionString());
+            x.UseRabbitMQ(options =>
+            {
+                options.HostName = configuration.GetRabbitHost();
+                options.Port = configuration.GetRabbitPort();
+                options.VirtualHost = configuration.GetRabbitVirtualHost();
+                options.UserName = configuration.GetRabbitUsername();
+                options.Password = configuration.GetRabbitPassword();
+            });
+            x.UseDashboard();
+        });
         return services;
     }
 }

@@ -7,6 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="DotNetCore.CAP" Version="6.2.1" />
+        <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="6.2.1" />
+        <PackageReference Include="DotNetCore.CAP.Dashboard" Version="6.2.1" />
+        <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="6.2.1" />
         <PackageReference Include="Dapper" Version="2.0.123" />
         <PackageReference Include="FluentMigrator.Runner" Version="3.3.2" />
         <PackageReference Include="FluentMigrator.Runner.Postgres" Version="3.3.2" />

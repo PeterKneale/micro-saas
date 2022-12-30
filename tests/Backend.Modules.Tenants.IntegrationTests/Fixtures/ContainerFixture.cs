@@ -1,4 +1,5 @@
 ﻿using Backend.Modules.Infrastructure.Database;
+using DotNetCore.CAP.Internal;
 
 namespace Backend.Modules.Tenants.IntegrationTests.Fixtures;
 
@@ -22,6 +23,8 @@ public class ContainerFixture : IDisposable
         
         _provider = services.BuildServiceProvider();
         _provider.ExecuteDatabaseMigration(x => x.ResetDatabase());
+        
+        _provider.GetRequiredService<IBootstrapper>().BootstrapAsync().GetAwaiter().GetResult(); 
     }
 
     public IServiceProvider Provider => _provider;
