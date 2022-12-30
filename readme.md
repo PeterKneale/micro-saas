@@ -5,13 +5,21 @@
 
 - todo
 
-# Backend
+# Backend - Modular Monolith
 
-### Admin API
+### Tenants API
 - Executes use cases in the context of an administrator on the platform
 - The security policy defined below allows read-only access to all tenant data
 
-### Tenant API
+### Settings API
+- Executes use cases in the context of a specific tenant on the platform
+- The security policy defined below allows full access to the specified tenants data
+
+### Statistics API
+- Executes use cases in the context of a specific tenant on the platform
+- The security policy defined below allows full access to the specified tenants data
+
+### Widgets API
 - Executes use cases in the context of a specific tenant on the platform
 - The security policy defined below allows full access to the specified tenants data
 
@@ -42,7 +50,7 @@
 ## Database schema
 Create a table for use by multiple tenants
 ```cs
-Create.Table("cars")
+Create.Table("widgets")
     .WithColumn("id").AsGuid().NotNullable().PrimaryKey()
     .WithColumn("tenant").AsString().NotNullable() // This column indicates which tenant a row belongs to
     .WithColumn("registration").AsString().Nullable().Unique()
@@ -84,11 +92,13 @@ Execute.Sql($"CREATE POLICY {Policy} ON {Table} FOR ALL TO {Username} USING ({Co
 
 ## Build and Deploy
 ```shell
-docker build -f Frontend/Dockerfile . -t peterkneale/frontend
-docker build -f Admin/Dockerfile . -t peterkneale/admin
-docker build -f Registration/Dockerfile . -t peterkneale/registration
+docker build -f src/Admin/Dockerfile . -t peterkneale/admin
+docker build -f src/Backend/Dockerfile . -t peterkneale/backend
+docker build -f src/Frontend/Dockerfile . -t peterkneale/frontend
+docker build -f src/Registration/Dockerfile . -t peterkneale/registration
 
-docker push peterkneale/frontend
 docker push peterkneale/admin
+docker push peterkneale/backend
+docker push peterkneale/frontend
 docker push peterkneale/registration
 ```

@@ -19,12 +19,12 @@ public class Migration1 : Migration
             .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
         
         Create.Table(Constants.TableSettings)
-            .WithColumn(Constants.ColumnTenantId).AsGuid().NotNullable().PrimaryKey()
+            .WithColumn(Constants.ColumnTenantId).AsGuid().NotNullable().PrimaryKey().WithDefaultValue(RawSql.Insert("current_setting('app.tenant_id')::uuid"))
             .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
         
         Create.Table(Constants.TableWidgets)
             .WithColumn(Constants.ColumnId).AsGuid().NotNullable().PrimaryKey()
-            .WithColumn(Constants.ColumnTenantId).AsGuid().NotNullable()
+            .WithColumn(Constants.ColumnTenantId).AsGuid().NotNullable().WithDefaultValue(RawSql.Insert("current_setting('app.tenant_id')::uuid"))
             .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
         
         // This table should have row level security that ensure a tenant can only manage their own data

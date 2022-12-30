@@ -4,8 +4,7 @@ package Backend;
 
 option csharp_namespace = "Backend.Api";
 
-service TenantsApi {
-    
+service TenantsApi {    
     // commands
     rpc AddTenant(AddTenantRequest) returns (EmptyResponse2);
     rpc Claim(ClaimRequest) returns (EmptyResponse2);
@@ -14,8 +13,7 @@ service TenantsApi {
     // queries
     rpc GetTenant(GetTenantRequest) returns (GetTenantResponse);
     rpc GetTenantByIdentifier(GetTenantByIdentifierRequest) returns (GetTenantByIdentifierResponse);
-    rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse);
-    
+    rpc ListTenants(ListTenantsRequest) returns (ListTenantsResponse);    
 }
 
 // commands

@@ -7,12 +7,10 @@ namespace Backend.Modules.Widgets.Infrastructure;
 internal class WidgetRepository : IWidgetRepository
 {
     private readonly IDbConnection _connection;
-    private readonly IGetTenantContext _context;
 
-    public WidgetRepository(ITenantConnectionFactory factory, IGetTenantContext context)
+    public WidgetRepository(ITenantConnectionFactory factory)
     {
         _connection = factory.GetDbConnectionForTenant();
-        _context = context;
     }
 
     public async Task<Widget?> Get(WidgetId widgetId, CancellationToken cancellationToken)
@@ -36,12 +34,11 @@ internal class WidgetRepository : IWidgetRepository
 
     public async Task Insert(Widget widget, CancellationToken cancellationToken)
     {
-        const string sql = $"insert into {TableWidgets} ({ColumnId}, {ColumnTenantId}, {ColumnData}) values (@id, @tenant_id, @data::jsonb)";
+        const string sql = $"insert into {TableWidgets} ({ColumnId}, {ColumnData}) values (@id, @data::jsonb)";
         var json = JsonHelper.ToJson(widget);
         await _connection.ExecuteAsync(sql, new
         {
             id = widget.Id.Id,
-            tenant_id = _context.CurrentTenant,
             data = json
         });
     }
@@ -59,5 +56,4 @@ internal class WidgetRepository : IWidgetRepository
             throw new Exception("Record not updated");
         }
     }
-
 }

@@ -19,8 +19,10 @@ public class Settings
 
     public string? Theme { get; private set; }
 
-    public string GetTheme() => Theme ?? "Default";
+    public string GetTheme() => Theme ?? DefaultThemeName;
 
     public static Settings Create() =>
         new();
+
+    public const string DefaultThemeName = "Default";
 }
