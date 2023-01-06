@@ -1,11 +1,9 @@
 ﻿using Backend.Modules.Application;
 using Backend.Modules.Tenants.Application.Extensions;
 using Backend.Modules.Tenants.Domain.RegistrationAggregate;
-using Backend.Modules.Tenants.Messages;
-using DotNetCore.CAP;
 using Microsoft.Extensions.Configuration;
 
-namespace Backend.Modules.Tenants.Application.IntegrationEvents.OnTenantClaimed;
+namespace Backend.Modules.Tenants.Application.IntegrationEvents.OnTenantReady;
 
 internal class SendEmail : ICapSubscribe
 {
@@ -20,7 +18,7 @@ internal class SendEmail : ICapSubscribe
         _configuration = configuration;
     }
 
-    [CapSubscribe("tenant-claimed", Group = "send-emails")]
+    [CapSubscribe("tenant-ready")]
     public async Task Handle(TenantClaimedIntegrationEvent message, CancellationToken cancellationToken)
     {
         var registrationId = RegistrationId.CreateInstance(message.RegistrationId);

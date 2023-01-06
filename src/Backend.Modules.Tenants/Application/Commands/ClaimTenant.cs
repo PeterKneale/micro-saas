@@ -1,9 +1,4 @@
-﻿using Backend.Modules.Tenants.Application.IntegrationEvents;
-using Backend.Modules.Tenants.Domain.Common;
-using Backend.Modules.Tenants.Messages;
-using DotNetCore.CAP;
-
-namespace Backend.Modules.Tenants.Application.Commands;
+﻿namespace Backend.Modules.Tenants.Application.Commands;
 
 public static class ClaimTenant
 {
@@ -47,7 +42,7 @@ public static class ClaimTenant
             await _repository.Update(registration, cancellationToken);
 
             var message = new TenantClaimedIntegrationEvent {RegistrationId = registration.Id.Id};
-            await _publisher.PublishAsync("tenant-claimed", message, cancellationToken: cancellationToken);
+            await _publisher.PublishAsync(Topics.TenantClaimed, message, cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

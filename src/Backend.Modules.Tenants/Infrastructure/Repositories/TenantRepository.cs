@@ -1,10 +1,8 @@
 ﻿using Backend.Modules.Infrastructure.Repositories.Serialisation;
-using Backend.Modules.Tenants.Application.Contracts;
-using Backend.Modules.Tenants.Domain.Common;
 using Backend.Modules.Tenants.Domain.TenantAggregate;
-using static Backend.Modules.Infrastructure.Database.Constants;
+using static Backend.Modules.Tenants.Infrastructure.Database.Constants;
 
-namespace Backend.Modules.Tenants.Infrastructure;
+namespace Backend.Modules.Tenants.Infrastructure.Repositories;
 
 internal class TenantRepository : ITenantRepository
 {
@@ -17,7 +15,7 @@ internal class TenantRepository : ITenantRepository
 
     public async Task Insert(Tenant tenant, CancellationToken cancellationToken)
     {
-        const string sql = $"insert into {TableTenants} ({ColumnId}, {ColumnTenantName}, {ColumnTenantIdentifier}, {ColumnData}) values (@id, @name, @identifier,@data::jsonb)";
+        const string sql = $"insert into {Schema}.{TableTenants} ({ColumnId}, {ColumnTenantName}, {ColumnTenantIdentifier}, {ColumnData}) values (@id, @name, @identifier,@data::jsonb)";
         var json = JsonHelper.ToJson(tenant);
         await _connection.ExecuteAsync(sql, new
         {
@@ -30,7 +28,7 @@ internal class TenantRepository : ITenantRepository
 
     public async Task<Tenant?> Get(TenantId tenantId, CancellationToken cancellationToken)
     {
-        const string sql = $"select {ColumnData} from {TableTenants} where {ColumnId} = @id";
+        const string sql = $"select {ColumnData} from {Schema}.{TableTenants} where {ColumnId} = @id";
         var result = await _connection.QuerySingleOrDefaultAsync<string>(sql, new
         {
             id = tenantId.Id
@@ -40,7 +38,7 @@ internal class TenantRepository : ITenantRepository
 
     public async Task<Tenant?> Get(TenantIdentifier identifier, CancellationToken cancellationToken)
     {
-        const string sql = $"select {ColumnData} from {TableTenants} where {ColumnTenantIdentifier} = @identifier";
+        const string sql = $"select {ColumnData} from {Schema}.{TableTenants} where {ColumnTenantIdentifier} = @identifier";
         var result = await _connection.QuerySingleOrDefaultAsync<string>(sql, new
         {
             identifier = identifier.Value
@@ -50,7 +48,7 @@ internal class TenantRepository : ITenantRepository
 
     public async Task<IEnumerable<Tenant>> ListTenants(CancellationToken cancellationToken)
     {
-        const string sql = $"select {ColumnData} from {TableTenants}";
+        const string sql = $"select {ColumnData} from {Schema}.{TableTenants}";
         var results = await _connection.QueryAsync<string>(sql, cancellationToken);
         return results
             .Select(result => JsonHelper.ToObject<Tenant>(result)!)

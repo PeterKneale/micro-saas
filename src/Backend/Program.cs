@@ -66,10 +66,10 @@ SettingsModuleSetup.Init(executionContextAccessor, logging, builder.Configuratio
 StatisticsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 TenantsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 
-WidgetsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
-SettingsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
-StatisticsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
-TenantsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
+WidgetsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
+SettingsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
+StatisticsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
+TenantsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
 TenantsModuleSetup.SetupOutbox();
 
 app.Run();

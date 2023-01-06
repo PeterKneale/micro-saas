@@ -1,7 +1,10 @@
 ﻿using System.Reflection;
+using Backend.Modules.Infrastructure.Configuration;
 using Backend.Modules.Infrastructure.Database;
 using Backend.Modules.Infrastructure.Tenancy;
 using Backend.Modules.Tenants.Infrastructure;
+using Backend.Modules.Tenants.Infrastructure.Database;
+using Backend.Modules.Tenants.Infrastructure.Repositories;
 using DotNetCore.CAP.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +22,7 @@ public static class TenantsModuleSetup
         var services = new ServiceCollection();
 
         // passed from host 
+        services.AddLogging();
         services.AddSingleton(executionContextAccessor);
         services.AddSingleton(logger);
         services.AddSingleton(configuration);
@@ -31,7 +35,7 @@ public static class TenantsModuleSetup
         services.AddValidatorsFromAssembly(assembly);
         services
             .AddScoped<Application.IntegrationEvents.OnTenantClaimed.CreateTenant>()
-            .AddScoped<Application.IntegrationEvents.OnTenantClaimed.SendEmail>()
+            .AddScoped<Backend.Modules.Tenants.Application.IntegrationEvents.OnTenantReady.SendEmail>()
             .AddScoped<Application.IntegrationEvents.OnTenantRegistered.SendEmail>();
 
         // infrastructure
@@ -46,9 +50,9 @@ public static class TenantsModuleSetup
     
     public static void SetupDatabase(Action<MigrationExecutor> action)
     {
-        using var scope = _provider.CreateScope();
-        var migrator = scope.ServiceProvider.GetRequiredService<MigrationExecutor>();
-        action(migrator);
+        var configuration = _provider.GetRequiredService<IConfiguration>();
+        var connection = configuration.GetSystemConnectionString();
+        MigrationRunner.Run(connection, action);
     }
 
     public static void SetupOutbox()

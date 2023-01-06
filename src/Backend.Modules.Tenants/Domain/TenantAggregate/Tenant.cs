@@ -1,6 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-
-namespace Backend.Modules.Tenants.Domain.TenantAggregate;
+﻿namespace Backend.Modules.Tenants.Domain.TenantAggregate;
 
 public class Tenant
 {

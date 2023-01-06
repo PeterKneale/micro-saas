@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Api" />
+    <Folder Include="Application\DomainEvents" />
   </ItemGroup>
 
 </Project>

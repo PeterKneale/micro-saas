@@ -1,7 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-using Backend.Modules.Tenants.Domain.RegistrationAggregate;
-using Backend.Modules.Tenants.Messages;
-using DotNetCore.CAP;
+﻿using Backend.Modules.Tenants.Domain.RegistrationAggregate;
 
 namespace Backend.Modules.Tenants.Application.Commands;
 
@@ -54,7 +51,7 @@ public static class RegisterTenant
             await _repository.Insert(registration, cancellationToken);
 
             var message = new TenantRegisteredIntegrationEvent {RegistrationId = registration.Id.Id};
-            await _publisher.PublishAsync("tenant-registered", message, cancellationToken: cancellationToken);
+            await _publisher.PublishAsync(Topics.TenantRegistered, message, cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

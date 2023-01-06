@@ -1,8 +1,5 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-using Backend.Modules.Tenants.Domain.RegistrationAggregate;
+﻿using Backend.Modules.Tenants.Domain.RegistrationAggregate;
 using Backend.Modules.Tenants.Domain.TenantAggregate;
-using Backend.Modules.Tenants.Messages;
-using DotNetCore.CAP;
 
 namespace Backend.Modules.Tenants.Application.IntegrationEvents.OnTenantClaimed;
 
@@ -19,7 +16,7 @@ internal class CreateTenant : ICapSubscribe
         _publisher = publisher;
     }
 
-    [CapSubscribe("tenant-claimed", Group = "create-tenant")]
+    [CapSubscribe(Topics.TenantClaimed)]
     public async Task ProcessAsync(TenantClaimedIntegrationEvent message, CancellationToken cancellationToken)
     {
         var registrationId = RegistrationId.CreateInstance(message.RegistrationId);
@@ -37,6 +34,6 @@ internal class CreateTenant : ICapSubscribe
         await _tenants.Insert(tenant, cancellationToken);
 
         var integrationEvent = new TenantCreatedIntegrationEvent {TenantId = tenantId.Id};
-        await _publisher.PublishAsync("tenant-created", integrationEvent, cancellationToken: cancellationToken);
+        await _publisher.PublishAsync(Topics.TenantReady, integrationEvent, cancellationToken: cancellationToken);
     }
 }

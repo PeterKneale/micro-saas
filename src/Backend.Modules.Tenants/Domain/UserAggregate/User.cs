@@ -1,6 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-
-namespace Backend.Modules.Tenants.Domain.UserAggregate;
+﻿namespace Backend.Modules.Tenants.Domain.UserAggregate;
 
 public class User
 {

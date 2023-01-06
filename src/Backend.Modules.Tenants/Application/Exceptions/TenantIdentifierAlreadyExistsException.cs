@@ -1,6 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-
-namespace Backend.Modules.Tenants.Application.Exceptions;
+﻿namespace Backend.Modules.Tenants.Application.Exceptions;
 
 internal class TenantIdentifierAlreadyExistsException : AlreadyExistsException
 {

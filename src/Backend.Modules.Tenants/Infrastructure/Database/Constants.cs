@@ -1,13 +1,15 @@
-﻿namespace Backend.Modules.Infrastructure.Database;
+﻿namespace Backend.Modules.Tenants.Infrastructure.Database;
 
 public class Constants
 {
+    // schema
+    public const string Schema = "saas_tenants";
+    
     // common
     public const string ColumnId = "id";
     public const string ColumnData = "data";
-    public const string ColumnTenantId = "tenant_id";
 
-    // tenants
+    // registrations
     public const string TableRegistrations = "registrations";
     public const string ColumnRegistrationIdentifier = "identifier";
 
@@ -16,9 +18,4 @@ public class Constants
     public const string ColumnTenantName = "name";
     public const string ColumnTenantIdentifier = "identifier";
 
-    // settings
-    public const string TableSettings = "settings";
-
-    // widgets
-    public const string TableWidgets = "widgets";
 }

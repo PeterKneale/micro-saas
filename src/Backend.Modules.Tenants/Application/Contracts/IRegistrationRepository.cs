@@ -1,5 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-using Backend.Modules.Tenants.Domain.RegistrationAggregate;
+﻿using Backend.Modules.Tenants.Domain.RegistrationAggregate;
 
 namespace Backend.Modules.Tenants.Application.Contracts;
 

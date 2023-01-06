@@ -1,6 +1,9 @@
-﻿using Backend.Modules.Infrastructure.Database;
+﻿using Backend.Modules.Infrastructure.Configuration;
+using Backend.Modules.Infrastructure.Database;
 using Backend.Modules.Widgets.Application.Contracts;
 using Backend.Modules.Widgets.Infrastructure;
+using Backend.Modules.Widgets.Infrastructure.Database;
+using Backend.Modules.Widgets.Infrastructure.Repositories;
 
 namespace Backend.Modules.Widgets;
 
@@ -15,6 +18,7 @@ public static class WidgetsModuleSetup
         var services = new ServiceCollection();
 
         // passed from host 
+        services.AddLogging();
         services.AddSingleton(executionContextAccessor);
         services.AddSingleton(logger);
         services.AddSingleton(configuration);
@@ -36,8 +40,8 @@ public static class WidgetsModuleSetup
     
     public static void SetupDatabase(Action<MigrationExecutor> action)
     {
-        using var scope = _provider.CreateScope();
-        var migrator = scope.ServiceProvider.GetRequiredService<MigrationExecutor>();
-        action(migrator);
+        var configuration = _provider.GetRequiredService<IConfiguration>();
+        var connection = configuration.GetSystemConnectionString();
+        MigrationRunner.Run(connection, action);
     }
 }

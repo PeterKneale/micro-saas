@@ -1,6 +1,5 @@
 ﻿using Backend.Modules.Tenants.Application.Contracts;
 using Backend.Modules.Tenants.Application.Exceptions;
-using Backend.Modules.Tenants.Domain.Common;
 
 namespace Backend.Modules.Tenants.Application.Queries;
 

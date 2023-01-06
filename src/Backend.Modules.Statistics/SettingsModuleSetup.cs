@@ -1,8 +1,10 @@
 ﻿using System.Reflection;
+using Backend.Modules.Infrastructure.Configuration;
 using Backend.Modules.Infrastructure.Database;
 using Backend.Modules.Infrastructure.Tenancy;
 using Backend.Modules.Statistics.Application.Contracts;
 using Backend.Modules.Statistics.Infrastructure;
+using Backend.Modules.Statistics.Infrastructure.Database;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -20,6 +22,7 @@ public static class StatisticsModuleSetup
         var services = new ServiceCollection();
 
         // passed from host 
+        services.AddLogging();
         services.AddSingleton(executionContextAccessor);
         services.AddSingleton(logger);
         services.AddSingleton(configuration);
@@ -41,8 +44,8 @@ public static class StatisticsModuleSetup
     
     public static void SetupDatabase(Action<MigrationExecutor> action)
     {
-        using var scope = _provider.CreateScope();
-        var migrator = scope.ServiceProvider.GetRequiredService<MigrationExecutor>();
-        action(migrator);
+        var configuration = _provider.GetRequiredService<IConfiguration>();
+        var connection = configuration.GetSystemConnectionString();
+        MigrationRunner.Run(connection, action);
     }
 }

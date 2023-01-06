@@ -1,8 +1,8 @@
 ﻿using Backend.Modules.Widgets.Application.Contracts;
 using Backend.Modules.Widgets.Domain.WidgetAggregate;
-using static Backend.Modules.Infrastructure.Database.Constants;
+using static Backend.Modules.Widgets.Infrastructure.Database.Constants;
 
-namespace Backend.Modules.Widgets.Infrastructure;
+namespace Backend.Modules.Widgets.Infrastructure.Repositories;
 
 internal class WidgetRepository : IWidgetRepository
 {
@@ -15,7 +15,7 @@ internal class WidgetRepository : IWidgetRepository
 
     public async Task<Widget?> Get(WidgetId widgetId, CancellationToken cancellationToken)
     {
-        const string sql = $"select {ColumnData} from {TableWidgets} where {ColumnId} = @id";
+        const string sql = $"select {ColumnData} from {Schema}.{TableWidgets} where {ColumnId} = @id";
         var result = await _connection.QuerySingleOrDefaultAsync<string>(sql, new
         {
             id = widgetId.Id
@@ -25,7 +25,7 @@ internal class WidgetRepository : IWidgetRepository
 
     public async Task<IEnumerable<Widget>> List(CancellationToken cancellationToken)
     {
-        const string sql = $"select {ColumnData} from {TableWidgets}";
+        const string sql = $"select {ColumnData} from {Schema}.{TableWidgets}";
         var results = await _connection.QueryAsync<string>(sql, cancellationToken);
         return results
             .Select(result => JsonHelper.ToObject<Widget>(result)!)
@@ -34,7 +34,7 @@ internal class WidgetRepository : IWidgetRepository
 
     public async Task Insert(Widget widget, CancellationToken cancellationToken)
     {
-        const string sql = $"insert into {TableWidgets} ({ColumnId}, {ColumnData}) values (@id, @data::jsonb)";
+        const string sql = $"insert into {Schema}.{TableWidgets} ({ColumnId}, {ColumnData}) values (@id, @data::jsonb)";
         var json = JsonHelper.ToJson(widget);
         await _connection.ExecuteAsync(sql, new
         {
@@ -45,7 +45,7 @@ internal class WidgetRepository : IWidgetRepository
 
     public async Task Update(Widget widget, CancellationToken cancellationToken)
     {
-        const string sql = $"update {TableWidgets} set {ColumnData} = @data::jsonb where {ColumnId} = @id";
+        const string sql = $"update {Schema}.{TableWidgets} set {ColumnData} = @data::jsonb where {ColumnId} = @id";
         var result = await _connection.ExecuteAsync(sql, new
         {
             id = widget.Id.Id,

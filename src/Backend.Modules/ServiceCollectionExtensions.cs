@@ -1,8 +1,5 @@
-﻿using System.Reflection;
-using Backend.Modules.Infrastructure.Behaviours;
-using Backend.Modules.Infrastructure.Database;
+﻿using Backend.Modules.Infrastructure.Behaviours;
 using Backend.Modules.Infrastructure.Emails;
-using FluentMigrator.Runner;
 
 namespace Backend.Modules;
 
@@ -29,15 +26,6 @@ public static class ServiceCollectionExtensions
         
         services
             .AddTransient<IEmailSender, EmailSender>();
-
-        // Update database migrations and executor
-        services
-            .AddFluentMigratorCore()
-            .ConfigureRunner(runner => runner
-                .AddPostgres()
-                .WithGlobalConnectionString(configuration.GetSystemConnectionString())
-                .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
-            .AddScoped<MigrationExecutor>();
         
         services.AddCap(x =>
         {

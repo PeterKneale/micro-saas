@@ -1,5 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-using Backend.Modules.Tenants.Domain.TenantAggregate;
+﻿using Backend.Modules.Tenants.Domain.TenantAggregate;
 
 namespace Backend.Modules.Tenants.Application.Commands;
 
@@ -37,6 +36,7 @@ public static class AddTenant
             {
                 throw new TenantAlreadyExistsException(tenantId);
             }
+            
             var identifierExists = await _repository.Get(identifier, cancellationToken);
             if (identifierExists != null)
             {

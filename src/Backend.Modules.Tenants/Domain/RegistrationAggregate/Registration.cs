@@ -1,6 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-
-namespace Backend.Modules.Tenants.Domain.RegistrationAggregate;
+﻿namespace Backend.Modules.Tenants.Domain.RegistrationAggregate;
 
 public class Registration
 {
