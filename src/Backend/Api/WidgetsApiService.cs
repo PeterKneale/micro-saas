@@ -1,33 +1,35 @@
-﻿using Backend.Api;
+﻿using Backend.Modules.Widgets;
 using Backend.Modules.Widgets.Application.Commands;
 using Backend.Modules.Widgets.Application.Queries;
+using FluentValidation;
+using Grpc.Core;
 
-namespace Backend.Modules.Widgets.Api;
+namespace Backend.Api;
 
-public class WidgetsApi : Backend.Api.WidgetsApi.WidgetsApiBase
+public class WidgetsApiService : WidgetsApi.WidgetsApiBase
 {
-    private readonly IMediator _mediator;
+    private readonly IWidgetsModule _module;
 
-    public WidgetsApi(IMediator mediator)
+    public WidgetsApiService(IWidgetsModule module)
     {
-        _mediator = mediator;
+        _module = module;
     }
 
     public override async Task<EmptyResponse> AddWidget(AddWidgetRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new AddWidget.Command(Guid.Parse(request.Id), request.Description));
+        await _module.ExecuteCommandAsync(new AddWidget.Command(Guid.Parse(request.Id), request.Description));
         return new EmptyResponse();
     }
     
     public override async Task<EmptyResponse> UpdateWidget(UpdateWidgetRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new UpdateWidget.Command(Guid.Parse(request.Id), request.Description));
+        await _module.ExecuteCommandAsync(new UpdateWidget.Command(Guid.Parse(request.Id), request.Description));
         return new EmptyResponse();
     }
 
     public override async Task<GetWidgetResponse> GetWidget(GetWidgetRequest request, ServerCallContext context)
     {
-        var result = await _mediator.Send(new GetWidget.Query(Guid.Parse(request.Id)));
+        var result = await _module.ExecuteQueryAsync(new GetWidget.Query(Guid.Parse(request.Id)));
         return new GetWidgetResponse
         {
             Id = result.Id.ToString(),
@@ -36,7 +38,7 @@ public class WidgetsApi : Backend.Api.WidgetsApi.WidgetsApiBase
     }
     public override async Task<ListWidgetsResponse> ListWidgets(ListWidgetsRequest request, ServerCallContext context)
     {
-        var results = await _mediator.Send(new ListWidgets.Query());
+        var results = await _module.ExecuteQueryAsync(new ListWidgets.Query());
 
         return new ListWidgetsResponse
         {

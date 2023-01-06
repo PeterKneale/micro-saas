@@ -1,6 +1,6 @@
 ﻿namespace Backend.Modules.Tenants.Application.Exceptions;
 
-internal class TenantNotFoundException : BaseNotFoundException
+internal class TenantNotFoundException : NotFoundException
 {
     public TenantNotFoundException(Guid id) : base("tenant", id.ToString())
     {

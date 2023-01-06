@@ -26,11 +26,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Backend.Modules.Settings\Backend.Modules.Settings.csproj" />
-      <ProjectReference Include="..\Backend.Modules.Statistics\Backend.Modules.Statistics.csproj" />
-      <ProjectReference Include="..\Backend.Modules.Tenants\Backend.Modules.Tenants.csproj" />
-      <ProjectReference Include="..\Backend.Modules.Widgets\Backend.Modules.Widgets.csproj" />
-      <ProjectReference Include="..\Backend.Modules\Backend.Modules.csproj" />
+        <ProjectReference Include="..\Backend.Modules.Settings\Backend.Modules.Settings.csproj" />
+        <ProjectReference Include="..\Backend.Modules.Statistics\Backend.Modules.Statistics.csproj" />
+        <ProjectReference Include="..\Backend.Modules.Tenants\Backend.Modules.Tenants.csproj" />
+        <ProjectReference Include="..\Backend.Modules.Widgets\Backend.Modules.Widgets.csproj" />
+        <ProjectReference Include="..\Backend.Modules\Backend.Modules.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Protobuf Include="Api\SettingsApi.proto" GrpcServices="Server" />
+        <Protobuf Include="Api\StatisticsApi.proto" GrpcServices="Server" />
+        <Protobuf Include="Api\TenantsApi.proto" GrpcServices="Server" />
+        <Protobuf Include="Api\WidgetApi.proto" GrpcServices="Server" />
     </ItemGroup>
 
 </Project>

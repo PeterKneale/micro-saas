@@ -1,6 +1,6 @@
 ﻿namespace Backend.Modules.Infrastructure.Tenancy;
 
-public interface IGetTenantContext
+public interface IExecutionContextAccessor
 {
     Guid CurrentTenant { get; }
 }

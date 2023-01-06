@@ -1,6 +1,6 @@
 ﻿namespace Backend.Modules.Tenants.Application.Exceptions;
 
-internal class RegistrationNotFoundException : BaseNotFoundException
+internal class RegistrationNotFoundException : NotFoundException
 {
     public RegistrationNotFoundException(string identifier) : base("registration", identifier)
     {

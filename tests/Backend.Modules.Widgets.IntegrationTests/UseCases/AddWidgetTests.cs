@@ -6,11 +6,11 @@ namespace Backend.Modules.Widgets.IntegrationTests.UseCases;
 [Collection(nameof(ContainerCollectionFixture))]
 public class AddWidgetTests
 {
-    private readonly IServiceProvider _provider;
+    private readonly IServiceProvider _module;
 
     public AddWidgetTests(ContainerFixture container)
     {
-        _provider = container.Provider;
+        _module = container.Provider;
     }
 
     [Fact]
@@ -21,8 +21,8 @@ public class AddWidgetTests
         var tenantId = Guid.NewGuid();
 
         // act
-        await _provider.ExecuteCommand(new AddWidget.Command(id, "x"), tenantId);
-        var result = await _provider.ExecuteQuery(new GetWidget.Query(id), tenantId);
+        await _module.ExecuteCommand(new AddWidget.Command(id, "x"), tenantId);
+        var result = await _module.ExecuteQuery(new GetWidget.Query(id), tenantId);
 
         // assert
         result.Id.Should().Be(id);

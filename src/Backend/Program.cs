@@ -1,17 +1,23 @@
 ﻿using System.Diagnostics;
 using System.Net;
-using Backend.Modules;
-using Backend.Modules.Infrastructure.Database;
+using System.Reflection;
+using Backend.Api;
+using Backend.Infrastructure.Tenancy;
 using Backend.Modules.Infrastructure.Interceptors;
 using Backend.Modules.Settings;
 using Backend.Modules.Statistics;
 using Backend.Modules.Tenants;
 using Backend.Modules.Widgets;
+using FluentValidation;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
+var assembly= Assembly.GetExecutingAssembly();
+
 var builder = WebApplication.CreateBuilder(args);
+
+var logging = LoggerFactory.Create(c => { c.AddSimpleConsole(opt => { opt.SingleLine = true; }); });
 
 builder.WebHost.ConfigureKestrel(opt =>
 {
@@ -21,42 +27,49 @@ builder.WebHost.ConfigureKestrel(opt =>
     opt.Listen(IPAddress.Any, 5001, listen => listen.Protocols = HttpProtocols.Http2);
 });
 
-builder.Services.AddGrpc(options =>
-    {
-        // Start trapping for exceptions and translate to grpc status codes
-        options.Interceptors.Add<ExceptionInterceptor>();
-        // Validate the grpc request
-        options.Interceptors.Add<ValidationInterceptor>();
-    })
-    .AddSettings()
-    .AddStatistics()
-    .AddTenants()
-    .AddWidgets();
 
-builder.Services
-    .AddModules(builder.Configuration)
-    .AddSettings(builder.Configuration)
-    .AddStatistics(builder.Configuration)
-    .AddTenants(builder.Configuration)
-    .AddWidgets(builder.Configuration);
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddHealthChecks();
-builder.Services.AddLogging(c =>
+builder.Services.AddLogging(c => { c.AddSimpleConsole(opt => { opt.SingleLine = true; }); });
+builder.Services.AddGrpc(options =>
 {
-    c.AddSimpleConsole(opt =>
-    {
-        opt.SingleLine = true;
-    });
+    // Start trapping for exceptions and translate to grpc status codes
+    options.Interceptors.Add<ExceptionInterceptor>();
+    // Validate the grpc request
+    options.Interceptors.Add<ValidationInterceptor>();
 });
 
+builder.Services.AddValidatorsFromAssembly(assembly);
+
+builder.Services
+    .AddStatisticsModule()
+    .AddTenantsModule()
+    .AddSettingsModule()
+    .AddWidgetsModule();
+
 var app = builder.Build();
+
 app.MapGet("/", () => "Backend");
 app.MapHealthChecks("/health/alive");
 app.MapHealthChecks("/health/ready");
-app
-    .AddSettings()
-    .AddStatistics()
-    .AddTenants()
-    .AddWidgets();
-app.Services.ExecuteDatabaseMigration(x => x.ApplyDatabaseMigrations());
+
+app.MapGrpcService<WidgetsApiService>();
+app.MapGrpcService<SettingsApiService>();
+app.MapGrpcService<StatisticsApiService>();
+app.MapGrpcService<TenantsApiService>();
+
+var httpContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();
+var executionContextAccessor = new ExecutionContextAccessorAccessor(httpContextAccessor);
+
+WidgetsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
+SettingsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
+StatisticsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
+TenantsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
+
+WidgetsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
+SettingsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
+StatisticsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
+TenantsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
+TenantsModuleSetup.SetupOutbox();
+
 app.Run();

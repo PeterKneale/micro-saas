@@ -1,4 +1,5 @@
-﻿using Backend.Modules.Exceptions;
+﻿using Backend.Infrastructure.Tenancy;
+using Backend.Modules.Exceptions;
 using Grpc.Core;
 using Grpc.Core.Interceptors;
 using ValidationException = FluentValidation.ValidationException;
@@ -26,24 +27,24 @@ public class ExceptionInterceptor : Interceptor
             _log.LogError(ex, "Validation exception detected, returning InvalidArgument");
             throw new RpcException(new Status(StatusCode.InvalidArgument, ex.Message));
         }
-        catch (BaseNotFoundException ex)
+        catch (NotFoundException ex)
         {
             _log.LogError(ex, "Not found exception detected, returning NotFound");
             throw new RpcException(new Status(StatusCode.NotFound, ex.Message));
         }
-        catch (BaseAlreadyExistsException ex)
+        catch (AlreadyExistsException ex)
         {
             _log.LogError(ex, "Already exists exception detected, returning NotFound");
             throw new RpcException(new Status(StatusCode.AlreadyExists, ex.Message));
         }
-        catch (BaseRuleBrokenException ex)
+        catch (RuleBrokenException ex)
         {
             _log.LogError(ex, "Rule broken exception detected, returning FailedPrecondition");
             throw new RpcException(new Status(StatusCode.FailedPrecondition, ex.Message));
         }
-        catch (MissingTenantHeaderException ex)
+        catch (TenantContextNotAvailableException ex)
         {
-            _log.LogError(ex, "Missing tenant header detected, returning PermissionDenied");
+            _log.LogError(ex, "TenantContext not available, returning PermissionDenied");
             throw new RpcException(new Status(StatusCode.PermissionDenied, ex.Message));
         }
         catch (Exception e)

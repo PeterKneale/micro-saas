@@ -1,20 +1,23 @@
-﻿using Backend.Modules.Settings.Application.Commands;
+﻿using Backend.Modules.Settings;
+using Backend.Modules.Settings.Application.Commands;
 using Backend.Modules.Settings.Application.Queries;
+using Grpc.Core;
+using MediatR;
 
-namespace Backend.Modules.Settings.Api;
+namespace Backend.Api;
 
-public class SettingsApi : Backend.Api.SettingsApi.SettingsApiBase
+public class SettingsApiService : SettingsApi.SettingsApiBase
 {
-    private readonly IMediator _mediator;
+    private readonly ISettingsModule _module;
 
-    public SettingsApi(IMediator mediator)
+    public SettingsApiService(ISettingsModule module)
     {
-        _mediator = mediator;
+        _module = module;
     }
 
     public override async Task<GetThemeResponse> GetTheme(GetThemeRequest request, ServerCallContext context)
     {
-        var theme = await _mediator.Send(new GetTheme.Query());
+        var theme = await _module.ExecuteQueryAsync(new GetTheme.Query());
         return new GetThemeResponse
         {
             Theme = theme
@@ -23,13 +26,13 @@ public class SettingsApi : Backend.Api.SettingsApi.SettingsApiBase
 
     public override async Task<EmptyResponse4> SetTheme(SetThemeRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new SetTheme.Command(request.Theme));
+        await _module.ExecuteCommandAsync(new SetTheme.Command(request.Theme));
         return new EmptyResponse4();
     }
 
     public override async Task<EmptyResponse4> ResetTheme(ResetThemeRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new ResetTheme.Command());
+        await _module.ExecuteCommandAsync(new ResetTheme.Command());
         return new EmptyResponse4();
     }
 }

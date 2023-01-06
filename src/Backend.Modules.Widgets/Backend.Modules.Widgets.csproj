@@ -16,14 +16,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Backend.Modules\Backend.Modules.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Protobuf Include="Api\WidgetApi.proto" GrpcServices="Server" />
   </ItemGroup>
 
 

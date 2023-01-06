@@ -1,4 +1,6 @@
 ﻿using Backend.Modules.Infrastructure.Database;
+using Backend.Modules.Infrastructure.Tenancy;
+using Microsoft.Extensions.Logging;
 
 namespace Backend.Modules.Settings.IntegrationTests.Fixtures;
 
@@ -8,20 +10,27 @@ public class ContainerFixture : IDisposable
 
     public ContainerFixture()
     {
+        var context = new FakeExecutionContextAccessor();
+        
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection()
             .AddEnvironmentVariables()
             .Build();
-        
+
+        var logging = LoggerFactory.Create(c =>
+        {
+            c.AddConsole();
+        });
+
         var services = new ServiceCollection()
-            .AddModules(configuration)
-            .AddSettings(configuration);
+            .AddSettingsModule();
         
-        services
-            .AddSingleton<IConfiguration>(configuration);
+        services.AddSingleton<IExecutionContextAccessor>(context);
         
         _provider = services.BuildServiceProvider();
-        _provider.ExecuteDatabaseMigration(x => x.ResetDatabase());
+        
+        SettingsModuleSetup.Init(context, logging, configuration);
+        SettingsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
     }
 
     public IServiceProvider Provider => _provider;

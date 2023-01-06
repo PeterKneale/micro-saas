@@ -1,21 +1,22 @@
-﻿using Backend.Api;
+﻿using Backend.Modules.Tenants;
 using Backend.Modules.Tenants.Application.Commands;
 using Backend.Modules.Tenants.Application.Queries;
+using Grpc.Core;
 
-namespace Backend.Modules.Tenants.Api;
+namespace Backend.Api;
 
-public class TenantsApi : Backend.Api.TenantsApi.TenantsApiBase
+public class TenantsApiService : TenantsApi.TenantsApiBase
 {
-    private readonly IMediator _mediator;
+    private readonly ITenantsModule _module;
 
-    public TenantsApi(IMediator mediator)
+    public TenantsApiService(ITenantsModule module)
     {
-        _mediator = mediator;
+        _module = module;
     }
-    
+
     public override async Task<GetTenantResponse> GetTenant(GetTenantRequest request, ServerCallContext context)
     {
-        var result = await _mediator.Send(new GetTenant.Query(Guid.Parse(request.Id)));
+        var result = await _module.ExecuteQueryAsync(new GetTenant.Query(Guid.Parse(request.Id)));
         return new GetTenantResponse
         {
             Id = result.Id.ToString(),
@@ -23,10 +24,10 @@ public class TenantsApi : Backend.Api.TenantsApi.TenantsApiBase
             Identifier = result.Identifier
         };
     }
-    
+
     public override async Task<GetTenantByIdentifierResponse> GetTenantByIdentifier(GetTenantByIdentifierRequest request, ServerCallContext context)
     {
-        var result = await _mediator.Send(new GetTenantByIdentifier.Query(request.Identifier));
+        var result = await _module.ExecuteQueryAsync(new GetTenantByIdentifier.Query(request.Identifier));
         return new GetTenantByIdentifierResponse
         {
             Id = result.Id.ToString(),
@@ -34,16 +35,16 @@ public class TenantsApi : Backend.Api.TenantsApi.TenantsApiBase
             Identifier = result.Identifier
         };
     }
-    
+
     public override async Task<EmptyResponse2> AddTenant(AddTenantRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new AddTenant.Command(Guid.Parse(request.Id), request.Name, request.Identifier));
+        await _module.ExecuteCommandAsync(new AddTenant.Command(Guid.Parse(request.Id), request.Name, request.Identifier));
         return new EmptyResponse2();
     }
-    
+
     public override async Task<ListTenantsResponse> ListTenants(ListTenantsRequest request, ServerCallContext context)
     {
-        var results = await _mediator.Send(new ListTenants.Query());
+        var results = await _module.ExecuteQueryAsync(new ListTenants.Query());
         var items = results.Select(x => new ListTenantsItem
         {
             Id = x.Id.ToString(),
@@ -58,13 +59,13 @@ public class TenantsApi : Backend.Api.TenantsApi.TenantsApiBase
 
     public override async Task<EmptyResponse2> Register(RegisterRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new RegisterTenant.Command(request.Email, request.Name, request.Identifier, request.OverrideToken));
+        await _module.ExecuteCommandAsync(new RegisterTenant.Command(request.Email, request.Name, request.Identifier, request.OverrideToken));
         return new EmptyResponse2();
     }
 
     public override async Task<EmptyResponse2> Claim(ClaimRequest request, ServerCallContext context)
     {
-        await _mediator.Send(new ClaimTenant.Command(request.Identifier, request.Password, request.Token));
+        await _module.ExecuteCommandAsync(new ClaimTenant.Command(request.Identifier, request.Password, request.Token));
         return new EmptyResponse2();
     }
 }

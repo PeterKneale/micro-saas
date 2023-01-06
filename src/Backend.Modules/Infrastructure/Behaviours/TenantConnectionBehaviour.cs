@@ -3,13 +3,13 @@
 internal class TenantConnectionBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>, IRequireTenantContext
 {
     private readonly ITenantConnectionFactory _factory;
-    private readonly IGetTenantContext _context;
+    private readonly IExecutionContextAccessor _contextAccessor;
     private readonly ILogger<TenantConnectionBehaviour<TRequest, TResponse>> _log;
 
-    public TenantConnectionBehaviour(ITenantConnectionFactory factory, IGetTenantContext context, ILogger<TenantConnectionBehaviour<TRequest, TResponse>> log)
+    public TenantConnectionBehaviour(ITenantConnectionFactory factory, IExecutionContextAccessor contextAccessor, ILogger<TenantConnectionBehaviour<TRequest, TResponse>> log)
     {
         _factory = factory;
-        _context = context;
+        _contextAccessor = contextAccessor;
         _log = log;
     }
 
@@ -21,7 +21,7 @@ internal class TenantConnectionBehaviour<TRequest, TResponse> : IPipelineBehavio
         using var transaction = connection.BeginTransaction();
         try
         {
-            var currentTenant = _context.CurrentTenant;
+            var currentTenant = _contextAccessor.CurrentTenant;
             _log.LogInformation("Setting the tenant context {CurrentTenant}", currentTenant);
             await connection.ExecuteAsync($"SET app.tenant_id = '{currentTenant}';");
 

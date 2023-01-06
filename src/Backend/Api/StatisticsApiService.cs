@@ -1,20 +1,21 @@
-﻿using Backend.Api;
+﻿using Backend.Modules.Statistics;
 using Backend.Modules.Statistics.Application.Queries;
+using Grpc.Core;
 
-namespace Backend.Modules.Statistics.Api;
+namespace Backend.Api;
 
-public class StatisticsApi : Backend.Api.StatisticsApi.StatisticsApiBase
+public class StatisticsApiService : StatisticsApi.StatisticsApiBase
 {
-    private readonly IMediator _mediator;
+    private readonly IStatisticsModule _module;
 
-    public StatisticsApi(IMediator mediator)
+    public StatisticsApiService(IStatisticsModule module)
     {
-        _mediator = mediator;
+        _module = module;
     }
     
     public override async Task<GetDashboardResponse> GetDashboard(GetDashboardRequest request, ServerCallContext context)
     {
-        var result = await _mediator.Send(new GetStatistics.Query());
+        var result = await _module.ExecuteQueryAsync(new GetStatistics.Query());
         return new GetDashboardResponse
         {
             TotalTenants = result.TotalTenants,

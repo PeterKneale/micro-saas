@@ -7,10 +7,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="..\..\src\Backend.Modules.Tenants\Api\TenantsApi.proto" GrpcServices="Client"/>
-        <Protobuf Include="..\..\src\Backend.Modules.Statistics\Api\StatisticsApi.proto" GrpcServices="Client"/>
-        <Protobuf Include="..\..\src\Backend.Modules.Settings\Api\SettingsApi.proto" GrpcServices="Client"/>
-        <Protobuf Include="..\..\src\Backend.Modules.Widgets\Api\WidgetApi.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\src\Backend\Api\TenantsApi.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\src\Backend\Api\SettingsApi.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\src\Backend\Api\WidgetApi.proto" GrpcServices="Client"/>
+        <Protobuf Include="..\..\src\Backend\Api\StatisticsApi.proto" GrpcServices="Client"/>
     </ItemGroup>
 
     <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using Grpc.Core;
+﻿using FluentValidation;
+using Grpc.Core;
 using Grpc.Core.Interceptors;
 
 namespace Backend.Modules.Infrastructure.Interceptors;

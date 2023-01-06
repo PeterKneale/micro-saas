@@ -30,14 +30,6 @@ public static class ServiceCollectionExtensions
         services
             .AddTransient<IEmailSender, EmailSender>();
 
-        // Update tenant context
-        // a single instance of tenant context is created per request
-        // requests for ISet and IGet are both forwarded to the same instance 
-        services
-            .AddScoped<TenantContext>()
-            .AddScoped<IGetTenantContext>(c => c.GetRequiredService<TenantContext>())
-            .AddScoped<ISetTenantContext>(c => c.GetRequiredService<TenantContext>());
-
         // Update database migrations and executor
         services
             .AddFluentMigratorCore()

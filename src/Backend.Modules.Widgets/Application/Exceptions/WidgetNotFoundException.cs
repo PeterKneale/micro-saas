@@ -1,6 +1,6 @@
 ﻿namespace Backend.Modules.Widgets.Application.Exceptions;
 
-internal class WidgetNotFoundException : BaseNotFoundException
+internal class WidgetNotFoundException : NotFoundException
 {
     public WidgetNotFoundException(Guid id) : base("car", id.ToString())
     {
