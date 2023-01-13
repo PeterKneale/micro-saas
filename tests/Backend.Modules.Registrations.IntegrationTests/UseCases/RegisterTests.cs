@@ -1,14 +1,14 @@
-﻿using Backend.Modules.Tenants.Application.Commands;
-using Backend.Modules.Tenants.IntegrationTests.Fixtures;
+﻿using Backend.Modules.Registrations.Application.Commands;
+using Backend.Modules.Registrations.IntegrationTests.Fixtures;
 
-namespace Backend.Modules.Tenants.IntegrationTests.UseCases;
+namespace Backend.Modules.Registrations.IntegrationTests.UseCases;
 
 [Collection(nameof(ContainerCollectionFixture))]
-public class RegisterTenantTests
+public class RegisterTests
 {
     private readonly IServiceProvider _provider;
 
-    public RegisterTenantTests(ContainerFixture container)
+    public RegisterTests(ContainerFixture container)
     {
         _provider = container.Provider;
     }
@@ -22,7 +22,7 @@ public class RegisterTenantTests
         var identifier = Guid.NewGuid().ToString();
 
         // act
-        await _provider.ExecuteCommand(new RegisterTenant.Command(email, name, identifier));
+        await _provider.ExecuteCommand(new Register.Command(email, name, identifier));
 
         // assert
     }
@@ -40,8 +40,8 @@ public class RegisterTenantTests
         var identifier2 = Guid.NewGuid().ToString();
 
         // act
-        await _provider.ExecuteCommand(new RegisterTenant.Command(email, name1, identifier1));
-        await _provider.ExecuteCommand(new RegisterTenant.Command(email, name2, identifier2));
+        await _provider.ExecuteCommand(new Register.Command(email, name1, identifier1));
+        await _provider.ExecuteCommand(new Register.Command(email, name2, identifier2));
 
         // assert
     }
@@ -57,8 +57,8 @@ public class RegisterTenantTests
         var identifier = Guid.NewGuid().ToString();
 
         // act
-        await _provider.ExecuteCommand(new RegisterTenant.Command(email1, name, identifier));
-        await _provider.ExecuteCommand(new RegisterTenant.Command(email2, name, identifier));
+        await _provider.ExecuteCommand(new Register.Command(email1, name, identifier));
+        await _provider.ExecuteCommand(new Register.Command(email2, name, identifier));
 
         // assert
     }

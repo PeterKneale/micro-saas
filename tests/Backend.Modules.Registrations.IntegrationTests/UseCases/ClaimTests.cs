@@ -1,14 +1,14 @@
-﻿using Backend.Modules.Tenants.Application.Commands;
-using Backend.Modules.Tenants.IntegrationTests.Fixtures;
+﻿using Backend.Modules.Registrations.Application.Commands;
+using Backend.Modules.Registrations.IntegrationTests.Fixtures;
 
-namespace Backend.Modules.Tenants.IntegrationTests.UseCases;
+namespace Backend.Modules.Registrations.IntegrationTests.UseCases;
 
 [Collection(nameof(ContainerCollectionFixture))]
-public class ClaimTenantTests
+public class ClaimTests
 {
     private readonly IServiceProvider _provider;
 
-    public ClaimTenantTests(ContainerFixture container)
+    public ClaimTests(ContainerFixture container)
     {
         _provider = container.Provider;
     }
@@ -24,8 +24,8 @@ public class ClaimTenantTests
         var token = Guid.NewGuid().ToString();
 
         // act
-        await _provider.ExecuteCommand(new RegisterTenant.Command(email, name, identifier, token));
-        await _provider.ExecuteCommand(new ClaimTenant.Command(identifier, password, token));
+        await _provider.ExecuteCommand(new Register.Command(email, name, identifier, token));
+        await _provider.ExecuteCommand(new Claim.Command(identifier, password, token));
 
         // assert
     }

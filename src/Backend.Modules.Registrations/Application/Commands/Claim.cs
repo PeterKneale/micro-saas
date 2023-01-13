@@ -1,6 +1,12 @@
-﻿namespace Backend.Modules.Tenants.Application.Commands;
+﻿using Backend.Modules.Registration.Messages;
+using Backend.Modules.Registrations.Application.Contracts;
+using Backend.Modules.Registrations.Application.Exceptions;
+using Backend.Modules.Registrations.Application.IntegrationEvents;
+using Backend.Modules.Registrations.Domain.Common;
 
-public static class ClaimTenant
+namespace Backend.Modules.Registrations.Application.Commands;
+
+public static class Claim
 {
     public record Command(string Identifier, string Password, string Token) : IRequest;
 
@@ -41,8 +47,12 @@ public static class ClaimTenant
 
             await _repository.Update(registration, cancellationToken);
 
-            var message = new TenantClaimedIntegrationEvent {RegistrationId = registration.Id.Id};
-            await _publisher.PublishAsync(Topics.TenantClaimed, message, cancellationToken: cancellationToken);
+            await _publisher.PublishAsync(Topics.TenantClaimed, new TenantClaimedIntegrationEvent
+            {
+                RegistrationId = registration.Id.Id,
+                Name = registration.Name.Value,
+                Identifier = registration.Identifier.Value
+            }, cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

@@ -14,7 +14,7 @@ public static class ServiceCollectionExtensions
             // Validate the request
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>))
             // Open a connection, begin a transaction and set the tenant context for the connection
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(TenantConnectionBehaviour<,>)); 
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(TenantConnectionBehaviour<,>));
 
         // Update database connections and repositories
         // Note that there is a single connection per request as this is a scoped dependency
@@ -23,14 +23,21 @@ public static class ServiceCollectionExtensions
         services
             .AddScoped<IAdminConnectionFactory, AdminConnectionFactory>()
             .AddScoped<ITenantConnectionFactory, TenantConnectionFactory>();
-        
+
         services
             .AddTransient<IEmailSender, EmailSender>();
+
+        services.AddCapProcessing(configuration);
         
-        services.AddCap(x =>
+        return services;
+    }
+
+    public static IServiceCollection AddCapProcessing(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddCap(cfg =>
         {
-            x.UsePostgreSql(configuration.GetSystemConnectionString());
-            x.UseRabbitMQ(options =>
+            cfg.UsePostgreSql(configuration.GetSystemConnectionString());
+            cfg.UseRabbitMQ(options =>
             {
                 options.HostName = configuration.GetRabbitHost();
                 options.Port = configuration.GetRabbitPort();
@@ -38,7 +45,8 @@ public static class ServiceCollectionExtensions
                 options.UserName = configuration.GetRabbitUsername();
                 options.Password = configuration.GetRabbitPassword();
             });
-            x.UseDashboard();
+            cfg.UseDashboard(x => x.PathMatch = "/cap");
+            cfg.ConsumerThreadCount = 0;
         });
         return services;
     }

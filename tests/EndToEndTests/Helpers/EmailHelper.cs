@@ -9,11 +9,13 @@ public static class EmailHelper
 
     public static async Task<string> GetClaimLinkFromRegisteredEmail(string email)
     {
+        await Task.Delay(TimeSpan.FromSeconds(20));
         var client = new MailhogClient(MailHogUri);
         var messages = await client.SearchAsync(SearchKind.To, email);
         var message =  messages.Items.Single(x => x.Subject == "Registered");
+        var link = GetLinkFromMessage(message);
         await DeleteMessage(message);
-        return GetLinkFromMessage(message);
+        return link;
     }
 
     private static async Task DeleteMessage(Message message)

@@ -1,8 +1,10 @@
 ﻿using Backend.Modules.Infrastructure.Repositories.Serialisation;
-using Backend.Modules.Tenants.Domain.RegistrationAggregate;
-using static Backend.Modules.Tenants.Infrastructure.Database.Constants;
+using Backend.Modules.Registrations.Application.Contracts;
+using Backend.Modules.Registrations.Domain.Common;
+using Backend.Modules.Registrations.Domain.RegistrationAggregate;
+using static Backend.Modules.Registrations.Infrastructure.Database.Constants;
 
-namespace Backend.Modules.Tenants.Infrastructure.Repositories;
+namespace Backend.Modules.Registrations.Infrastructure.Repositories;
 
 internal class RegistrationRepository : IRegistrationRepository
 {
@@ -13,7 +15,7 @@ internal class RegistrationRepository : IRegistrationRepository
         _connection = factory.GetDbConnectionForAdmin();
     }
 
-    public async Task Insert(Registration registration, CancellationToken cancellationToken)
+    public async Task Insert(Domain.RegistrationAggregate.Registration registration, CancellationToken cancellationToken)
     {
         const string sql = $"insert into {Schema}.{TableRegistrations} ({ColumnId},  {ColumnRegistrationIdentifier}, {ColumnData}) values (@id, @identifier,@data::jsonb)";
         var json = JsonHelper.ToJson(registration);
@@ -25,7 +27,7 @@ internal class RegistrationRepository : IRegistrationRepository
         });
     }
 
-    public async Task Update(Registration registration, CancellationToken cancellationToken)
+    public async Task Update(Domain.RegistrationAggregate.Registration registration, CancellationToken cancellationToken)
     {
         const string sql = $"update {Schema}.{TableRegistrations} set {ColumnData} = @data::jsonb where {ColumnId} = @id";
         var result = await _connection.ExecuteAsync(sql, new
@@ -39,32 +41,32 @@ internal class RegistrationRepository : IRegistrationRepository
         }
     }
 
-    public async Task<IEnumerable<Registration>> Get(TenantIdentifier identifier, CancellationToken cancellationToken)
+    public async Task<IEnumerable<Domain.RegistrationAggregate.Registration>> Get(TenantIdentifier identifier, CancellationToken cancellationToken)
     {
         const string sql = $"select {ColumnData} from {Schema}.{TableRegistrations} where {ColumnRegistrationIdentifier} = @identifier";
         var results = await _connection.QueryAsync<string>(sql, new
         {
             identifier = identifier.Value
         });
-        return results.Select(x => JsonHelper.ToObject<Registration>(x)!);
+        return results.Select(x => JsonHelper.ToObject<Domain.RegistrationAggregate.Registration>(x)!);
     }
 
-    public async Task<Registration?> Get(RegistrationId id, CancellationToken cancellationToken)
+    public async Task<Domain.RegistrationAggregate.Registration?> Get(RegistrationId id, CancellationToken cancellationToken)
     {
         const string sql = $"select {ColumnData} from {Schema}.{TableRegistrations} where {ColumnId} = @id";
         var result = await _connection.QuerySingleOrDefaultAsync<string>(sql, new
         {
             id = id.Id
         });
-        return JsonHelper.ToObject<Registration>(result);
+        return JsonHelper.ToObject<Domain.RegistrationAggregate.Registration>(result);
     }
 
-    public async Task<IEnumerable<Registration>> List(CancellationToken cancellationToken)
+    public async Task<IEnumerable<Domain.RegistrationAggregate.Registration>> List(CancellationToken cancellationToken)
     {
         const string sql = $"select {ColumnData} from {Schema}.{TableRegistrations}";
         var results = await _connection.QueryAsync<string>(sql, cancellationToken);
         return results
-            .Select(result => JsonHelper.ToObject<Registration>(result)!)
+            .Select(result => JsonHelper.ToObject<Domain.RegistrationAggregate.Registration>(result)!)
             .ToList();
     }
 }

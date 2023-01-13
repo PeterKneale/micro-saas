@@ -1,4 +1,4 @@
-﻿namespace Backend.Modules.Tenants.Application.Exceptions;
+﻿namespace Backend.Modules.Registrations.Application.Exceptions;
 
 internal class RegistrationNotFoundException : NotFoundException
 {

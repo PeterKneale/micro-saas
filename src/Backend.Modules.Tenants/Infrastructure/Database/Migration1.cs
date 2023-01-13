@@ -7,11 +7,6 @@ public class Migration1 : Migration
 {
     public override void Up()
     {
-        Create.Table(Constants.TableRegistrations).InSchema(Constants.Schema)
-            .WithColumn(Constants.ColumnId).AsGuid().NotNullable().PrimaryKey()
-            .WithColumn(Constants.ColumnTenantIdentifier).AsString().NotNullable()
-            .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
-        
         Create.Table(Constants.TableTenants).InSchema(Constants.Schema)
             .WithColumn(Constants.ColumnId).AsGuid().NotNullable().PrimaryKey()
             .WithColumn(Constants.ColumnTenantName).AsString().NotNullable()
@@ -19,13 +14,11 @@ public class Migration1 : Migration
             .WithColumn(Constants.ColumnData).AsCustom("jsonb").NotNullable();
         
         // This table should have row level security that ensure a tenant can only manage their own data
-        Execute.Sql($"ALTER TABLE {Constants.Schema}.{Constants.TableRegistrations} ENABLE ROW LEVEL SECURITY;");
         Execute.Sql($"ALTER TABLE {Constants.Schema}.{Constants.TableTenants} ENABLE ROW LEVEL SECURITY;");
     }
 
     public override void Down()
     {
         Delete.Table(Constants.TableTenants).InSchema(Constants.Schema);
-        Delete.Table(Constants.TableRegistrations).InSchema(Constants.Schema);
     }
 }

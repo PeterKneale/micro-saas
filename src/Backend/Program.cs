@@ -4,6 +4,9 @@ using System.Reflection;
 using Backend.Api;
 using Backend.Infrastructure.ExecutionContext;
 using Backend.Infrastructure.Interceptors;
+using Backend.Modules;
+using Backend.Modules.Infrastructure.Configuration;
+using Backend.Modules.Registrations;
 using Backend.Modules.Settings;
 using Backend.Modules.Statistics;
 using Backend.Modules.Tenants;
@@ -12,7 +15,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
 
-var assembly= Assembly.GetExecutingAssembly();
+var assembly = Assembly.GetExecutingAssembly();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -39,8 +42,9 @@ builder.Services.AddGrpc(options =>
 });
 
 builder.Services.AddValidatorsFromAssembly(assembly);
-
+builder.Services.AddCapProcessing(builder.Configuration);
 builder.Services
+    .AddRegistrationsModule()
     .AddStatisticsModule()
     .AddTenantsModule()
     .AddSettingsModule()
@@ -52,24 +56,29 @@ app.MapGet("/", () => "Backend");
 app.MapHealthChecks("/health/alive");
 app.MapHealthChecks("/health/ready");
 
-app.MapGrpcService<WidgetsApiService>();
+app.MapGrpcService<RegistrationsApiService>();
 app.MapGrpcService<SettingsApiService>();
 app.MapGrpcService<StatisticsApiService>();
 app.MapGrpcService<TenantsApiService>();
+app.MapGrpcService<WidgetsApiService>();
 
 var httpContextAccessor = app.Services.GetRequiredService<IHttpContextAccessor>();
 var executionContextAccessor = new ExecutionContextAccessorAccessor(httpContextAccessor);
 
-WidgetsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
+RegistrationsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 SettingsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 StatisticsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 TenantsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
+WidgetsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 
-WidgetsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
-SettingsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
-StatisticsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
-TenantsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
+Backend.Modules.Registrations.Infrastructure.Database.MigrationRunner.Run(builder.Configuration.GetSystemConnectionString(), x => x.ResetDatabase());
+
+WidgetsModuleSetup.SetupDatabase(x => x.ApplyDatabaseMigrations());
+SettingsModuleSetup.SetupDatabase(x => x.ApplyDatabaseMigrations());
+StatisticsModuleSetup.SetupDatabase(x => x.ApplyDatabaseMigrations());
+TenantsModuleSetup.SetupDatabase(x => x.ApplyDatabaseMigrations());
 
 TenantsModuleSetup.SetupOutbox();
+RegistrationsModuleSetup.SetupOutbox();
 
 app.Run();

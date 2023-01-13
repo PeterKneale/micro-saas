@@ -1,8 +1,11 @@
-﻿using Backend.Modules.Tenants.Domain.RegistrationAggregate;
+﻿using Backend.Modules.Registration.Messages;
+using Backend.Modules.Registrations.Application.Contracts;
+using Backend.Modules.Registrations.Application.IntegrationEvents;
+using Backend.Modules.Registrations.Domain.Common;
 
-namespace Backend.Modules.Tenants.Application.Commands;
+namespace Backend.Modules.Registrations.Application.Commands;
 
-public static class RegisterTenant
+public static class Register
 {
     public record Command(string Email, string Name, string Identifier, string? OverrideToken = null) : IRequest;
 
@@ -19,29 +22,22 @@ public static class RegisterTenant
     internal class Handler : IRequestHandler<Command>
     {
         private readonly IRegistrationRepository _repository;
-        private readonly ITenantRepository _tenants;
         private readonly ICapPublisher _publisher;
 
-        public Handler(IRegistrationRepository repository, ITenantRepository tenants, ICapPublisher publisher)
+        public Handler(IRegistrationRepository repository, ICapPublisher publisher)
         {
             _repository = repository;
-            _tenants = tenants;
             _publisher = publisher;
         }
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
             var identifier = TenantIdentifier.CreateInstance(request.Identifier);
-            var tenant = await _tenants.Get(identifier, cancellationToken);
-            if (tenant != null)
-            {
-                throw new TenantIdentifierAlreadyExistsException(identifier);
-            }
 
             var email = Email.CreateInstance(request.Email);
             var name = TenantName.CreateInstance(request.Name);
 
-            var registration = Registration.Register(email, name, identifier);
+            var registration = Domain.RegistrationAggregate.Registration.Register(email, name, identifier);
 
             if (!string.IsNullOrWhiteSpace(request.OverrideToken))
             {
@@ -50,8 +46,10 @@ public static class RegisterTenant
 
             await _repository.Insert(registration, cancellationToken);
 
-            var message = new TenantRegisteredIntegrationEvent {RegistrationId = registration.Id.Id};
-            await _publisher.PublishAsync(Topics.TenantRegistered, message, cancellationToken: cancellationToken);
+            await _publisher.PublishAsync(Topics.TenantRegistered, new TenantRegisteredIntegrationEvent
+            {
+                RegistrationId = registration.Id.Id
+            }, cancellationToken: cancellationToken);
 
             return Unit.Value;
         }

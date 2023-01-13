@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Protobuf Include="..\..\src\Backend\Api\RegistrationsApi.proto" GrpcServices="Client" />
         <Protobuf Include="..\..\src\Backend\Api\TenantsApi.proto" GrpcServices="Client"/>
         <Protobuf Include="..\..\src\Backend\Api\SettingsApi.proto" GrpcServices="Client"/>
         <Protobuf Include="..\..\src\Backend\Api\WidgetApi.proto" GrpcServices="Client"/>

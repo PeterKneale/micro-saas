@@ -26,6 +26,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\Backend.Modules.Registrations\Backend.Modules.Registrations.csproj" />
         <ProjectReference Include="..\Backend.Modules.Settings\Backend.Modules.Settings.csproj" />
         <ProjectReference Include="..\Backend.Modules.Statistics\Backend.Modules.Statistics.csproj" />
         <ProjectReference Include="..\Backend.Modules.Tenants\Backend.Modules.Tenants.csproj" />
@@ -34,6 +35,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Protobuf Include="Api\RegistrationsApi.proto" GrpcServices="Server" />
         <Protobuf Include="Api\SettingsApi.proto" GrpcServices="Server" />
         <Protobuf Include="Api\StatisticsApi.proto" GrpcServices="Server" />
         <Protobuf Include="Api\TenantsApi.proto" GrpcServices="Server" />

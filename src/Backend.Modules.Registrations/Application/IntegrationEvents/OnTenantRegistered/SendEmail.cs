@@ -1,9 +1,12 @@
 ﻿using Backend.Modules.Application;
-using Backend.Modules.Tenants.Application.Extensions;
-using Backend.Modules.Tenants.Domain.RegistrationAggregate;
+using Backend.Modules.Registration.Messages;
+using Backend.Modules.Registrations.Application.Contracts;
+using Backend.Modules.Registrations.Application.Exceptions;
+using Backend.Modules.Registrations.Application.Extensions;
+using Backend.Modules.Registrations.Domain.RegistrationAggregate;
 using Microsoft.Extensions.Configuration;
 
-namespace Backend.Modules.Tenants.Application.IntegrationEvents.OnTenantRegistered;
+namespace Backend.Modules.Registrations.Application.IntegrationEvents.OnTenantRegistered;
 
 internal class SendEmail : ICapSubscribe
 {

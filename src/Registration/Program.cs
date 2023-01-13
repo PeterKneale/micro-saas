@@ -35,6 +35,11 @@ builder.Services
     .AddGrpcClient<TenantsApi.TenantsApiClient>(o => {
         o.Address = builder.Configuration.GetServiceGrpcUri();
     });
+    
+builder.Services
+    .AddGrpcClient<RegistrationsApi.RegistrationsApiClient>(o => {
+        o.Address = builder.Configuration.GetServiceGrpcUri();
+    });
 
 var app = builder.Build();
 

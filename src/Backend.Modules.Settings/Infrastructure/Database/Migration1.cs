@@ -1,5 +1,4 @@
-﻿using Backend.Modules.Infrastructure.Database;
-using FluentMigrator;
+﻿using FluentMigrator;
 
 namespace Backend.Modules.Settings.Infrastructure.Database;
 

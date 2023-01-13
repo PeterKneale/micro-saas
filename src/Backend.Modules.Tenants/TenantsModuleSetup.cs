@@ -15,7 +15,7 @@ public static class TenantsModuleSetup
 {
     private static ServiceProvider? _provider;
 
-    public static void Init(IExecutionContextAccessor executionContextAccessor, ILoggerFactory logger, IConfiguration configuration)
+    public static void Init(IExecutionContextAccessor context, ILoggerFactory logger, IConfiguration configuration)
     {
         var assembly = Assembly.GetExecutingAssembly();
         
@@ -23,7 +23,7 @@ public static class TenantsModuleSetup
 
         // passed from host 
         services.AddLogging();
-        services.AddSingleton(executionContextAccessor);
+        services.AddSingleton(context);
         services.AddSingleton(logger);
         services.AddSingleton(configuration);
         
@@ -34,13 +34,10 @@ public static class TenantsModuleSetup
         services.AddMediatR(assembly);
         services.AddValidatorsFromAssembly(assembly);
         services
-            .AddScoped<Application.IntegrationEvents.OnTenantClaimed.CreateTenant>()
-            .AddScoped<Backend.Modules.Tenants.Application.IntegrationEvents.OnTenantReady.SendEmail>()
-            .AddScoped<Application.IntegrationEvents.OnTenantRegistered.SendEmail>();
+            .AddScoped<Application.IntegrationEvents.OnTenantClaimed.CreateTenant>();
 
         // infrastructure
         services
-            .AddScoped<IRegistrationRepository, RegistrationRepository>()
             .AddScoped<ITenantRepository, TenantRepository>();
         
         _provider = services.BuildServiceProvider();
