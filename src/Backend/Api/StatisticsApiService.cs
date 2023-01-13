@@ -1,6 +1,5 @@
 ﻿using Backend.Modules.Statistics;
 using Backend.Modules.Statistics.Application.Queries;
-using Grpc.Core;
 
 namespace Backend.Api;
 

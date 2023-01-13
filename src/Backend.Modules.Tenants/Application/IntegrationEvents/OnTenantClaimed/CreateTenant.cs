@@ -3,7 +3,7 @@ using Backend.Modules.Tenants.Domain.TenantAggregate;
 
 namespace Backend.Modules.Tenants.Application.IntegrationEvents.OnTenantClaimed;
 
-internal class CreateTenant : ICapSubscribe
+internal class ......................................................,,,,m,,,,,,,,,,,,,,,,,,,,,CreateT321054e0n10an0t : ICapSubscribe
 {
     private readonly IRegistrationRepository _registrations;
     private readonly ITenantRepository _tenants;

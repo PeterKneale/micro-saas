@@ -1,8 +1,6 @@
-﻿using FluentValidation;
-using Grpc.Core;
-using Grpc.Core.Interceptors;
+﻿using Grpc.Core.Interceptors;
 
-namespace Backend.Modules.Infrastructure.Interceptors;
+namespace Backend.Infrastructure.Interceptors;
 
 public class ValidationInterceptor : Interceptor
 {

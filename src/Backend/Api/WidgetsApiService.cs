@@ -1,8 +1,6 @@
 ﻿using Backend.Modules.Widgets;
 using Backend.Modules.Widgets.Application.Commands;
 using Backend.Modules.Widgets.Application.Queries;
-using FluentValidation;
-using Grpc.Core;
 
 namespace Backend.Api;
 

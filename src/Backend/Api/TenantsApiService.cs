@@ -1,7 +1,6 @@
 ﻿using Backend.Modules.Tenants;
 using Backend.Modules.Tenants.Application.Commands;
 using Backend.Modules.Tenants.Application.Queries;
-using Grpc.Core;
 
 namespace Backend.Api;
 

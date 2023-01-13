@@ -2,13 +2,12 @@
 using System.Net;
 using System.Reflection;
 using Backend.Api;
-using Backend.Infrastructure.Tenancy;
-using Backend.Modules.Infrastructure.Interceptors;
+using Backend.Infrastructure.ExecutionContext;
+using Backend.Infrastructure.Interceptors;
 using Backend.Modules.Settings;
 using Backend.Modules.Statistics;
 using Backend.Modules.Tenants;
 using Backend.Modules.Widgets;
-using FluentValidation;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -70,6 +69,7 @@ WidgetsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
 SettingsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
 StatisticsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
 TenantsModuleSetup.SetupDatabase(x=>x.ApplyDatabaseMigrations());
+
 TenantsModuleSetup.SetupOutbox();
 
 app.Run();

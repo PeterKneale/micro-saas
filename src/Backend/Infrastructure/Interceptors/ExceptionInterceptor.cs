@@ -1,10 +1,9 @@
-﻿using Backend.Infrastructure.Tenancy;
+﻿using Backend.Infrastructure.ExecutionContext;
 using Backend.Modules.Exceptions;
-using Grpc.Core;
 using Grpc.Core.Interceptors;
 using ValidationException = FluentValidation.ValidationException;
 
-namespace Backend.Modules.Infrastructure.Interceptors;
+namespace Backend.Infrastructure.Interceptors;
 
 public class ExceptionInterceptor : Interceptor
 {
@@ -42,7 +41,7 @@ public class ExceptionInterceptor : Interceptor
             _log.LogError(ex, "Rule broken exception detected, returning FailedPrecondition");
             throw new RpcException(new Status(StatusCode.FailedPrecondition, ex.Message));
         }
-        catch (TenantContextNotAvailableException ex)
+        catch (ExecutionContextNotAvailableException ex)
         {
             _log.LogError(ex, "TenantContext not available, returning PermissionDenied");
             throw new RpcException(new Status(StatusCode.PermissionDenied, ex.Message));

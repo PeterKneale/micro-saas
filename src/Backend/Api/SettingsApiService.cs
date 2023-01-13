@@ -1,8 +1,6 @@
 ﻿using Backend.Modules.Settings;
 using Backend.Modules.Settings.Application.Commands;
 using Backend.Modules.Settings.Application.Queries;
-using Grpc.Core;
-using MediatR;
 
 namespace Backend.Api;
 
