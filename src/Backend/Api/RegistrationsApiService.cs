@@ -1,5 +1,5 @@
-﻿using Backend.Modules.Registrations;
-using Backend.Modules.Registrations.Application.Commands;
+﻿using Modules.Registrations;
+using Modules.Registrations.Application.Commands;
 
 namespace Backend.Api;
 

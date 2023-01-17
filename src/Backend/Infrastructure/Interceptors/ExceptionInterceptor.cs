@@ -1,5 +1,5 @@
 ﻿using Backend.Infrastructure.ExecutionContext;
-using Backend.Modules.Exceptions;
+using Modules.Exceptions;
 using Grpc.Core.Interceptors;
 using ValidationException = FluentValidation.ValidationException;
 

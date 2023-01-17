@@ -1,6 +1,6 @@
-﻿using Backend.Modules.Widgets;
-using Backend.Modules.Widgets.Application.Commands;
-using Backend.Modules.Widgets.Application.Queries;
+﻿using Modules.Widgets;
+using Modules.Widgets.Application.Commands;
+using Modules.Widgets.Application.Queries;
 
 namespace Backend.Api;
 

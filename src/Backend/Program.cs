@@ -4,13 +4,13 @@ using System.Reflection;
 using Backend.Api;
 using Backend.Infrastructure.ExecutionContext;
 using Backend.Infrastructure.Interceptors;
-using Backend.Modules;
-using Backend.Modules.Infrastructure.Configuration;
-using Backend.Modules.Registrations;
-using Backend.Modules.Settings;
-using Backend.Modules.Statistics;
-using Backend.Modules.Tenants;
-using Backend.Modules.Widgets;
+using Modules;
+using Modules.Infrastructure.Configuration;
+using Modules.Registrations;
+using Modules.Settings;
+using Modules.Statistics;
+using Modules.Tenants;
+using Modules.Widgets;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Activity.DefaultIdFormat = ActivityIdFormat.W3C;
@@ -71,7 +71,7 @@ StatisticsModuleSetup.Init(executionContextAccessor, logging, builder.Configurat
 TenantsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 WidgetsModuleSetup.Init(executionContextAccessor, logging, builder.Configuration);
 
-Backend.Modules.Registrations.Infrastructure.Database.MigrationRunner.Run(builder.Configuration.GetSystemConnectionString(), x => x.ResetDatabase());
+Modules.Registrations.Infrastructure.Database.MigrationRunner.Run(builder.Configuration.GetSystemConnectionString(), x => x.ResetDatabase());
 
 WidgetsModuleSetup.SetupDatabase(x => x.ApplyDatabaseMigrations());
 SettingsModuleSetup.SetupDatabase(x => x.ApplyDatabaseMigrations());
