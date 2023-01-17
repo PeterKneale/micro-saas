@@ -3,7 +3,7 @@
 public static class DbConfigurationExtensions
 {
     private const string Template = "Username={0};Password={1};Database={2};Host={3};Port={4};";
-
+    
     public static string GetSystemConnectionString(this IConfiguration configuration)
     {
         var username = configuration["DB_SYSTEM_USERNAME"] ?? "postgres";

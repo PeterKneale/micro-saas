@@ -1,4 +1,5 @@
-﻿using Backend.Modules.Infrastructure.Database;
+﻿using Backend.Modules.Infrastructure.Tenancy;
+using DotNetCore.CAP.Internal;
 
 namespace Backend.Modules.Tenants.IntegrationTests.Fixtures;
 
@@ -8,20 +9,27 @@ public class ContainerFixture : IDisposable
 
     public ContainerFixture()
     {
+        var context = new FakeExecutionContextAccessor();
+        
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection()
             .AddEnvironmentVariables()
             .Build();
-        
+
+        var logging = LoggerFactory.Create(c =>
+        {
+            c.AddConsole();
+        });
+
         var services = new ServiceCollection()
-            .AddModules(configuration)
-            .AddTenants(configuration);
+            .AddTenantsModule();
         
-        services
-            .AddSingleton<IConfiguration>(configuration);
+        services.AddSingleton<IExecutionContextAccessor>(context);
         
         _provider = services.BuildServiceProvider();
-        _provider.ExecuteDatabaseMigration(x => x.ResetDatabase());
+        TenantsModuleSetup.Init(context, logging, configuration);
+        TenantsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
+        TenantsModuleSetup.SetupOutbox();
     }
 
     public IServiceProvider Provider => _provider;
@@ -30,4 +38,6 @@ public class ContainerFixture : IDisposable
     {
         _provider.Dispose();
     }
+
+    public ITestOutputHelper? OutputHelper { get; set; }
 }

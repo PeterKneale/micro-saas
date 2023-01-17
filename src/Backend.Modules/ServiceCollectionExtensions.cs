@@ -1,8 +1,5 @@
-﻿using System.Reflection;
-using Backend.Modules.Infrastructure.Behaviours;
-using Backend.Modules.Infrastructure.Database;
+﻿using Backend.Modules.Infrastructure.Behaviours;
 using Backend.Modules.Infrastructure.Emails;
-using FluentMigrator.Runner;
 
 namespace Backend.Modules;
 
@@ -17,7 +14,7 @@ public static class ServiceCollectionExtensions
             // Validate the request
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>))
             // Open a connection, begin a transaction and set the tenant context for the connection
-            .AddTransient(typeof(IPipelineBehavior<,>), typeof(TenantConnectionBehaviour<,>)); 
+            .AddTransient(typeof(IPipelineBehavior<,>), typeof(TenantConnectionBehaviour<,>));
 
         // Update database connections and repositories
         // Note that there is a single connection per request as this is a scoped dependency
@@ -26,27 +23,31 @@ public static class ServiceCollectionExtensions
         services
             .AddScoped<IAdminConnectionFactory, AdminConnectionFactory>()
             .AddScoped<ITenantConnectionFactory, TenantConnectionFactory>();
-        
+
         services
             .AddTransient<IEmailSender, EmailSender>();
 
-        // Update tenant context
-        // a single instance of tenant context is created per request
-        // requests for ISet and IGet are both forwarded to the same instance 
-        services
-            .AddScoped<TenantContext>()
-            .AddScoped<IGetTenantContext>(c => c.GetRequiredService<TenantContext>())
-            .AddScoped<ISetTenantContext>(c => c.GetRequiredService<TenantContext>());
+        services.AddCapProcessing(configuration);
+        
+        return services;
+    }
 
-        // Update database migrations and executor
-        services
-            .AddFluentMigratorCore()
-            .ConfigureRunner(runner => runner
-                .AddPostgres()
-                .WithGlobalConnectionString(configuration.GetSystemConnectionString())
-                .ScanIn(Assembly.GetExecutingAssembly()).For.Migrations())
-            .AddScoped<MigrationExecutor>();
-
+    public static IServiceCollection AddCapProcessing(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddCap(cfg =>
+        {
+            cfg.UsePostgreSql(configuration.GetSystemConnectionString());
+            cfg.UseRabbitMQ(options =>
+            {
+                options.HostName = configuration.GetRabbitHost();
+                options.Port = configuration.GetRabbitPort();
+                options.VirtualHost = configuration.GetRabbitVirtualHost();
+                options.UserName = configuration.GetRabbitUsername();
+                options.Password = configuration.GetRabbitPassword();
+            });
+            cfg.UseDashboard(x => x.PathMatch = "/cap");
+            cfg.ConsumerThreadCount = 0;
+        });
         return services;
     }
 }

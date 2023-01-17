@@ -1,5 +1,4 @@
 ﻿using Backend.Modules.Statistics.Application.Contracts;
-using static Backend.Modules.Infrastructure.Database.Constants;
 
 namespace Backend.Modules.Statistics.Infrastructure;
 
@@ -14,13 +13,13 @@ internal class TenantStatisticsRepository : ITenantStatisticsRepository
     
     public async Task<int> CountTenants(CancellationToken cancellationToken)
     {
-        const string sql = $"select count(1) from {TableTenants}";
+        const string sql = $"select 1;";
         return await _connection.QuerySingleAsync<int>(sql);
     }
 
     public async Task<int> CountWidgets(CancellationToken cancellationToken)
     {
-        const string sql = $"select count(1) from {TableWidgets}";
+        const string sql = $"select 1;";
         return await _connection.QuerySingleAsync<int>(sql);
     }
 }

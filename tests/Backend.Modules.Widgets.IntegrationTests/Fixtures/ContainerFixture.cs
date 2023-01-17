@@ -1,4 +1,6 @@
-﻿using Backend.Modules.Infrastructure.Database;
+﻿using Backend.Modules.Infrastructure.Tenancy;
+using Microsoft.Extensions.Logging;
+using Xunit.Abstractions;
 
 namespace Backend.Modules.Widgets.IntegrationTests.Fixtures;
 
@@ -8,20 +10,27 @@ public class ContainerFixture : IDisposable
 
     public ContainerFixture()
     {
+        var context = new FakeExecutionContextAccessor();
+        
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection()
             .AddEnvironmentVariables()
             .Build();
-        
+
+        var logging = LoggerFactory.Create(c =>
+        {
+            c.AddConsole();
+        });
+
         var services = new ServiceCollection()
-            .AddModules(configuration)
-            .AddWidgets(configuration);
+            .AddWidgetsModule();
         
-        services
-            .AddSingleton<IConfiguration>(configuration);
+        services.AddSingleton<IExecutionContextAccessor>(context);
         
         _provider = services.BuildServiceProvider();
-        _provider.ExecuteDatabaseMigration(x => x.ResetDatabase());
+        
+        WidgetsModuleSetup.Init(context, logging, configuration);
+        WidgetsModuleSetup.SetupDatabase(x=>x.ResetDatabase());
     }
 
     public IServiceProvider Provider => _provider;
@@ -30,4 +39,6 @@ public class ContainerFixture : IDisposable
     {
         _provider.Dispose();
     }
+
+    public ITestOutputHelper? OutputHelper { get; set; }
 }

@@ -1,6 +1,4 @@
-﻿using Backend.Modules.Tenants.Domain.Common;
-
-namespace Backend.Modules.Tenants.Domain.RegistrationAggregate;
+﻿namespace Backend.Modules.Tenants.Domain.RegistrationAggregate;
 
 public class Registration
 {
@@ -23,7 +21,7 @@ public class Registration
     public TenantName Name { get; private set; } = null!;
     public TenantIdentifier Identifier { get; private set; } = null!;
     public string? Token { get; private set; }
-    public DateTime? RegisteredAt { get; private set; }
+    public DateTime RegisteredAt { get; private set; }
     public DateTime? ClaimedAt { get; private set; }
 
     public void Claim(string token)
@@ -36,6 +34,7 @@ public class Registration
         ClaimedAt = DateTime.UtcNow;
     }
     
+    // Override the token that will be used to claim this registration
     public void OverrideToken(string token)
     {
         Token = token;

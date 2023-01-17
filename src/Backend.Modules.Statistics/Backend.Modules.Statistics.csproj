@@ -21,9 +21,5 @@
     <ItemGroup>
         <ProjectReference Include="..\Backend.Modules\Backend.Modules.csproj" />
     </ItemGroup>
-    
-    <ItemGroup>
-        <Protobuf Include="Api\StatisticsApi.proto" GrpcServices="Server" />
-    </ItemGroup>
 
 </Project>

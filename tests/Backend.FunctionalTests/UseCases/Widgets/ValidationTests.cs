@@ -15,6 +15,22 @@ public class ValidationTests
     }
 
     [Fact]
+    public void InvalidRequestReturnsInvalidArgument()
+    {
+        // arrange
+        var id = "X";
+        var tenant = MetaDataBuilder.WithTenant();
+
+        // act
+        Action act = () => _client.GetWidget(new GetWidgetRequest {Id = id}, tenant);
+
+        // assert
+        act.Should().Throw<RpcException>().WithMessage("*'Id' must be a valid GUID*")
+            .And
+            .Status.StatusCode.Should().Be(StatusCode.InvalidArgument);
+    }
+    
+    [Fact]
     public void MissingTenantMetaDataThrows()
     {
         // arrange
@@ -24,7 +40,7 @@ public class ValidationTests
         Action act = () => _client.GetWidget(new GetWidgetRequest {Id = id});
 
         // assert
-        act.Should().Throw<RpcException>().WithMessage("*not found*")
+        act.Should().Throw<RpcException>().WithMessage("*Tenant Header is not available*")
             .And
             .Status.StatusCode.Should().Be(StatusCode.PermissionDenied);
     }

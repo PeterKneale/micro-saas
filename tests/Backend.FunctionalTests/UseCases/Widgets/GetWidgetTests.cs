@@ -45,21 +45,4 @@ public class GetWidgetTests
             .And
             .Status.StatusCode.Should().Be(StatusCode.NotFound);
     }
-
-
-    [Fact]
-    public void BadRequest()
-    {
-        // arrange
-        var id = "X";
-        var tenant = MetaDataBuilder.WithTenant();
-
-        // act
-        Action act = () => _client.GetWidget(new GetWidgetRequest {Id = id}, tenant);
-
-        // assert
-        act.Should().Throw<RpcException>().WithMessage("*'Id' must be a valid GUID*")
-            .And
-            .Status.StatusCode.Should().Be(StatusCode.InvalidArgument);
-    }
 }

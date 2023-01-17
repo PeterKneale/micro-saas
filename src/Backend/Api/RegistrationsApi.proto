@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package Backend;
+
+option csharp_namespace = "Backend.Api";
+
+service RegistrationsApi {    
+    // commands
+    rpc Register(RegisterRequest) returns (EmptyResponse5);
+    rpc Claim(ClaimRequest) returns (EmptyResponse5);
+    
+    // queries
+    rpc ListRegistrations(ListRegistrationsRequest) returns (ListRegistrationsResponse);    
+}
+
+// commands
+message RegisterRequest {
+    string name = 1;
+    string email = 2;
+    string identifier = 3;
+    string override_token = 4;
+}
+message ClaimRequest {
+    string identifier = 1;
+    string password = 2;
+    string token =3;
+}
+
+// queries
+message ListRegistrationsRequest {
+}
+
+message ListRegistrationsResponse {
+    repeated ListRegistrationsItem items = 1;
+}
+
+message ListRegistrationsItem {
+    string id = 1;
+    string name = 2;
+    string identifier = 3;
+    string email = 4;
+    
+}
+
+
+message EmptyResponse5{
+}

@@ -22,7 +22,6 @@ public class ServiceFixture : WebApplicationFactory<ApiAssembly>, ITestOutputHel
         TenantAdminClient = new TenantsApi.TenantsApiClient(_channel);
         TenantStatisticsClient = new StatisticsApi.StatisticsApiClient(_channel);
         TenantSettingsClient = new SettingsApi.SettingsApiClient(_channel);
-        Services.ExecuteDatabaseMigration(x => x.ResetDatabase());
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder) =>

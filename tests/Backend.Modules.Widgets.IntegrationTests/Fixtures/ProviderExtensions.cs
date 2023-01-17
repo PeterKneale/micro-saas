@@ -11,8 +11,9 @@ public static class ProviderExtensions
         {
             SetTenantContext(tenant.Value, scope);
         }
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        await mediator.Send(command);
+
+        var module = scope.ServiceProvider.GetRequiredService<IWidgetsModule>();
+        await module.ExecuteCommandAsync(command);
     }
 
     public static async Task<T> ExecuteQuery<T>(this IServiceProvider provider, IRequest<T> query, Guid? tenant = null)
@@ -22,14 +23,15 @@ public static class ProviderExtensions
         {
             SetTenantContext(tenant.Value, scope);
         }
-        var mediator = scope.ServiceProvider.GetRequiredService<IMediator>();
-        return await mediator.Send(query);
+
+        var module = scope.ServiceProvider.GetRequiredService<IWidgetsModule>();
+        return await module.ExecuteQueryAsync(query);
     }
 
     private static void SetTenantContext(Guid tenant, IServiceScope scope)
     {
         // resolve the tenant context so that it can be set for this use case
-        var setter = scope.ServiceProvider.GetRequiredService<ISetTenantContext>();
-        setter.SetCurrentTenant(tenant);
+        var setter = scope.ServiceProvider.GetRequiredService<IExecutionContextAccessor>() as FakeExecutionContextAccessor;
+        setter!.SetCurrentTenant(tenant);
     }
 }
