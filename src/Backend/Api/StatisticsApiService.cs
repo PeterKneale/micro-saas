@@ -1,5 +1,5 @@
-﻿using Backend.Modules.Statistics;
-using Backend.Modules.Statistics.Application.Queries;
+﻿using Modules.Statistics;
+using Modules.Statistics.Application.Queries;
 
 namespace Backend.Api;
 

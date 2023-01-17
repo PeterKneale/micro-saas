@@ -1,6 +1,6 @@
-﻿using Backend.Modules.Tenants;
-using Backend.Modules.Tenants.Application.Commands;
-using Backend.Modules.Tenants.Application.Queries;
+﻿using Modules.Tenants;
+using Modules.Tenants.Application.Commands;
+using Modules.Tenants.Application.Queries;
 
 namespace Backend.Api;
 

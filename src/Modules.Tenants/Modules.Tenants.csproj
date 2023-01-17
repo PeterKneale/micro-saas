@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
+        <PackageReference Include="Grpc.Core.Api" Version="2.50.0" />
+        <PackageReference Include="Google.Protobuf" Version="3.21.12" />
+        <PackageReference Include="Grpc.Tools" Version="2.50.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Modules.Registrations.Messages\Modules.Registrations.Messages.csproj" />
+        <ProjectReference Include="..\Modules.Tenants.Messages\Modules.Tenants.Messages.csproj" />
+        <ProjectReference Include="..\Modules\Modules.csproj" />
+    </ItemGroup>
+
+</Project>

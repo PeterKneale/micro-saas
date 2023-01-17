@@ -26,12 +26,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Backend.Modules.Registrations\Backend.Modules.Registrations.csproj" />
-        <ProjectReference Include="..\Backend.Modules.Settings\Backend.Modules.Settings.csproj" />
-        <ProjectReference Include="..\Backend.Modules.Statistics\Backend.Modules.Statistics.csproj" />
-        <ProjectReference Include="..\Backend.Modules.Tenants\Backend.Modules.Tenants.csproj" />
-        <ProjectReference Include="..\Backend.Modules.Widgets\Backend.Modules.Widgets.csproj" />
-        <ProjectReference Include="..\Backend.Modules\Backend.Modules.csproj" />
+        <ProjectReference Include="..\Modules.Registrations\Modules.Registrations.csproj" />
+        <ProjectReference Include="..\Modules.Settings\Modules.Settings.csproj" />
+        <ProjectReference Include="..\Modules.Statistics\Modules.Statistics.csproj" />
+        <ProjectReference Include="..\Modules.Tenants\Modules.Tenants.csproj" />
+        <ProjectReference Include="..\Modules.Widgets\Modules.Widgets.csproj" />
+        <ProjectReference Include="..\Modules\Modules.csproj" />
     </ItemGroup>
 
     <ItemGroup>

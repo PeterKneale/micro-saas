@@ -1,6 +1,6 @@
-﻿using Backend.Modules.Settings;
-using Backend.Modules.Settings.Application.Commands;
-using Backend.Modules.Settings.Application.Queries;
+﻿using Modules.Settings;
+using Modules.Settings.Application.Commands;
+using Modules.Settings.Application.Queries;
 
 namespace Backend.Api;
 

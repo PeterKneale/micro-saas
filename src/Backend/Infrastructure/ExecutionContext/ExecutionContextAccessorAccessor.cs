@@ -1,4 +1,4 @@
-﻿using Backend.Modules.Infrastructure.Tenancy;
+﻿using Modules.Infrastructure.Tenancy;
 using Grpc.AspNetCore.Server;
 
 namespace Backend.Infrastructure.ExecutionContext;
